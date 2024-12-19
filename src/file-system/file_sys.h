@@ -1,12 +1,8 @@
 #ifdef FILE_SYS
 #define FILE_SYS
 
-#define FILE_SYS_LIMIT 128
-#define FILE_SYS_MAX_LENGTH 32
-
-#define BLOCK_LENGTH 32
-
-
+#define MAGIC_NUMBER 0x19383845
+#define 
 
 
 #endif 
