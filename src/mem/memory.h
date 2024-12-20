@@ -1,4 +1,4 @@
-#include "AuroraOS.h"
+#include "kernel.h"
 
 void memset(void *s, int c, unsigned int n);
 
