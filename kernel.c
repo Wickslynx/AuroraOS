@@ -3,6 +3,9 @@
 #include "frontend/frontend.c"
 
 void kernel_main() {
+  frontend_init();
+  fs_init();
+
   
 }
 
