@@ -1,1 +1,5 @@
-# AuroraOS (Currently have nothing.)
+# AuroraOS 
+
+Minimalistic OS, still being worked on.
+
+
