@@ -11,7 +11,7 @@ unsigned char *free_inode_bitmap;
 unsigned char *free_data_bitmap;
 
 
-void init_filesystem() {
+void fs_init() {
     sb = (superblock_t *)fs_memory;
     sb->magic = FS_MAGIC;
     sb->total_blocks = 1024;
