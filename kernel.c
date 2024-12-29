@@ -5,6 +5,9 @@
 void kernel_main() {
   frontend_init();
   fs_init();
+  emb_init();
+
+  OSWriteText()
 
   
 }
