@@ -22,10 +22,10 @@ typedef struct dir_entry {
   unsigned int inode_index;
 } dir_entry_t;
 
-void fs_init;
-void fs_create();
-void fs_write();
-void fs_read();
+void fs_init();
+void create();
+void write();
+void read();
 
 
 #endif 
