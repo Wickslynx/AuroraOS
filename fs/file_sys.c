@@ -4,7 +4,7 @@
 //----------------------------------------------------------------------------------------
 //Please see the contributer_introduction file for more info on how to commit!
 
-/*   --File system built for AuroraDB--
+/*   --File system built for AuroraOS--
 
 
 Important stuff to know:
