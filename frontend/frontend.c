@@ -18,7 +18,7 @@ More stuff added in the future.
 
 
 
-void frontend_init() {
+int frontend_init() {
     unsigned int i;
     unsigned int j;
 
@@ -30,9 +30,14 @@ void frontend_init() {
         vidptr[i] = ' ';      
         vidptr[i+1] = 0x07;   // Attribute-byte: light grey on black screen
     }
+
+    return 0;
 }
 
 }
+
+
+
 
 
 void OsWriteText(const char *str) {
