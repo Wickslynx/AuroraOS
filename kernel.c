@@ -7,7 +7,7 @@ void kernel_main() {
   fs_init();
   emb_init();
 
-  OSWriteText()
+  OSWriteText("Hello, this OS is still in its experimental stage, all rights reserved @Wickslynx 2025.")
 
   
 }
