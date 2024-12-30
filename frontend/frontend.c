@@ -37,7 +37,13 @@ int frontend_init() {
 }
 
 
+void OsSetBGColor() {
+    
+}
 
+void OsOpenWindow() {
+    
+}
 
 
 void OsWriteText(const char *str) {
