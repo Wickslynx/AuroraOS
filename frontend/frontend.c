@@ -10,6 +10,9 @@ Important stuff to know:
 Color values are declared in:
 utils/macros/macros.h
 
+Update cursor func declared in:
+utils/funcs/functions.h
+
 More stuff added in the future.
 
 
@@ -19,33 +22,34 @@ More stuff added in the future.
 //----------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------
 
-
-
-int frontend_init() {
-    unsigned int i;
-    unsigned int j;
-
-    char *vidptr = (char*)0xb8000; 
-    unsigned int screen_size = 80 * 25 * 2; // Each character takes 2 bytes
-
-    // Clear screen
-    for (i = 0; i < screen_size; i += 2) {
-        vidptr[i] = ' ';      
-        vidptr[i+1] = 0x07;   // Attribute-byte: light grey on black screen
-    }
-
-    return 0;
-}
-
-}
-
-
-
-// Video memory constants
+// Video memory constants.
 #define VGA_MEMORY 0xb8000
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
 #define VGA_BYTES_PER_CHAR 2
+
+
+int frontend_init() {
+    //Initilize VGA mem.
+    char *vidptr = (char*)VGA_MEMORY;
+    unsigned int screen_size = VGA_WIDTH * VGA_HEIGHT * VGA_BYTES_PER_CHAR;
+    
+    // Clear screen.
+    for (unsigned int i = 0; i < screen_size; i += 2) {
+        vidptr[i] = ' ';
+        vidptr[i+1] = current_color;
+    }
+    
+
+    cursor_position = 0;// Reset cursor position
+    
+    update_cursor(0, 0); //Set cursors position to 0, 0.
+    
+    return 0;
+}
+
+
+
 
 
 // Global variables
