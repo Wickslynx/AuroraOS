@@ -1,25 +1,22 @@
 [bits 32]
-[extern kernel_main]    ; Declare kernel_main as external
+[extern kernel_main]    ; kernel.c
 
-section .text          ; Fix the typo from .txt to .text
+section .text          
 global _start
 _start:
-    ; Set up stack properly
-    mov esp, kernel_stack_top
+    mov esp, kernel_stack_top ; Set up stack.
     
-    ; Clear EFLAGS
-    push 0
+     
+    push 0  ; Clear the EFLAGS (Whatever that is.)
     popf
     
-    ; Call kernel_main
-    call kernel_main
     
-    ; If kernel returns, halt
-    cli
+    call kernel_main ; Call kernel_main func.
+    cli ; If kernel returns, halt
     hlt
 
 section .bss
 align 4
 kernel_stack_bottom:
-    resb 16384  ; 16 KB for stack
+    resb 16384  ; 16 KB for stack, good enough for now.
 kernel_stack_top:
