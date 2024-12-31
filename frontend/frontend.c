@@ -7,6 +7,9 @@
 
 Important stuff to know:
 
+Color values are declared in:
+utils/macros/macros.h
+
 More stuff added in the future.
 
 
@@ -49,33 +52,6 @@ int frontend_init() {
 static uint8_t current_color = 0x07; // Default: light grey on black
 static uint16_t cursor_position = 0;
 
-// Helper function to update hardware cursor
-static void update_cursor(int x, int y) {
-    uint16_t pos = y * VGA_WIDTH + x;
-    
-    // Send command to control port 0x3D4
-    __asm__ volatile ("outb %0, %1" : : "a"(0x0F), "d"(0x3D4));
-    __asm__ volatile ("outb %0, %1" : : "a"((uint8_t)(pos & 0xFF)), "d"(0x3D5));
-    __asm__ volatile ("outb %0, %1" : : "a"(0x0E), "d"(0x3D4));
-    __asm__ volatile ("outb %0, %1" : : "a"((uint8_t)((pos >> 8) & 0xFF)), "d"(0x3D5));
-}
-
-int frontend_init() {
-    char *vidptr = (char*)VGA_MEMORY;
-    unsigned int screen_size = VGA_WIDTH * VGA_HEIGHT * VGA_BYTES_PER_CHAR;
-    
-    // Clear screen
-    for (unsigned int i = 0; i < screen_size; i += 2) {
-        vidptr[i] = ' ';
-        vidptr[i+1] = current_color;
-    }
-    
-    // Reset cursor position
-    cursor_position = 0;
-    update_cursor(0, 0);
-    
-    return 0;
-}
 
 void OsSetBGColor(uint8_t color) {
     if (color > 0xF) return; // Invalid color
