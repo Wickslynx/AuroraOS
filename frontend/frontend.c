@@ -167,22 +167,3 @@ void OsWriteText(const char *str) {
     update_cursor(cursor_position % VGA_WIDTH, cursor_position / VGA_WIDTH);
 }
 
-
-void OsWriteText(const char *str) {
-    char *vidptr = (char*)0xb8000;  // Start of video memory
-    unsigned int i = 0;
-    unsigned int j = 0;
-
-    // Find the end of the screen
-    while (vidptr[j] != ' ') {
-        j += 2;
-    }
-
-    // Write the string to video memory
-    while (str[i] != '\0') {
-        vidptr[j] = str[i];       // Character to print
-        vidptr[j+1] = 0x07;       // Attribute-byte: light grey on black screen
-        ++i;
-        j = j + 2;
-    }
-}
