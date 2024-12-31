@@ -1,3 +1,5 @@
+; Bootloader built for AuroraOS! Wicks 2024.
+
 [org 0x7c00]
 bits 16
 
