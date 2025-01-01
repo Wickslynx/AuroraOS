@@ -4,21 +4,21 @@
 bits 16
 
 start:
-    ; Set up segments
+    ; Set up segments.
     xor ax, ax
     mov ds, ax
     mov es, ax
     mov ss, ax
     mov sp, 0x7c00
 
-    ; Switch to protected mode
+    ; Switch to protected mode.
     cli
     lgdt [gdt_descriptor]
     mov eax, cr0
     or eax, 1
     mov cr0, eax
     
-    ; Far jump to 32-bit code
+    ; Far jump to 32-bit code.
     jmp 0x08:protected_mode
 
 [bits 32]
@@ -36,14 +36,14 @@ protected_mode:
 
 ; GDT (Global Descriptor Table)
 gdt_start:
-    dd 0, 0       ; Null descriptor
+    dd 0, 0       ; Null descriptor.
 gdt_code:
-    dw 0xffff     ; Limit
-    dw 0x0000     ; Base
-    db 0x00       ; Base
-    db 10011010b  ; Flags
-    db 11001111b  ; Flags + Limit
-    db 0x00       ; Base
+    dw 0xffff     ; Limit.
+    dw 0x0000     ; Base.
+    db 0x00       ; Base.
+    db 10011010b  ; Flags.
+    db 11001111b  ; Flags + Limit.
+    db 0x00       ; Base.
 gdt_data:
     dw 0xffff
     dw 0x0000
