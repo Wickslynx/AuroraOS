@@ -28,8 +28,8 @@ Memory layout:
 
 Additional declarations:
 
-memcpy, memset: memory/memory.c
-true, false: macros/macros.c
+memcpy, memset: mem/memory.c
+true, false: utils/macros/macros.c
 
 
 */ 
@@ -143,7 +143,7 @@ int write(const char *filename, const char *data, unsigned int length) {
 int read(const char *filename, char *buffer, unsigned int length) {
     for (unsigned int i = 0; i < MAX_FILES; i++) { //For all files.
         
-        dir_entry_t *entry = (dir_entry_t *)(data_blocks + i * BLOCK_SIZE); //Make a new directory entry as usual :O
+        dir_entry_t *entry = (dir_entry_t *)(data_blocks + i * BLOCK_SIZE); //Make a new directory entry as usual :)
         
         int found = true; //Declare found as default true,
         
@@ -168,7 +168,7 @@ int read(const char *filename, char *buffer, unsigned int length) {
                 memcpy(buffer + j * BLOCK_SIZE, data_blocks + file_inode->data_block_indices[j] * BLOCK_SIZE, BLOCK_SIZE); // Memory copy them to a char array (buffer).
             }
             
-            return length; //Return the length of the file-
+            return length; //Return the length of the file.
         }
     }
     return -1; // File not found.
