@@ -95,7 +95,7 @@ int create(const char *filename) {
         }
     }
     return -1; // If no free inode.
-]
+}
 
 int write(const char *filename, const char *data, unsigned int length) {
     for (unsigned int i = 0; i < MAX_FILES; i++) { //For every file.
