@@ -97,44 +97,40 @@ int create(const char *filename) {
     return -1; // If no free inode.
 }
 
-int write(const char *filename, const char *data, unsigned int length) {
-    for (unsigned int i = 0; i < MAX_FILES; i++) { //For every file.
+int write(char *filename, char *data, unsigned int length) {
+    for (unsigned int i = 0; i < MAX_FILES; i++) {
+        dir_entry_t *entry = (dir_entry_t *)(data_blocks + i * BLOCK_SIZE);
         
-        dir_entry_t *entry = (dir_entry_t *)(data_blocks + i * BLOCK_SIZE); //Make a new directory entry.
-        
-        int found = true; //Declare found as default true,
+        int found = 1; // true
         
         for (int j = 0; j < MAX_FILENAME_LENGTH; j++) {
-            if (entry->filename[j] != filename[j]) { //If entry dosen't match the filename.
-                found = false; //Set found to false;
+            if (entry->filename[j] != filename[j]) {
+                found = 0; // false
                 break;
             }
-            if (filename[j] == '\0') break; //If filename length 0, break.
+            if (filename[j] == '\0') break;
         }
         
-        if (found) { //If they match.
-        
-            inode_t *file_inode = &inodes[entry->inode_index]; //Make a new inode for the file.
+        if (found) {
+            inode_t *file_inode = &inodes[entry->inode_index];
 
-            //Check the filesize limit.
+            // Check file size limit
             if (length > BLOCK_SIZE * 12) {
-                return -1; // File too large.
+                return -1; // File too large
             }
 
-            //Allocate + write.
-            for (unsigned int j = 0; j < (length + BLOCK_SIZE - 1) / BLOCK_SIZE; j++) { //If j is less than the number of required blocks, continue, else restart (increment j).
-                
-                if (!free_data_bitmap[j]) { //If there is a free inode pos.
+            // Allocate and write
+            for (unsigned int j = 0; j < (length + BLOCK_SIZE - 1) / BLOCK_SIZE; j++) {
+                if (!free_data_bitmap[j]) {
+                    free_data_bitmap[j] = 1;
                     
-                    free_data_bitmap[j] = 1; //Set that pos to used.
+                    file_inode->data_block_indices[j] = j;
                     
-                    file_inode->data_block_indices[j] = j; //Set the file inode to the pos.
-                    
-                    memcpy(data_blocks + j * BLOCK_SIZE, data + j * BLOCK_SIZE, BLOCK_SIZE); //Memory copy the data to the pos.
+                    memcpy(data_blocks + j * BLOCK_SIZE, data + j * BLOCK_SIZE, BLOCK_SIZE);
                 }
             }
             
-            file_inode->size = length;  //Set the file inodes size to the length.
+            file_inode->size = length;
             return 0; 
         }
     }
