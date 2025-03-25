@@ -41,21 +41,21 @@ fi
 # --- Compilation ---
 
 echo "Compiling memory management..."
-gcc -m32 -c -ffreestanding -nostdlib -I kernel.h -I frontend -I utils/macros -I mem -I init -I fs -o "$OUTPUT_MEMORY_O" "$MEMORY_C"
+gcc -m32 -c -ffreestanding -nostdlib -I kernel.h -I frontend -I utils/macros -I utils/funcs -I mem -I init -I fs -o "$OUTPUT_MEMORY_O" "$MEMORY_C"
 if [ $? -ne 0 ]; then
     echo "Error compiling memory management. Exiting."
     exit 1
 fi
 
 echo "Compiling frontend..."
-gcc -m32 -c -ffreestanding -nostdlib -I frontend -I utils/macros -I mem -I init -I fs -o "$OUTPUT_FRONTEND_O" "$FRONTEND_C"
+gcc -m32 -c -ffreestanding -nostdlib -I frontend -I utils/macros -I mem -I utils/funcs -I init -I fs -o "$OUTPUT_FRONTEND_O" "$FRONTEND_C"
 if [ $? -ne 0 ]; then
     echo "Error compiling frontend. Exiting."
     exit 1
 fi
 
 echo "Compiling file system..."
-gcc -m32 -c -ffreestanding -nostdlib -I frontend -I utils/macros -I mem -I init -I fs -o "$OUTPUT_FILESYS_O" "$FILESYS_C"
+gcc -m32 -c -ffreestanding -nostdlib -I frontend -I utils/macros -I mem -I utils/funcs -I init -I fs -o "$OUTPUT_FILESYS_O" "$FILESYS_C"
 if [ $? -ne 0 ]; then
     echo "Error compiling file system. Exiting."
     exit 1
