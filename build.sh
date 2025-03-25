@@ -3,9 +3,9 @@
 # This script will build and run your AuroraOS with QEMU.
 
 # --- Configuration ---
-BOOT_ASM="boot.asm"
-KERNEL_ENTRY_ASM="kernel_entry.asm"
-FRONTEND_C="frontend.c"
+BOOT_ASM="asm/boot.asm"
+KERNEL_ENTRY_ASM="asm/kernel_entry.asm"
+FRONTEND_C="frontend/frontend.c"
 FRONTEND_H="frontend/frontend.h" # Added header file
 FILESYS_H="fs/file_sys.h"       # Added file system header
 FILESYS_C="fs/file_sys.c"       # Added file system source
