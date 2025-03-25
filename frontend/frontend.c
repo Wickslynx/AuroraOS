@@ -30,6 +30,10 @@ More stuff added in the future.
 #define VGA_HEIGHT 25
 #define VGA_BYTES_PER_CHAR 2
 
+// ---Global variables---
+static uint8_t current_color = 0x07; // Default: light grey on black
+static uint16_t cursor_position = 0;
+
 
 int frontend_init() {
     //Initilize VGA mem.
@@ -54,9 +58,6 @@ int frontend_init() {
 
 
 
-// Global variables
-static uint8_t current_color = 0x07; // Default: light grey on black
-static uint16_t cursor_position = 0;
 
 
 void OsSetBGColor(uint8_t color) {
