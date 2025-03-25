@@ -16,7 +16,7 @@ More stuff added in the future.
 //----------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------
 
-#include "kernel.h"
+//#include "kernel.h" // TODO: No main kernel header rn
 
 void memset(void *s, int c, unsigned int n);
 
