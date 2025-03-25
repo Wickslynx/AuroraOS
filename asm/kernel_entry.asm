@@ -18,5 +18,5 @@ _start:
 section .bss
 align 4
 kernel_stack_bottom:
-    resb 16384  ; 16 KB for stack, good enough for now.
+    resb 32768  ; 32 KB for stack, good enough for now.
 kernel_stack_top:
