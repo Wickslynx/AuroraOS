@@ -118,20 +118,20 @@ void OSSetTextColor(uint8_t color) {
 }
 
 char OSGetUserInput() {
-    char c = 0;
-    unsigned char temp_c; // Använd en unsigned char för att matcha inb
-    // Wait for keypress
+    unsigned char temp_c = 0; // Changed to ensure proper type for input
+    
     __asm__ volatile (
         "1: inb $0x64, %%al\n\t"    // Read keyboard status
         "testb $0x1, %%al\n\t"      // Check if input buffer is full
-        "jz 1b\n\t"                // If not, keep checking
-        "inb $0x60, %0"             // Read the character
-        : "=r"(temp_c) // Använd "=r" för output
-        :
-        : "eax", "memory" // Lägg till "eax" som clobbered register eftersom "inb" använder al
+        "jz 1b\n\t"                 // If not, keep checking
+        "inb $0x60, %%al\n\t"       // Read the character into al
+        "movb %%al, %0"             // Move the character to temp_c
+        : "=r"(temp_c)              // Output operand
+        :                           // No input operands
+        : "eax", "memory"           // Clobbered registers
     );
-    c = (char)temp_c; // Flytta värdet från temp_c till c
-    return c;
+    
+    return (char)temp_c;
 }
 
 
