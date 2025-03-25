@@ -41,7 +41,7 @@ fi
 # --- Compilation ---
 
 echo "Compiling memory management..."
-gcc -m32 -c -ffreestanding -nostdlib -I frontend -I utils/macros -I mem -I init -I fs -o "$OUTPUT_MEMORY_O" "$MEMORY_C"
+gcc -m32 -c -ffreestanding -nostdlib -I kernel.h -I frontend -I utils/macros -I mem -I init -I fs -o "$OUTPUT_MEMORY_O" "$MEMORY_C"
 if [ $? -ne 0 ]; then
     echo "Error compiling memory management. Exiting."
     exit 1
