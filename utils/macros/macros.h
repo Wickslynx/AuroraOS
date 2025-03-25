@@ -40,4 +40,10 @@ More stuff added in the future.
 #define YELLOW 0xE
 #define WHITE 0xF
 
+// -- Integers ---
+
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+
+
 
