@@ -37,7 +37,16 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+
 # --- Compilation ---
+
+echo "Compiling memory management..."
+gcc -m32 -c -ffreestanding -nostdlib -I frontend -I utils/macros -I mem -I init -I fs -o "$OUTPUT_MEMORY_O" "$MEMORY_C"
+if [ $? -ne 0 ]; then
+    echo "Error compiling memory management. Exiting."
+    exit 1
+fi
+
 echo "Compiling frontend..."
 gcc -m32 -c -ffreestanding -nostdlib -I frontend -I utils/macros -I mem -I init -I fs -o "$OUTPUT_FRONTEND_O" "$FRONTEND_C"
 if [ $? -ne 0 ]; then
@@ -52,12 +61,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "Compiling memory management..."
-gcc -m32 -c -ffreestanding -nostdlib -I frontend -I utils/macros -I mem -I init -I fs -o "$OUTPUT_MEMORY_O" "$MEMORY_C"
-if [ $? -ne 0 ]; then
-    echo "Error compiling memory management. Exiting."
-    exit 1
-fi
+
 
 # --- Linking ---
 echo "Linking kernel..."
