@@ -1,8 +1,7 @@
-#include "mem.h"
-#include "core.h"
+
 
 void kernel_main() {
-  StartupOS();
+  /*StartupOS(); // TODO: Can't include the headers cuz they aint built:skull: so ill comment this out.
   
   while (!OS_RUNNNING) {
 
@@ -14,7 +13,7 @@ void kernel_main() {
       OSError();
     }
     
-  }
+  } */
 
 }
 
