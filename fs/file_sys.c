@@ -97,15 +97,21 @@ int create(const char *filename) {
     return -1; // If no free inode.
 }
 
-int write(char *filename, char *data, unsigned int length) {
+int write(const char *filename, const char *data, unsigned int length) {
+    // Validate input parameters
+    if (filename == NULL || data == NULL || length == 0) {
+        return -1; // Invalid input
+    }
+
     for (unsigned int i = 0; i < MAX_FILES; i++) {
         dir_entry_t *entry = (dir_entry_t *)(data_blocks + i * BLOCK_SIZE);
         
-        int found = 1; // true
+        int found = TRUE; // true
         
+        // Careful filename comparison
         for (int j = 0; j < MAX_FILENAME_LENGTH; j++) {
             if (entry->filename[j] != filename[j]) {
-                found = 0; // false
+                found = FALSE; // false
                 break;
             }
             if (filename[j] == '\0') break;
@@ -113,20 +119,47 @@ int write(char *filename, char *data, unsigned int length) {
         
         if (found) {
             inode_t *file_inode = &inodes[entry->inode_index];
-
+            
             // Check file size limit
             if (length > BLOCK_SIZE * 12) {
                 return -1; // File too large
             }
-
+            
+            // Calculate number of blocks needed
+            unsigned int blocks_needed = (length + BLOCK_SIZE - 1) / BLOCK_SIZE;
+            
+            // Check if enough free blocks are available
+            unsigned int free_blocks_count = 0;
+            for (unsigned int k = 0; k < MAX_DATA_BLOCKS; k++) {
+                if (!free_data_bitmap[k]) {
+                    free_blocks_count++;
+                }
+            }
+            
+            if (free_blocks_count < blocks_needed) {
+                return -1; // Not enough free blocks
+            }
+            
             // Allocate and write
-            for (unsigned int j = 0; j < (length + BLOCK_SIZE - 1) / BLOCK_SIZE; j++) {
+            unsigned int blocks_written = 0;
+            for (unsigned int j = 0; j < MAX_DATA_BLOCKS && blocks_written < blocks_needed; j++) {
                 if (!free_data_bitmap[j]) {
                     free_data_bitmap[j] = 1;
                     
-                    file_inode->data_block_indices[j] = j;
+                    file_inode->data_block_indices[blocks_written] = j;
                     
-                    memcpy((void*)(data_blocks + j * BLOCK_SIZE), (const void*)(data + j * BLOCK_SIZE), BLOCK_SIZE);
+                    // Calculate bytes to copy (full block or remaining data)
+                    unsigned int bytes_to_copy = (blocks_written == blocks_needed - 1) 
+                        ? (length % BLOCK_SIZE ? length % BLOCK_SIZE : BLOCK_SIZE) 
+                        : BLOCK_SIZE;
+                    
+                    memcpy(
+                        (void*)(data_blocks + j * BLOCK_SIZE), 
+                        (const void*)(data + blocks_written * BLOCK_SIZE), 
+                        bytes_to_copy
+                    );
+                    
+                    blocks_written++;
                 }
             }
             
@@ -136,6 +169,7 @@ int write(char *filename, char *data, unsigned int length) {
     }
     return -1; // File not found
 }
+
 
 int read(const char *filename, char *buffer, unsigned int length) {
     for (unsigned int i = 0; i < MAX_FILES; i++) { //For all files.
