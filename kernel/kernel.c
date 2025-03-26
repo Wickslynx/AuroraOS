@@ -1,4 +1,3 @@
-#include "io.h"
 #include "mem.h"
 #include "core.h"
 
