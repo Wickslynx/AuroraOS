@@ -1,6 +1,7 @@
 #!/bin/bash
-# This script will build and run AuroraOS with QEMU.
-# --- Configuration ---
+# AuroraOS Kernel Build Script
+
+# --- Configuration Paths ---
 BOOT_ASM="kernel/asm/boot.asm"
 KERNEL_ENTRY_ASM="kernel/asm/kernel_entry.asm"
 FRONTEND_C="kernel/os/home.c"     
@@ -11,6 +12,8 @@ FUNCTIONS_H="utils/funcs/functions.h"
 MEMORY_C="kernel/mem/memory.c"         
 MEMORY_H="kernel/mem/memory.h"         
 LINKER_SCRIPT="linker.ld"
+
+# --- Output Files ---
 OUTPUT_BOOT_BIN="boot.bin"
 OUTPUT_KERNEL_O="kernel_entry.o"
 OUTPUT_FRONTEND_O="home.o"
@@ -20,63 +23,45 @@ OUTPUT_KERNEL_ELF="kernel.elf"
 OUTPUT_KERNEL_BIN="kernel.bin"
 OUTPUT_OS_BIN="auroraos.bin"
 
-# --- Assembly ---
-echo "Assembling bootloader..."
-nasm "$BOOT_ASM" -f bin -o "$OUTPUT_BOOT_BIN"
-if [ $? -ne 0 ]; then
-    echo "Error assembling bootloader. Exiting."
+# --- Compilation Flags ---
+NASM_FLAGS="-f elf64"
+GCC_FLAGS="-m64 -mno-red-zone -fno-pic -fno-pie -ffreestanding -nostdlib"
+INCLUDE_PATHS="-I kernel.h -I frontend -I utils/macros -I utils/funcs -I mem -I init -I fs"
+LINKER_FLAGS="-m elf_x86_64 -T $LINKER_SCRIPT"
+
+# --- Error Handling Function ---
+handle_error() {
+    echo "$1"
     exit 1
-fi
+}
+
+# --- Assembly Stage ---
+echo "Assembling bootloader..."
+nasm "$BOOT_ASM" -f bin -o "$OUTPUT_BOOT_BIN" || handle_error "Error assembling bootloader."
 
 echo "Assembling kernel entry..."
-nasm "$KERNEL_ENTRY_ASM" -f elf64 -o "$OUTPUT_KERNEL_O"
-if [ $? -ne 0 ]; then
-    echo "Error assembling kernel entry. Exiting."
-    exit 1
-fi
+nasm "$KERNEL_ENTRY_ASM" $NASM_FLAGS -o "$OUTPUT_KERNEL_O" || handle_error "Error assembling kernel entry."
 
-# --- Compilation ---
+# --- Compilation Stage ---
 echo "Compiling memory management..."
-gcc -m64 -mcmodel=kernel -mno-red-zone -c -ffreestanding -nostdlib -I kernel.h -I frontend -I utils/macros -I utils/funcs -I mem -I init -I fs -o "$OUTPUT_MEMORY_O" "$MEMORY_C"
-if [ $? -ne 0 ]; then
-    echo "Error compiling memory management. Exiting."
-    exit 1
-fi
+gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_MEMORY_O" "$MEMORY_C" || handle_error "Error compiling memory management."
 
 echo "Compiling frontend..."
-gcc -m64 -mcmodel=kernel -mno-red-zone -c -ffreestanding -nostdlib -I frontend -I utils/macros -I mem -I utils/funcs -I init -I fs -o "$OUTPUT_FRONTEND_O" "$FRONTEND_C"
-if [ $? -ne 0 ]; then
-    echo "Error compiling frontend. Exiting."
-    exit 1
-fi
+gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_FRONTEND_O" "$FRONTEND_C" || handle_error "Error compiling frontend."
 
 echo "Compiling file system..."
-gcc -m64 -mcmodel=kernel -mno-red-zone -c -ffreestanding -nostdlib -I frontend -I utils/macros -I mem -I utils/funcs -I init -I fs -o "$OUTPUT_FILESYS_O" "$FILESYS_C"
-if [ $? -ne 0 ]; then
-    echo "Error compiling file system. Exiting."
-    exit 1
-fi
+gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_FILESYS_O" "$FILESYS_C" || handle_error "Error compiling file system."
 
-# --- Linking ---
+# --- Linking Stage ---
 echo "Linking kernel..."
-ld -m elf_x86_64 -T "$LINKER_SCRIPT" "$OUTPUT_KERNEL_O" "$OUTPUT_FRONTEND_O" "$OUTPUT_FILESYS_O" "$OUTPUT_MEMORY_O" -o "$OUTPUT_KERNEL_ELF"
-if [ $? -ne 0 ]; then
-    echo "Error linking kernel. Exiting."
-    exit 1
-fi
+ld $LINKER_FLAGS "$OUTPUT_KERNEL_O" "$OUTPUT_FRONTEND_O" "$OUTPUT_FILESYS_O" "$OUTPUT_MEMORY_O" -o "$OUTPUT_KERNEL_ELF" || handle_error "Error linking kernel."
 
 echo "Creating binary image..."
-objcopy -O binary "$OUTPUT_KERNEL_ELF" "$OUTPUT_KERNEL_BIN"
-if [ $? -ne 0 ]; then
-    echo "Error creating binary image. Exiting."
-    exit 1
-fi
+objcopy -O binary "$OUTPUT_KERNEL_ELF" "$OUTPUT_KERNEL_BIN" || handle_error "Error creating binary image."
 
 echo "Combining bootloader and kernel..."
-cat "$OUTPUT_BOOT_BIN" "$OUTPUT_KERNEL_BIN" > "$OUTPUT_OS_BIN"
-if [ $? -ne 0 ]; then
-    echo "Error combining bootloader and kernel. Exiting."
-    exit 1
-fi
+cat "$OUTPUT_BOOT_BIN" "$OUTPUT_KERNEL_BIN" > "$OUTPUT_OS_BIN" || handle_error "Error combining bootloader and kernel."
 
-echo "Done! You can now run AuroraOS with qemu using: qemu-system-x86_64 -fda $OUTPUT_OS_BIN"
+# --- Completion Message ---
+echo "Build successful!"
+echo "Run AuroraOS with: qemu-system-x86_64 -fda $OUTPUT_OS_BIN"
