@@ -1,7 +1,7 @@
 #ifndef FRONTEND_H
 #define FRONTEND_H
 
-extern void update_cursor(int x, int y);
+#include "functions.h"
 
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
