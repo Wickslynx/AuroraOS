@@ -43,7 +43,7 @@ echo "Assembling kernel entry..."
 nasm "$KERNEL_ENTRY_ASM" $NASM_FLAGS -o "$OUTPUT_KERNEL_O" || handle_error "Error assembling kernel entry."
 
 echo "Compiling kernel main..."
-gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "kernel.o" "kernel.c" || handle_error "Error compiling kernel main."
+gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "kernel.o" "kernel/kernel.c" || handle_error "Error compiling kernel main."
 
 # --- Compilation Stage ---
 echo "Compiling memory management..."
