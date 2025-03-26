@@ -6,7 +6,7 @@
 
 extern void memset(void *s, int c, unsigned int n);
 
-extern void memcpy(void *dest, void *src, unsigned int n);
+extern void memcpy(void *dest, const void *src, unsigned int n);
 
 
 #define BLOCK_SIZE 512

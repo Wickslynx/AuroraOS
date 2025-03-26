@@ -5,7 +5,7 @@
 # --- Configuration ---
 BOOT_ASM="kernel/asm/boot.asm"
 KERNEL_ENTRY_ASM="kernel/asm/kernel_entry.asm"
-FRONTEND_C="kernel/core/home.c"     
+FRONTEND_C="kernel/os/home.c"     
 FILESYS_H="kernel/fs/file_sys.h"     
 FILESYS_C="kernel/fs/file_sys.c"       
 MACROS_H="utils/macros/macros.h" 
@@ -15,12 +15,12 @@ MEMORY_H="kernel/mem/memory.h"
 LINKER_SCRIPT="linker.ld"
 OUTPUT_BOOT_BIN="boot.bin"
 OUTPUT_KERNEL_O="kernel_entry.o"
-OUTPUT_FRONTEND_O="frontend.o"
+OUTPUT_FRONTEND_O="home.o"
 OUTPUT_FILESYS_O="file_sys.o"   # Object file for file system
 OUTPUT_MEMORY_O="memory.o"     # Object file for memory management
 OUTPUT_KERNEL_ELF="kernel.elf"
 OUTPUT_KERNEL_BIN="kernel.bin"
-OUTPUT_OS_BIN="os.bin"
+OUTPUT_OS_BIN="auroraos.bin"
 
 # --- Assembly ---
 echo "Assembling bootloader..."

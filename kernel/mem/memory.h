@@ -20,4 +20,4 @@ More stuff added in the future.
 
 void memset(void *s, int c, unsigned int n);
 
-void memcpy(void *dest, void *src, unsigned int n);
+void memcpy(void *dest, const void *src, unsigned int n);
