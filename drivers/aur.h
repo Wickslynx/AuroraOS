@@ -1,1 +1,0 @@
-//-- AuroraOS official windowing system. 
