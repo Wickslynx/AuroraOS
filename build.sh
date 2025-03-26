@@ -42,6 +42,9 @@ nasm "$BOOT_ASM" -f bin -o "$OUTPUT_BOOT_BIN" || handle_error "Error assembling 
 echo "Assembling kernel entry..."
 nasm "$KERNEL_ENTRY_ASM" $NASM_FLAGS -o "$OUTPUT_KERNEL_O" || handle_error "Error assembling kernel entry."
 
+echo "Compiling kernel main..."
+gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "kernel.o" "kernel.c" || handle_error "Error compiling kernel main."
+
 # --- Compilation Stage ---
 echo "Compiling memory management..."
 gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_MEMORY_O" "$MEMORY_C" || handle_error "Error compiling memory management."
@@ -52,9 +55,10 @@ gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_FRONTEND_O" "$FRONTEND_C" || handle
 echo "Compiling file system..."
 gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_FILESYS_O" "$FILESYS_C" || handle_error "Error compiling file system."
 
+
 # --- Linking Stage ---
 echo "Linking kernel..."
-ld $LINKER_FLAGS "$OUTPUT_KERNEL_O" "$OUTPUT_FRONTEND_O" "$OUTPUT_FILESYS_O" "$OUTPUT_MEMORY_O" -o "$OUTPUT_KERNEL_ELF" || handle_error "Error linking kernel."
+ld $LINKER_FLAGS "$OUTPUT_KERNEL_O" "$OUTPUT_FRONTEND_O" "$OUTPUT_FILESYS_O" "$OUTPUT_MEMORY_O" "kernel.o" -o "$OUTPUT_KERNEL_ELF" || handle_error "Error linking kernel."
 
 echo "Creating binary image..."
 objcopy -O binary "$OUTPUT_KERNEL_ELF" "$OUTPUT_KERNEL_BIN" || handle_error "Error creating binary image."
