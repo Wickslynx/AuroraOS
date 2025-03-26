@@ -13,6 +13,7 @@ extern void memcpy(void *dest, void *src, unsigned int n);
 #define MAX_FILES 256
 #define MAX_FILENAME_LENGTH 32
 #define FS_MAGIC 0xABCD1234
+#define MAX_DATA_BLOCKS 1008
 
 // Superblock Structure
 typedef struct {
