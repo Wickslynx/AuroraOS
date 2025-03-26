@@ -70,8 +70,8 @@ void fs_init() {
     free_data_bitmap = fs_memory + sb->free_data_bitmap; //Make a pointer to the already defined method.
 
     //Make memsets to and set every block to 0 (free).
-    memset(free_inode_bitmap, 0, sb->inode_blocks);
-    memset(free_data_bitmap, 0, sb->data_blocks);
+    OSmemset(free_inode_bitmap, 0, sb->inode_blocks);
+    OSmemset(free_data_bitmap, 0, sb->data_blocks);
 }
 
 int create(const char *filename) {        
@@ -81,7 +81,7 @@ int create(const char *filename) {
             free_inode_bitmap[i] = 1; //Set to used.
             
             inode_t *new_inode = &inodes[i]; //Make a new inode.
-            memset(new_inode, 0, sizeof(inode_t)); //Make available mem for it .
+            OSmemset(new_inode, 0, sizeof(inode_t)); //Make available mem for it .
             
             dir_entry_t *new_entry = (dir_entry_t *)(data_blocks + i * BLOCK_SIZE); //Make a new directory entry.
             
@@ -153,7 +153,7 @@ int write(const char *filename, const char *data, unsigned int length) {
                         ? (length % BLOCK_SIZE ? length % BLOCK_SIZE : BLOCK_SIZE) 
                         : BLOCK_SIZE;
                     
-                    memcpy(
+                    OSmemcpy(
                         (void*)(data_blocks + j * BLOCK_SIZE), 
                         (const void*)(data + blocks_written * BLOCK_SIZE), 
                         bytes_to_copy
@@ -196,7 +196,7 @@ int read(const char *filename, char *buffer, unsigned int length) {
             
             //For all data blocks.
             for (unsigned int j = 0; j < (length + BLOCK_SIZE - 1) / BLOCK_SIZE; j++) {
-                memcpy(buffer + j * BLOCK_SIZE, data_blocks + file_inode->data_block_indices[j] * BLOCK_SIZE, BLOCK_SIZE); // Memory copy them to a char array (buffer).
+                OSmemcpy(buffer + j * BLOCK_SIZE, data_blocks + file_inode->data_block_indices[j] * BLOCK_SIZE, BLOCK_SIZE); // Memory copy them to a char array (buffer).
             }
             
             return length; //Return the length of the file.
