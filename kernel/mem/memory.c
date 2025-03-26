@@ -19,14 +19,14 @@ More stuff added in the future.
 //----------------------------------------------------------------------------------------
 
 
-void memset(void *s, int c, unsigned int n) {
+void OSmemset(void *s, int c, unsigned int n) {
   unsigned char *p = s;
   while (n--) {
     *p++ = (unsigned char)c;
   }
 }
 
-void memcpy(void *dest, const void *src, unsigned int n) {
+void OSmemcpy(void *dest, const void *src, unsigned int n) {
   unsigned char *d = dest; 
   const unsigned char *s = src;
 
