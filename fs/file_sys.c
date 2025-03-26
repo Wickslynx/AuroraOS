@@ -106,12 +106,12 @@ int write(const char *filename, const char *data, unsigned int length) {
     for (unsigned int i = 0; i < MAX_FILES; i++) {
         dir_entry_t *entry = (dir_entry_t *)(data_blocks + i * BLOCK_SIZE);
         
-        int found = TRUE; // true
+        int found = true; // true
         
         // Careful filename comparison
         for (int j = 0; j < MAX_FILENAME_LENGTH; j++) {
             if (entry->filename[j] != filename[j]) {
-                found = FALSE; // false
+                found = false; // false
                 break;
             }
             if (filename[j] == '\0') break;
