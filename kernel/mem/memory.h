@@ -18,6 +18,6 @@ More stuff added in the future.
 
 //#include "kernel.h" // TODO: No main kernel header rn
 
-void memset(void *s, int c, unsigned int n);
+void OSmemset(void *s, int c, unsigned int n);
 
-void memcpy(void *dest, const void *src, unsigned int n);
+void OSmemcpy(void *dest, const void *src, unsigned int n);
