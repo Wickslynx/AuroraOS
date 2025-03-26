@@ -126,7 +126,7 @@ int write(char *filename, char *data, unsigned int length) {
                     
                     file_inode->data_block_indices[j] = j;
                     
-                    memcpy(data_blocks + j * BLOCK_SIZE, data + j * BLOCK_SIZE, BLOCK_SIZE);
+                    memcpy((void*)(data_blocks + j * BLOCK_SIZE), (const void*)(data + j * BLOCK_SIZE), BLOCK_SIZE);
                 }
             }
             
