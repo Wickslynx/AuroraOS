@@ -21,3 +21,6 @@ More stuff added in the future.
 void OSmemset(void *s, int c, unsigned int n);
 
 void OSmemcpy(void *dest, const void *src, unsigned int n);
+
+void* OSmalloc(uint32 size);
+
