@@ -34,3 +34,17 @@ void OSmemcpy(void *dest, const void *src, unsigned int n) {
     *d++ = *s++;
   }
 }
+
+void* OSmalloc(uint32 size) {
+    // Align size to 4 bytes
+    size = (size + 3) & ~3;
+    
+    if (current_offset + size > sizeof(memory_pool)) {
+        return 0;  // Out of memory
+    }
+    
+    void* ptr = &memory_pool[current_offset];
+    current_offset += size;
+    return ptr;
+}
+
