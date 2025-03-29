@@ -1,4 +1,4 @@
-
+#include "fs/file_sys.h"
 
 void kernel_main() {
   /*StartupOS(); // TODO: Can't include the headers cuz they aint built:skull: so ill comment this out.
@@ -14,6 +14,9 @@ void kernel_main() {
     }
     
   } */
+
+  fs_init();
+
 
 }
 
