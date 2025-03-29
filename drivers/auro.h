@@ -10,6 +10,8 @@ Important stuff to know:
 Color values are declared in:
 utils/macros/macros.h
 
+All of the core FB is in fb/fb.h
+
 Ground Up I/O is defined in io/io.h
 
 Update cursor func declared in:
