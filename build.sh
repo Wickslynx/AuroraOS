@@ -4,7 +4,7 @@
 # --- Configuration Paths ---
 BOOT_ASM="kernel/asm/boot.asm"
 KERNEL_ENTRY_ASM="kernel/asm/kernel_entry.asm"
-HOME_C="kernel/os/home"
+HOME_C="kernel/os/home.c"
 AURO_H="drivers/auro/auro.h"
 FILESYS_H="kernel/fs/file_sys.h"     
 FILESYS_C="kernel/fs/file_sys.c"       
