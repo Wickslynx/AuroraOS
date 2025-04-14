@@ -42,7 +42,7 @@ extern uint8 _sback;
         __typeof__(_y) __ymax = __y + (_h);\
         __typeof__(_c) __c = (_c);\
         for (; __y < __ymax; __y++) {\
-            memset(&screen_buffer()[__y * SCREEN_WIDTH + __x], __c, __w);\
+            OSmemset(&screen_buffer()[__y * SCREEN_WIDTH + __x], __c, __w);\
         }\
     } while (0)
 
