@@ -17,18 +17,18 @@ extern void OSmemcpy(void *dest, const void *src, unsigned int n);
 
 // Superblock Structure
 typedef struct {
-    uint32_t magic;           // Magic number to identify filesystem
-    uint32_t total_blocks;    // Total number of blocks
-    uint32_t inode_blocks;    // Number of inode blocks
-    uint32_t data_blocks;     // Number of data blocks
-    uint32_t free_inode_bitmap; // Position of inode bitmap
-    uint32_t free_data_bitmap;  // Position of data bitmap
+    uint32 magic;           // Magic number to identify filesystem
+    uint32 total_blocks;    // Total number of blocks
+    uint32 inode_blocks;    // Number of inode blocks
+    uint32 data_blocks;     // Number of data blocks
+    uint32 free_inode_bitmap; // Position of inode bitmap
+    uint32 free_data_bitmap;  // Position of data bitmap
 } superblock_t;
 
 // Inode Structure
 typedef struct {
-    uint32_t size;                 // File size
-    uint32_t data_block_indices[12]; // Indices of data blocks
+    uint32 size;                 // File size
+    uint32 data_block_indices[12]; // Indices of data blocks
 } inode_t;
 
 // Directory Entry Structure
