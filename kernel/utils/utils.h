@@ -49,17 +49,17 @@ static inline u16 inports(u16 port) {
     return r;
 }
 
-static inline void outports(u16 port, u16 data) {
+static inline void outports(uint16 port, u16 data) {
     asm("outw %1, %0" : : "dN" (port), "a" (data));
 }
 
-static inline u8 inportb(u16 port) {
-    u8 r;
+static inline uint8 inportb(uint16 port) {
+    uint8 r;
     asm("inb %1, %0" : "=a" (r) : "dN" (port));
     return r;
 }
 
-static inline void outportb(u16 port, u8 data) {
+static inline void outportb(uint16 port, uint8 data) {
     asm("outb %1, %0" : : "dN" (port), "a" (data));
 }
 
@@ -70,7 +70,7 @@ static inline size_t strlen(const char *str) {
     return l;
 }
 
-static inline char *itoa(i32 x, char *s, size_t sz) {
+static inline char *itoa(int32 x, char *s, size_t sz) {
     if (sz < 20) {
         extern void panic(const char *);
         panic("ITOA BUFFER TOO SMALL");
@@ -95,14 +95,14 @@ static inline char *itoa(i32 x, char *s, size_t sz) {
 }
 
 // Memory functions
-static inline void OSmemset(void *dst, u8 value, size_t n) {
-    u8 *d = dst;
+static inline void OSmemset(void *dst, uint8 value, size_t n) {
+    uint8 *d = dst;
     while (n-- > 0) *d++ = value;
 }
 
 static inline void *OSmemcpy(void *dst, const void *src, size_t n) {
-    u8 *d = dst;
-    const u8 *s = src;
+    uint8 *d = dst;
+    const uint8 *s = src;
     while (n-- > 0) *d++ = *s++;
     return d;
 }
@@ -110,8 +110,8 @@ static inline void *OSmemcpy(void *dst, const void *src, size_t n) {
 static inline void *OSmemmove(void *dst, const void *src, size_t n) {
     if (dst < src) return memcpy(dst, src, n);
 
-    u8 *d = dst;
-    const u8 *s = src;
+    uint8 *d = dst;
+    const uint8 *s = src;
 
     for (size_t i = n; i > 0; i--) {
         d[i - 1] = s[i - 1];
