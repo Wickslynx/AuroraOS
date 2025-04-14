@@ -1,5 +1,5 @@
 #include "internal/screen.h"
-#include "interal/font.h"
+#include "internal/font.h"
 
 
 void AuroraOSFrontendInit() {
