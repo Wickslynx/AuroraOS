@@ -20,7 +20,6 @@ typedef uint32 size_t;
 #define false 0
     
 
-#define NULL  ((void*)0)
 
 // Macro utilities
 #define CONCAT(x, y) x##y
@@ -77,7 +76,7 @@ static inline char *itoa(int32 x, char *s, size_t sz) {
         panic("ITOA BUFFER TOO SMALL");
     }
 
-    u32 tmp = x;
+    uint32 tmp = x;
     i32 i = 0;
 
     do {
