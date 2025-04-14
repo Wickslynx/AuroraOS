@@ -9,9 +9,7 @@ AURO_H="drivers/auro/auro.h"
 FILESYS_H="kernel/fs/file_sys.h"     
 FILESYS_C="kernel/fs/file_sys.c"       
 MACROS_H="utils/macros/macros.h" 
-FUNCTIONS_H="utils/funcs/functions.h"
-MEMORY_C="kernel/mem/memory.c"         
-MEMORY_H="kernel/mem/memory.h"         
+FUNCTIONS_H="utils/funcs/functions.h"                  
 LINKER_SCRIPT="linker.ld"
 
 # --- Output Files ---
@@ -19,7 +17,6 @@ OUTPUT_BOOT_BIN="boot.bin"
 OUTPUT_KERNEL_O="kernel_entry.o"
 OUTPUT_FRONTEND_O="home.o"
 OUTPUT_FILESYS_O="file_sys.o"
-OUTPUT_MEMORY_O="memory.o"
 OUTPUT_KERNEL_ELF="kernel.elf"
 OUTPUT_KERNEL_BIN="kernel.bin"
 OUTPUT_OS_BIN="auroraos.bin"
@@ -46,9 +43,7 @@ nasm "$KERNEL_ENTRY_ASM" $NASM_FLAGS -o "$OUTPUT_KERNEL_O" || handle_error "Erro
 echo "Compiling kernel main..."
 gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "kernel.o" "kernel/kernel.c" || handle_error "Error compiling kernel main."
 
-# --- Compilation Stage ---
-echo "Compiling memory management..."
-gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_MEMORY_O" "$MEMORY_C" || handle_error "Error compiling memory management."
+
 
 
 echo "Compiling frontend..."
