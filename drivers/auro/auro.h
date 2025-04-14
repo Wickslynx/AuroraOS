@@ -16,7 +16,11 @@ static int abs(int x) {
 void AuroraOSFrontendInit() {
   screen_init();
   screen_clear(0); // Clear screen to black
-  screen_swap();
+  outportb(0x3C2, 0x63); // Switch to VGA mode if needed
+}
+
+AuroSwapBuffers() {
+    screen_swap();
 }
 
 void AuroRectangle(int x, int y, int width, int height) {
