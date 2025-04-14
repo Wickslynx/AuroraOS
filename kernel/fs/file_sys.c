@@ -45,6 +45,7 @@ inode_t *inodes;
 unsigned char *data_blocks;
 unsigned char *free_inode_bitmap;
 unsigned char *free_data_bitmap;
+typedef char bool; // TO prevent error
 
 void fs_init() {
     sb = (superblock_t *)fs_memory; 
