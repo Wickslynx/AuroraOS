@@ -4,7 +4,8 @@
 # --- Configuration Paths ---
 BOOT_ASM="kernel/asm/boot.asm"
 KERNEL_ENTRY_ASM="kernel/asm/kernel_entry.asm"
-FRONTEND_C="kernel/os/home.c"     
+HOME_C="kernel/os/home"
+AURO_H="drivers/auro/auro.h"
 FILESYS_H="kernel/fs/file_sys.h"     
 FILESYS_C="kernel/fs/file_sys.c"       
 MACROS_H="utils/macros/macros.h" 
@@ -49,8 +50,11 @@ gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "kernel.o" "kernel/kernel.c" || handle_error
 echo "Compiling memory management..."
 gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_MEMORY_O" "$MEMORY_C" || handle_error "Error compiling memory management."
 
+echo "Compiling auro..."
+gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_FRONTEND_O" "$AURO_H" || handle_error "Error compiling auro."
+
 echo "Compiling frontend..."
-gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_FRONTEND_O" "$FRONTEND_C" || handle_error "Error compiling frontend."
+gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_FRONTEND_O" "$HOME_C" || handle_error "Error compiling frontend."
 
 echo "Compiling file system..."
 gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_FILESYS_O" "$FILESYS_C" || handle_error "Error compiling file system."
