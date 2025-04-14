@@ -34,7 +34,7 @@ typedef struct {
 // Directory Entry Structure
 typedef struct {
     char filename[MAX_FILENAME_LENGTH]; // Filename
-    uint32_t inode_index;               // Index of corresponding inode
+    uint32 inode_index;               // Index of corresponding inode
 } dir_entry_t;
 
 // Function Prototypes
