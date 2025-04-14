@@ -77,7 +77,7 @@ static inline char *itoa(int32 x, char *s, size_t sz) {
     }
 
     uint32 tmp = x;
-    i32 i = 0;
+    int32 i = 0;
 
     do {
         tmp = x % 10;
