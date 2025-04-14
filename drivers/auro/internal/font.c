@@ -3,7 +3,7 @@
 #include "system.h"
 
 // 8x8 font for ASCII 0..127
-static const u8 FONT[128][8] = {
+static const uint8 FONT[128][8] = {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // U+0000 (nul)
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // U+0001
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // U+0002
@@ -134,7 +134,7 @@ static const u8 FONT[128][8] = {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}    // U+007F
 };
 
-void font_char(char c, size_t x, size_t y, u8 color) {
+void font_char(char c, size_t x, size_t y, uint8 color) {
     assert(c >= 0, "INVALID CHARACTER");
 
     const u8 *glyph = FONT[(size_t) c];
@@ -148,7 +148,7 @@ void font_char(char c, size_t x, size_t y, u8 color) {
     }
 }
 
-void font_str(const char *s, size_t x, size_t y, u8 color) {
+void font_str(const char *s, size_t x, size_t y, uint8 color) {
     char c;
 
     while ((c = *s++) != 0) {
