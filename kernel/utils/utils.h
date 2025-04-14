@@ -13,6 +13,7 @@ typedef signed char int8_t;
 typedef unsigned long long uint64;
 typedef signed long long int64;
 typedef unsigned long size;
+typedef uint32 size_t;
 
 
 #define true  1
