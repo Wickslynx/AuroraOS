@@ -1,5 +1,16 @@
+#ifndef AURO_H
+#define AURO_H
+
 #include "internal/screen.h"
 #include "internal/font.h"
+
+
+// ------- HELPERS ------------
+
+static int abs(int x) {
+    return (x < 0) ? -x : x;
+}
+
 
 
 void AuroraOSFrontendInit() {
@@ -66,5 +77,4 @@ void AuroPolygon(uint8 color, int points[][2], int pointCount) {
     }
 }
 
-
-
+#endif
