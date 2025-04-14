@@ -8,7 +8,7 @@ void AuroraOSFrontendInit() {
   screen_swap();
 }
 
-void AuroRectangle(x, y, width, height) {
+void AuroRectangle(int x, int y, int width, int height) {
   screen_fill(COLOR(7, 7, 3), x, y, width, height);
 }
 
