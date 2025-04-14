@@ -22,6 +22,7 @@ void kernel_main() {
   AuroraOSFrontendInit();
   while (OS_RUNNING) {
     AuroRectangle(100, 200, 30, 50);
+    AuroSwapBuffer();
   }
 
 
