@@ -9,6 +9,7 @@ AURO_H="drivers/auro/auro.h"
 FILESYS_H="kernel/fs/file_sys.h"     
 FILESYS_C="kernel/fs/file_sys.c"       
 MACROS_H="utils/macros/macros.h" 
+SCREEN_C="drivers/auro/internal/screen.c"
 FUNCTIONS_H="utils/funcs/functions.h"                  
 LINKER_SCRIPT="linker.ld"
 
