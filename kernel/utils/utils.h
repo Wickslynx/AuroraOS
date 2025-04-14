@@ -95,19 +95,19 @@ static inline char *itoa(i32 x, char *s, size_t sz) {
 }
 
 // Memory functions
-static inline void memset(void *dst, u8 value, size_t n) {
+static inline void OSmemset(void *dst, u8 value, size_t n) {
     u8 *d = dst;
     while (n-- > 0) *d++ = value;
 }
 
-static inline void *memcpy(void *dst, const void *src, size_t n) {
+static inline void *OSmemcpy(void *dst, const void *src, size_t n) {
     u8 *d = dst;
     const u8 *s = src;
     while (n-- > 0) *d++ = *s++;
     return d;
 }
 
-static inline void *memmove(void *dst, const void *src, size_t n) {
+static inline void *OSmemmove(void *dst, const void *src, size_t n) {
     if (dst < src) return memcpy(dst, src, n);
 
     u8 *d = dst;
