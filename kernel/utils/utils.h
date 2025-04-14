@@ -40,6 +40,7 @@ typedef uint32 size_t;
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 #define CLAMP(x, min, max) MAX(min, MIN(x, max))
+#define NULL ((void *)0)
 
 // Bit manipulation
 #define HIBIT(x) (31 - __builtin_clz(x))
