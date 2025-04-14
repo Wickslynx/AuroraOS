@@ -26,7 +26,7 @@
         );})
 
 extern uint8 _sbuffers[2][SCREEN_SIZE];
-extern uuint8 _sback;
+extern uint8 _sback;
 
 #define screen_buffer() (_sbuffers[_sback])
 
