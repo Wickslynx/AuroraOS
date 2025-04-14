@@ -18,6 +18,7 @@ void kernel_main() {
 
   fs_init();
   AuroraOSFrontendInit();
+  AuroRectangle(100, 200, 30, 50)
 
 
 }
