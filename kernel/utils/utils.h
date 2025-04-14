@@ -43,13 +43,13 @@ typedef unsigned long size;
 #define STI() asm ("sti")
 
 // Port I/O operations
-static inline u16 inports(u16 port) {
-    u16 r;
+static inline uint16 inports(uint16 port) {
+    uint16 r;
     asm("inw %1, %0" : "=a" (r) : "dN" (port));
     return r;
 }
 
-static inline void outports(uint16 port, u16 data) {
+static inline void outports(uint16 port, uint16 data) {
     asm("outw %1, %0" : : "dN" (port), "a" (data));
 }
 
