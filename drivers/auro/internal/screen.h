@@ -1,7 +1,7 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#include "util.h"
+#include "screen-util.h"
 
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 200
