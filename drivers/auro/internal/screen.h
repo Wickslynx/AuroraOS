@@ -7,7 +7,7 @@
 #define SCREEN_HEIGHT 200
 #define SCREEN_SIZE (SCREEN_WIDTH * SCREEN_HEIGHT)
 
-#define COLOR(_r, _g, _b)((u8)( \
+#define COLOR(_r, _g, _b)((uint8)( \
     (((_r) & 0x7) << 5) |       \
     (((_g) & 0x7) << 2) |       \
     (((_b) & 0x3) << 0)))
@@ -25,8 +25,8 @@
             CLAMP(COLOR_B(_c) + __d, 0, 3)      \
         );})
 
-extern u8 _sbuffers[2][SCREEN_SIZE];
-extern u8 _sback;
+extern uint8 _sbuffers[2][SCREEN_SIZE];
+extern uuint8 _sback;
 
 #define screen_buffer() (_sbuffers[_sback])
 
@@ -47,7 +47,7 @@ extern u8 _sback;
     } while (0)
 
 void screen_swap();
-void screen_clear(u8 color);
+void screen_clear(uint8 color);
 void screen_init();
 
 #endif
