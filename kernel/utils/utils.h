@@ -1,7 +1,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include <stdint.h>
+
 
 // Fixed-width integer types
 typedef uint8_t  u8;
