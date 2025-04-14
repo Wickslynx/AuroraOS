@@ -63,8 +63,8 @@ void fs_init() {
     free_data_bitmap = fs_memory + sb->free_data_bitmap;
 
     // Use new memset
-    memset(free_inode_bitmap, 0, sb->inode_blocks);
-    memset(free_data_bitmap, 0, sb->data_blocks);
+    OSmemset(free_inode_bitmap, 0, sb->inode_blocks);
+    OSmemset(free_data_bitmap, 0, sb->data_blocks);
 }
 
 int create(const char *filename) {        
@@ -73,7 +73,7 @@ int create(const char *filename) {
             free_inode_bitmap[i] = 1;
             
             inode_t *new_inode = &inodes[i];
-            memset(new_inode, 0, sizeof(inode_t));
+            OSmemset(new_inode, 0, sizeof(inode_t));
             
             dir_entry_t *new_entry = (dir_entry_t *)(data_blocks + i * BLOCK_SIZE);
             
@@ -128,8 +128,7 @@ int write(const char *filename, const char *data, unsigned int length) {
                         ? (length % BLOCK_SIZE ? length % BLOCK_SIZE : BLOCK_SIZE) 
                         : BLOCK_SIZE;
                     
-                    // Use new memcpy
-                    memcpy(data_blocks + j * BLOCK_SIZE, data + blocks_written * BLOCK_SIZE, bytes_to_copy);
+                    OSmemcpy(data_blocks + j * BLOCK_SIZE, data + blocks_written * BLOCK_SIZE, bytes_to_copy);
                     
                     blocks_written++;
                 }
@@ -160,7 +159,7 @@ int read(const char *filename, char *buffer, unsigned int length) {
             length = file_inode->size;
 
             for (unsigned int j = 0; j < (length + BLOCK_SIZE - 1) / BLOCK_SIZE; j++) {
-                memcpy(buffer + j * BLOCK_SIZE, data_blocks + file_inode->data_block_indices[j] * BLOCK_SIZE, BLOCK_SIZE);
+                OSmemcpy(buffer + j * BLOCK_SIZE, data_blocks + file_inode->data_block_indices[j] * BLOCK_SIZE, BLOCK_SIZE);
             }
             
             return length;
