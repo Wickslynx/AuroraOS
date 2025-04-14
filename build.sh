@@ -44,6 +44,8 @@ echo "Compiling kernel main..."
 gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "kernel.o" "kernel/kernel.c" || handle_error "Error compiling kernel main."
 
 
+echo "Compiling Auro.."
+gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "auro.o" "$SCREEN_C" || handle_error "Error compiling auro."
 
 
 echo "Compiling frontend..."
