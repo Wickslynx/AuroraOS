@@ -4,11 +4,6 @@
 #include "macros.h"
 #include "../utils/utils.h"
 
-extern void OSmemset(void *s, int c, unsigned int n);
-
-extern void OSmemcpy(void *dest, const void *src, unsigned int n);
-
-
 #define BLOCK_SIZE 512
 #define MAX_FILES 256
 #define MAX_FILENAME_LENGTH 32
