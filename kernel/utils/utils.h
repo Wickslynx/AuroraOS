@@ -50,7 +50,7 @@ typedef uint32 size_t;
 #define PACKED __attribute__((packed))
 
 #ifndef asm
-#define asm __asm__ volatile
+#define asm __asm__
 #endif
 
 #define CLI() asm ("cli")
