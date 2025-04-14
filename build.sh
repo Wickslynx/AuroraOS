@@ -50,8 +50,6 @@ gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "kernel.o" "kernel/kernel.c" || handle_error
 echo "Compiling memory management..."
 gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_MEMORY_O" "$MEMORY_C" || handle_error "Error compiling memory management."
 
-echo "Compiling auro..."
-gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_FRONTEND_O" "$AURO_H" || handle_error "Error compiling auro."
 
 echo "Compiling frontend..."
 gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_FRONTEND_O" "$HOME_C" || handle_error "Error compiling frontend."
