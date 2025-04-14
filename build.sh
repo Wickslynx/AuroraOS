@@ -57,7 +57,7 @@ gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_FILESYS_O" "$FILESYS_C" || handle_e
 
 # --- Linking Stage ---
 echo "Linking kernel..."
-ld $LINKER_FLAGS "$OUTPUT_KERNEL_O" "$OUTPUT_FRONTEND_O" "$OUTPUT_FILESYS_O" "kernel.o" -o "$OUTPUT_KERNEL_ELF" || handle_error "Error linking kernel."
+ld $LINKER_FLAGS "$OUTPUT_KERNEL_O" "$OUTPUT_FRONTEND_O" "auro.o" "$OUTPUT_FILESYS_O" "kernel.o" -o "$OUTPUT_KERNEL_ELF" || handle_error "Error linking kernel."
 
 echo "Creating binary image..."
 objcopy -O binary "$OUTPUT_KERNEL_ELF" "$OUTPUT_KERNEL_BIN" || handle_error "Error creating binary image."
