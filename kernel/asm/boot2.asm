@@ -1,7 +1,7 @@
 ; === Stage 2 Bootloader === 
-; AuroraOS, 2025. (Wicks)
+; AuroraOS, 2025. (Wicks) — Modified to load FS into high memory
 
-[org 0x8000] ; this matches the address loaded by Stage 1
+[org 0x8000]
 bits 16
 
 start_stage2:
@@ -12,44 +12,54 @@ start_stage2:
     mov ss, ax
     mov sp, 0x7C00
 
-    ; Load kernel from disk (e.g., sector 3+)
-    mov ah, 0x02        ; INT 13h - Read Sectors
-    mov al, 20          ; Read 20 sectors (adjust size as needed)
+    ; ==== Load KERNEL (sector 4-23) to 0x100000 ====
+    mov ah, 0x02        ; BIOS Read Sectors
+    mov al, 20          ; Read 20 sectors (adjust to kernel size)
     mov ch, 0
-    mov cl, 4           ; Start reading from sector 4 (LBA 3)
+    mov cl, 4
     mov dh, 0
     mov dl, 0x80
     mov bx, 0x0000
-    mov es, 0x1000      ; Load kernel at 0x100000 (segment:offset = 0x1000:0000)
+    mov es, 0x1000      ; Segment 0x1000:0000 -> 0x100000
     int 0x13
     jc fail
 
-    ; Setup GDT
+    ; ==== Load FILESYSTEM (sector 24-47) to 0x200000 ====
+    mov ah, 0x02
+    mov al, 24          ; Read 24 sectors = 512 * 24 = 12288 bytes = 12KB FS blob
+    mov ch, 0
+    mov cl, 24
+    mov dh, 0
+    mov dl, 0x80
+    mov bx, 0x0000
+    mov es, 0x2000      ; Segment 0x2000:0000 -> 0x200000
+    int 0x13
+    jc fail
+
+    ; ==== Setup GDT ====
     lgdt [gdt_descriptor]
 
-    ; Enter protected mode
+    ; ==== Enter Protected Mode ====
     mov eax, cr0
     or eax, 1
     mov cr0, eax
-
-    ; Far jump into protected mode
     jmp 0x08:protected_mode
 
-; ==== GDT Setup ====
+; ==== GDT ====
 gdt_start:
-    dq 0                ; null
+    dq 0
 gdt_code:
-    dw 0xFFFF           ; limit
-    dw 0                ; base low
-    db 0                ; base middle
-    db 10011010b        ; code segment
-    db 11001111b        ; granularity
-    db 0                ; base high
+    dw 0xFFFF
+    dw 0
+    db 0
+    db 10011010b
+    db 11001111b
+    db 0
 gdt_data:
     dw 0xFFFF
     dw 0
     db 0
-    db 10010010b        ; data segment
+    db 10010010b
     db 11001111b
     db 0
 gdt_end:
@@ -66,30 +76,27 @@ protected_mode:
     mov ss, ax
     mov esp, 0x90000
 
-    ; Enable PAE (Physical Address Extension)
+    ; Enable PAE
     mov eax, cr4
     or eax, 1 << 5
     mov cr4, eax
 
-    ; Setup basic page tables here (optional: want to do it manually?)
-    ; Enable long mode in MSR
-    mov ecx, 0xC0000080     ; IA32_EFER
+    ; Enable long mode
+    mov ecx, 0xC0000080
     rdmsr
-    or eax, 1 << 8          ; Set LME bit (Long Mode Enable)
+    or eax, 1 << 8
     wrmsr
 
-    ; Enable paging
+    ; Paging setup
     mov eax, page_directory
     mov cr3, eax
-
     mov eax, cr0
-    or eax, 0x80000000      ; Set PG bit
+    or eax, 0x80000000
     mov cr0, eax
 
-    ; Far jump to long mode
     jmp 0x08:long_mode_entry
 
-; ==== Long Mode Setup ====
+; ==== Long Mode ====
 [bits 64]
 long_mode_entry:
     mov ax, 0x10
@@ -101,7 +108,8 @@ long_mode_entry:
 
     mov rsp, 0xA0000
 
-    ; Jump to kernel entry point (loaded at 0x100000)
+    ; Filesystem is now available at 0x200000
+    ; Kernel entry point
     jmp 0x100000
 
 fail:
@@ -110,5 +118,4 @@ fail:
 
 align 4096
 page_directory:
-    ; Minimal identity-mapped page table (1GB)
-    ; Want help writing this too?
+    ; Your identity-mapped paging setup goes here (can help write this too!)
