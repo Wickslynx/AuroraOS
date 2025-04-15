@@ -1,5 +1,5 @@
-; === Stage 2 Bootloader === 
-; AuroraOS, 2025. (Wicks) — Modified to load FS into high memory
+; === Stage 2 Bootloader ===
+; AuroraOS, 2025 (Wicks) — High memory support
 
 [org 0x8000]
 bits 16
@@ -12,40 +12,40 @@ start_stage2:
     mov ss, ax
     mov sp, 0x7C00
 
-    ; ==== Load KERNEL (sector 4-23) to 0x100000 ====
-    mov ah, 0x02        ; BIOS Read Sectors
-    mov al, 20          ; Read 20 sectors (adjust to kernel size)
+    ; === Load KERNEL (sector 4–23) to 0x8000 ===
+    mov ah, 0x02
+    mov al, 20
     mov ch, 0
     mov cl, 4
     mov dh, 0
     mov dl, 0x80
     mov bx, 0x0000
-    mov es, 0x1000      ; Segment 0x1000:0000 -> 0x100000
+    mov es, 0x0800       ; 0x0800:0000 = 0x8000
     int 0x13
     jc fail
 
-    ; ==== Load FILESYSTEM (sector 24-47) to 0x200000 ====
+    ; === Load FILESYSTEM (sector 24–47) to 0xA000 ===
     mov ah, 0x02
-    mov al, 24          ; Read 24 sectors = 512 * 24 = 12288 bytes = 12KB FS blob
+    mov al, 24
     mov ch, 0
     mov cl, 24
     mov dh, 0
     mov dl, 0x80
     mov bx, 0x0000
-    mov es, 0x2000      ; Segment 0x2000:0000 -> 0x200000
+    mov es, 0x0A00       ; 0x0A00:0000 = 0xA000
     int 0x13
     jc fail
 
-    ; ==== Setup GDT ====
+    ; === Setup GDT ===
     lgdt [gdt_descriptor]
 
-    ; ==== Enter Protected Mode ====
+    ; === Enter Protected Mode ===
     mov eax, cr0
     or eax, 1
     mov cr0, eax
     jmp 0x08:protected_mode
 
-; ==== GDT ====
+; === GDT ===
 gdt_start:
     dq 0
 gdt_code:
@@ -68,7 +68,7 @@ gdt_descriptor:
     dw gdt_end - gdt_start - 1
     dd gdt_start
 
-; ==== Protected Mode ====
+; === Enter Protected Mode ===
 [bits 32]
 protected_mode:
     mov ax, 0x10
@@ -76,27 +76,41 @@ protected_mode:
     mov ss, ax
     mov esp, 0x90000
 
+    ; Copy kernel to 0x100000
+    mov esi, 0x8000
+    mov edi, 0x100000
+    mov ecx, 512 * 20 / 4
+    rep movsd
+
+    ; Copy FS to 0x200000
+    mov esi, 0xA000
+    mov edi, 0x200000
+    mov ecx, 512 * 24 / 4
+    rep movsd
+
     ; Enable PAE
     mov eax, cr4
     or eax, 1 << 5
     mov cr4, eax
 
-    ; Enable long mode
+    ; Enable Long Mode (via MSR)
     mov ecx, 0xC0000080
     rdmsr
     or eax, 1 << 8
     wrmsr
 
-    ; Paging setup
+    ; Setup page tables
     mov eax, page_directory
     mov cr3, eax
+
+    ; Enable paging
     mov eax, cr0
     or eax, 0x80000000
     mov cr0, eax
 
     jmp 0x08:long_mode_entry
 
-; ==== Long Mode ====
+; === Long Mode ===
 [bits 64]
 long_mode_entry:
     mov ax, 0x10
@@ -108,14 +122,23 @@ long_mode_entry:
 
     mov rsp, 0xA0000
 
-    ; Filesystem is now available at 0x200000
-    ; Kernel entry point
-    jmp 0x100000
+    ; Filesystem is at 0x200000, kernel at 0x100000
+    jmp 0x100000         ; jump to kernel entry point
 
 fail:
     hlt
     jmp $
 
+; === Identity-Mapped Paging Tables ===
 align 4096
 page_directory:
-    ; Your identity-mapped paging setup goes here (can help write this too!)
+    dq page_table | 0x03
+    times 511 dq 0
+
+align 4096
+page_table:
+%assign i 0
+%rep 512
+    dq i * 0x1000 | 0x03
+%assign i i+1
+%endrep
