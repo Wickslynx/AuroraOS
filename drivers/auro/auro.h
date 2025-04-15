@@ -19,7 +19,7 @@ void AuroraOSFrontendInit() {
   outportb(0x3C2, 0x63); // Switch to VGA mode if needed
 }
 
-AuroSwapBuffers() {
+void AuroSwapBuffers() {
     screen_swap();
 }
 
