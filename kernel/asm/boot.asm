@@ -97,10 +97,10 @@ gdt_descriptor:
 ; Page tables
 align 4096
 page_table_pml4:
-    dq page_table_pdpt | 0x03
+    dq page_table_pdpt + 0x03
 align 4096
 page_table_pdpt:
-    dq page_table_pd | 0x03
+    dq page_table_pd + 0x03
 align 4096
 page_table_pd:
     dq 0x0000000000000083
