@@ -132,13 +132,13 @@ fail:
 ; === Identity-Mapped Paging Tables ===
 align 4096
 page_directory:
-    dq page_table | 0x03
+    dq page_table + 0x03
     times 511 dq 0
 
 align 4096
 page_table:
 %assign i 0
 %rep 512
-    dq i * 0x1000 | 0x03
+    dq i * 0x1000 + 0x03
 %assign i i+1
 %endrep
