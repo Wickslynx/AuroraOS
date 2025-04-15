@@ -68,4 +68,4 @@ cat "$OUTPUT_BOOT_BIN" "$OUTPUT_KERNEL_BIN" > "$OUTPUT_OS_BIN" || handle_error "
 
 # --- Completion Message ---
 echo "Build successful!"
-echo "Run AuroraOS with: qemu-system-x86_64 -fda $OUTPUT_OS_BIN -drive format=raw,file=auroraos.bin"
+echo "Run AuroraOS with: qemu-system-x86_64 -drive format=raw,file=$OUTPUT_OS_BIN"
