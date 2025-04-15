@@ -16,13 +16,13 @@ void kernel_main() {
     
   } */
 
-  int OS_RUNNING = 0
+  int OS_RUNNING = 1;
 
   fs_init();
   AuroraOSFrontendInit();
   while (OS_RUNNING) {
     AuroRectangle(100, 200, 30, 50);
-    AuroSwapBuffer();
+    AuroSwapBuffers();
   }
 
 
