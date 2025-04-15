@@ -95,7 +95,7 @@ protected_mode:
 
     ; Enable Long Mode (via MSR)
     mov ecx, 0xC0000080
-    rdmsr
+    rdmsr             ; <--- requires bits 32!
     or eax, 1 << 8
     wrmsr
 
@@ -110,24 +110,6 @@ protected_mode:
 
     jmp 0x08:long_mode_entry
 
-; === Long Mode ===
-[bits 64]
-long_mode_entry:
-    mov ax, 0x10
-    mov ds, ax
-    mov es, ax
-    mov ss, ax
-    mov fs, ax
-    mov gs, ax
-
-    mov rsp, 0xA0000
-
-    ; Filesystem is at 0x200000, kernel at 0x100000
-    jmp 0x100000         ; jump to kernel entry point
-
-fail:
-    hlt
-    jmp $
 
 ; === Identity-Mapped Paging Tables ===
 align 4096
