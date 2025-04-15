@@ -19,7 +19,8 @@ start:
     mov dh, 0           ; Head 0
     mov dl, 0x80        ; Drive 0x80 (first HDD)
     mov bx, 0x0000      ; Offset
-    mov es, 0x0800      ; Segment = 0x0800 => 0x0800:0000 = 0x8000
+    mov ax, 0x0800
+    mov es, ax ; Segment = 0x0800 => 0x0800:0000 = 0x8000
     int 0x13
     jc disk_error
 
