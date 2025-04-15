@@ -12,6 +12,8 @@ MACROS_H="utils/macros/macros.h"
 SCREEN_C="drivers/auro/internal/screen.c"
 FUNCTIONS_H="utils/funcs/functions.h"                  
 LINKER_SCRIPT="linker.ld"
+STAGE2_ASM="kernel/asm/boot2.asm"
+
 
 # --- Output Files ---
 OUTPUT_BOOT_BIN="boot.bin"
@@ -21,6 +23,7 @@ OUTPUT_FILESYS_O="file_sys.o"
 OUTPUT_KERNEL_ELF="kernel.elf"
 OUTPUT_KERNEL_BIN="kernel.bin"
 OUTPUT_OS_BIN="auroraos.bin"
+OUTPUT_STAGE2_BIN="boot2.bin"
 
 # --- Compilation Flags ---
 NASM_FLAGS="-f elf64"
@@ -37,6 +40,10 @@ handle_error() {
 # --- Assembly Stage ---
 echo "Assembling bootloader..."
 nasm "$BOOT_ASM" -f bin -o "$OUTPUT_BOOT_BIN" || handle_error "Error assembling bootloader."
+
+
+echo "Assembling second-stage bootloader..."
+nasm "$STAGE2_ASM" -f bin -o "$OUTPUT_STAGE2_BIN" || handle_error "Error assembling second-stage bootloader."
 
 echo "Assembling kernel entry..."
 nasm "$KERNEL_ENTRY_ASM" $NASM_FLAGS -o "$OUTPUT_KERNEL_O" || handle_error "Error assembling kernel entry."
@@ -64,7 +71,7 @@ echo "Creating binary image..."
 objcopy -O binary "$OUTPUT_KERNEL_ELF" "$OUTPUT_KERNEL_BIN" || handle_error "Error creating binary image."
 
 echo "Combining bootloader and kernel..."
-cat "$OUTPUT_BOOT_BIN" "$OUTPUT_KERNEL_BIN" > "$OUTPUT_OS_BIN" || handle_error "Error combining bootloader and kernel."
+cat "$OUTPUT_BOOT_BIN" "$OUTPUT_STAGE2_BIN" "$OUTPUT_KERNEL_BIN" > "$OUTPUT_OS_BIN" || handle_error "Error combining bootloader and kernel."
 
 # --- Completion Message ---
 echo "Build successful!"
