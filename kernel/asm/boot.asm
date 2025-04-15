@@ -1,4 +1,5 @@
-; AuroraOS, 2025: First stage bootloader. (Wicks)
+; ==== STAGE 1 BootLoader =====
+; AuroraOS, 2025: (Wicks)
 [org 0x7C00]
 bits 16
 
