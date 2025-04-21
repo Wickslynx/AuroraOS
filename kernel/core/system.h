@@ -1,7 +1,8 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#include "util.h"
+
+#include "../core/util.h"
 
 #define _assert_0() __error_illegal_macro__
 #define _assert_1(_e) do { if (!(_e)) panic(NULL); } while (0)

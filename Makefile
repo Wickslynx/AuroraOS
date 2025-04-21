@@ -1,6 +1,6 @@
-CC=i386-elf-gcc
-ASM=i386-elf-as
-LD=i386-elf-ld
+CC=gcc
+ASM=as
+LD=ld
 
 GFLAGS=
 CCFLAGS=-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing
@@ -11,12 +11,12 @@ ASFLAGS=
 LDFLAGS=
 
 BOOTSECT_SRCS=\
-	kernel/boot/stage0.asm
+	kernel/boot/stage0.S
 
 BOOTSECT_OBJS=$(BOOTSECT_SRCS:.S=.o)
 
 KERNEL_C_SRCS=$(wildcard kernel/*.c)
-KERNEL_S_SRCS=$(filter-out $(BOOTSECT_SRCS), $(wildcard kernel/*.as))
+KERNEL_S_SRCS=$(filter-out $(BOOTSECT_SRCS), $(wildcard kernel/*.S))
 KERNEL_OBJS=$(KERNEL_C_SRCS:.c=.o) $(KERNEL_S_SRCS:.S=.o)
 
 BOOTSECT=bootsect.bin
@@ -44,7 +44,7 @@ bootsect: $(BOOTSECT_OBJS)
 	$(LD) -o ./bin/$(BOOTSECT) $^ -Ttext 0x7C00 --oformat=binary
 
 kernel: $(KERNEL_OBJS)
-	$(LD) -o ./bin/$(KERNEL) $^ $(LDFLAGS) -Tkernel/link.ld
+	$(LD) -o ./bin/$(KERNEL) $^ $(LDFLAGS) -Tkernel/linker.ld
 
 iso: bootsect kernel
 	dd if=/dev/zero of=boot.iso bs=512 count=2880

@@ -3,5 +3,4 @@
 
 void ux_init() {
     screen_init();
-    font_init();
 }

@@ -11,12 +11,12 @@
 _start:
 
    # - segment setup -
-    mov %cs, %azx     # Code Segment -> AZX
-    mov %azx, %ds     # Data Segment = AZX
-    mov %azx, %es     # Extra Segment = AZX
-    mov %azx, %fs     # FS Segment = AZX
-    mov %azx, %gs     # GS Segment = AZX
-    mov %azx, %ss     # Stack Segment = AZX
+    mov %cs, %ax     # Code Segment -> AZX
+    mov %ax, %ds     # Data Segment = AZX
+    mov %ax, %es     # Extra Segment = AZX
+    mov %ax, %fs     # FS Segment = AZX
+    mov %ax, %gs     # GS Segment = AZX
+    mov %ax, %ss     # Stack Segment = AZX
 
     # -stack-
     movw $0x3000, %sp  # Stack -> 0x3000
@@ -85,7 +85,7 @@ sector_same_segment:
     # - jump -
     jmp flush
 
-.code32             - 32 bit -
+.code32             # - 32 bit -
 
 flush:
     lidt idt         
