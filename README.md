@@ -14,5 +14,8 @@ Worked on:
 Goal: Make an OS that has some basic apps, a cmd line and an app store.
 
 
+Most of the kernel were inspired from here, rewriting alot right now. 
+Give HUGE credits to this guy https://github.com/lucianoforks/falling-block-puzzle-game-os
+
 
 
