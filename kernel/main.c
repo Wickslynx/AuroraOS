@@ -1,6 +1,3 @@
-#include "init/init.c"
-#include "ux/ux.c"
-#include "core/timer.h"
 
 #include "core/util.h"
 #include "ux/screen.h"
@@ -15,13 +12,10 @@
 
 // THIS IS THE MAIN FUNCTION THAT WILL BE CALLED WHEN THE OS BOOTS.
 void _main(u32 magic) {
-    kernel_init();
-    ux_init();
-
 
     while (true) {
         // const u32 now = (u32) timer_get();
         
-        screen_swap();       
+        //screen_swap();       
     }
 }

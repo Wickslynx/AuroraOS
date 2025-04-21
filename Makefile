@@ -8,7 +8,7 @@ CCFLAGS+=-Wno-pointer-arith -Wno-unused-parameter
 CCFLAGS+=-nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector
 CCFLAGS+=-fno-builtin-function -fno-builtin
 ASFLAGS=
-LDFLAGS=
+LDFLAGS=  -m elf_i386 
 
 BOOTSECT_SRCS=\
 	kernel/boot/stage0.S
@@ -47,6 +47,7 @@ kernel: $(KERNEL_OBJS)
 	$(LD) -o ./bin/$(KERNEL) $^ $(LDFLAGS) -Tkernel/linker.ld
 
 iso: bootsect kernel
-	dd if=/dev/zero of=boot.iso bs=512 count=2880
-	dd if=./bin/$(BOOTSECT) of=boot.iso conv=notrunc bs=512 seek=0 count=1
-	dd if=./bin/$(KERNEL) of=boot.iso conv=notrunc bs=512 seek=1 count=2048
+	dd if=/dev/zero of=auroraos.iso bs=512 count=2880
+	dd if=./bin/$(BOOTSECT) of=auroraos.iso conv=notrunc bs=512 seek=0 count=1
+	dd if=./bin/$(KERNEL) of=auroraos.iso conv=notrunc bs=512 seek=1 count=2048
+	$(info Build done. Run AuroraoS with: qemu-system-i386 -cdrom auroraos.iso)
