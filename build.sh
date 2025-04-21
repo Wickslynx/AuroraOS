@@ -1,78 +1,61 @@
 #!/bin/bash
-# AuroraOS Kernel Build Script
 
-# --- Configuration Paths ---
-BOOT_ASM="kernel/asm/boot.asm"
-KERNEL_ENTRY_ASM="kernel/asm/kernel_entry.asm"
-HOME_C="kernel/os/home.c"
-AURO_H="drivers/auro/auro.h"
-FILESYS_H="kernel/fs/file_sys.h"     
-FILESYS_C="kernel/fs/file_sys.c"       
-MACROS_H="utils/macros/macros.h" 
-SCREEN_C="drivers/auro/internal/screen.c"
-FUNCTIONS_H="utils/funcs/functions.h"                  
-LINKER_SCRIPT="linker.ld"
-STAGE2_ASM="kernel/asm/boot2.asm"
+CC=i386-elf-gcc
+ASM=i386-elf-as
+LD=i386-elf-ld
 
+GFLAGS=""
+CCFLAGS="-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing"
+CCFLAGS+="-Wno-pointer-arith -Wno-unused-parameter"
+CCFLAGS+="-nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector"
+CCFLAGS+="-fno-builtin-function -fno-builtin"
+ASFLAGS=""
+LDFLAGS=""
 
-# --- Output Files ---
-OUTPUT_BOOT_BIN="boot.bin"
-OUTPUT_KERNEL_O="kernel_entry.o"
-OUTPUT_FRONTEND_O="home.o"
-OUTPUT_FILESYS_O="file_sys.o"
-OUTPUT_KERNEL_ELF="kernel.elf"
-OUTPUT_KERNEL_BIN="kernel.bin"
-OUTPUT_OS_BIN="auroraos.bin"
-OUTPUT_STAGE2_BIN="boot2.bin"
+BOOTSECT_SRCS="kernel/boot/stage0.S"
+BOOTSECT_OBJS=$(echo "$BOOTSECT_SRCS" | sed 's/\.S/\.o/g')
+KERNEL_C_SRCS=$(find kernel -maxdepth 1 -name "*.c")
+KERNEL_ASM_SRCS=$(find kernel -maxdepth 1 -name "*.S")
+KERNEL_S_SRCS=$(echo "$KERNEL_ASM_SRCS" | grep -v "$(echo "$BOOTSECT_SRCS" | sed 's/\//\\//g')")
+KERNEL_OBJS=$(echo "$KERNEL_C_SRCS" | sed 's/\.c/\.o/g') $(echo "$KERNEL_S_SRCS" | sed 's/\.S/\.o/g')
 
-# --- Compilation Flags ---
-NASM_FLAGS="-f elf64"
-GCC_FLAGS="-m64 -mno-red-zone -fno-pic -fno-pie -ffreestanding -nostdlib"
-INCLUDE_PATHS="-I kernel.h -I frontend -I utils/macros -I utils/funcs -I mem -I init -I fs"
-LINKER_FLAGS="-m elf_x86_64 -T $LINKER_SCRIPT"
+BOOTSECT="bootsect.bin"
+KERNEL="kernel.bin"
+ISO="boot.iso"
 
-# --- Error Handling Function ---
-handle_error() {
-    echo "$1"
-    exit 1
-}
+# Create directories
+mkdir -p bin
 
-# --- Assembly Stage ---
-echo "Assembling bootloader..."
-nasm "$BOOT_ASM" -f bin -o "$OUTPUT_BOOT_BIN" || handle_error "Error assembling bootloader."
+# Clean previous build
+rm -rf bin/*.o
+rm -rf *.iso
+rm -rf bin/*.elf
+rm -rf bin/*.bin
 
+# Build bootsect
+$(LD) -o "bin/$(BOOTSECT)" "$BOOTSECT_OBJS" -Ttext 0x7C00 --oformat=binary
 
-echo "Assembling second-stage bootloader..."
-nasm "$STAGE2_ASM" -f bin -o "$OUTPUT_STAGE2_BIN" || handle_error "Error assembling second-stage bootloader."
+# Build kernel
+$(LD) -o "bin/$(KERNEL)" "$KERNEL_OBJS" $(LDFLAGS) -Tkernel/link.ld
 
-echo "Assembling kernel entry..."
-nasm "$KERNEL_ENTRY_ASM" $NASM_FLAGS -o "$OUTPUT_KERNEL_O" || handle_error "Error assembling kernel entry."
+# Compile C sources
+for src in $KERNEL_C_SRCS; do
+	base=$(basename "$src" .c)
+	$(CC) -o "bin/${base}.o" -c "$src" $(GFLAGS) $(CCFLAGS)
+done
 
-echo "Compiling kernel main..."
-gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "kernel.o" "kernel/kernel.c" || handle_error "Error compiling kernel main."
+# Assemble S sources (excluding bootsect)
+for src in $KERNEL_S_SRCS; do
+	base=$(basename "$src" .S)
+	$(ASM) -o "bin/${base}.o" -c "$src" $(GFLAGS) $(ASFLAGS)
+done
+# Compile bootsect
+base_boot=$(basename "$BOOTSECT_SRCS" .S)
+$(ASM) -o "bin/${base_boot}.o" -c "$BOOTSECT_SRCS" $(GFLAGS) $(ASFLAGS)
 
+# Create ISO
+dd if=/dev/zero of="$ISO" bs=512 count=2880
+dd if="bin/$(BOOTSECT)" of="$ISO" conv=notrunc bs=512 seek=0 count=1
+dd if="bin/$(KERNEL)" of="$ISO" conv=notrunc bs=512 seek=1 count=2048
 
-echo "Compiling Auro.."
-gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "auro.o" "$SCREEN_C" || handle_error "Error compiling auro."
-
-
-echo "Compiling frontend..."
-gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_FRONTEND_O" "$HOME_C" || handle_error "Error compiling frontend."
-
-echo "Compiling file system..."
-gcc $GCC_FLAGS $INCLUDE_PATHS -c -o "$OUTPUT_FILESYS_O" "$FILESYS_C" || handle_error "Error compiling file system."
-
-
-# --- Linking Stage ---
-echo "Linking kernel..."
-ld $LINKER_FLAGS "$OUTPUT_KERNEL_O" "$OUTPUT_FRONTEND_O" "auro.o" "$OUTPUT_FILESYS_O" "kernel.o" -o "$OUTPUT_KERNEL_ELF" || handle_error "Error linking kernel."
-
-echo "Creating binary image..."
-objcopy -O binary "$OUTPUT_KERNEL_ELF" "$OUTPUT_KERNEL_BIN" || handle_error "Error creating binary image."
-
-echo "Combining bootloader and kernel..."
-cat "$OUTPUT_BOOT_BIN" "$OUTPUT_STAGE2_BIN" "$OUTPUT_KERNEL_BIN" > "$OUTPUT_OS_BIN" || handle_error "Error combining bootloader and kernel."
-
-# --- Completion Message ---
-echo "Build successful!"
-echo "Run AuroraOS with: qemu-system-x86_64 -drive format=raw,file=$OUTPUT_OS_BIN"
+echo "Build complete!"
