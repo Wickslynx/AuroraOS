@@ -21,7 +21,7 @@ KERNEL_OBJS=$(echo "$KERNEL_C_SRCS" | sed 's/\.c/\.o/g') $(echo "$KERNEL_S_SRCS"
 
 BOOTSECT="bootsect.bin"
 KERNEL="kernel.bin"
-ISO="boot.iso"
+ISO="auroraos.iso"
 
 # Create directories
 mkdir -p bin
@@ -58,4 +58,4 @@ dd if=/dev/zero of="$ISO" bs=512 count=2880
 dd if="bin/$(BOOTSECT)" of="$ISO" conv=notrunc bs=512 seek=0 count=1
 dd if="bin/$(KERNEL)" of="$ISO" conv=notrunc bs=512 seek=1 count=2048
 
-echo "Build complete!"
+echo "Build complete! You can now run it with: qemu-system-i386 -cdrom auroraos.iso"
