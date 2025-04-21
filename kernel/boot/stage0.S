@@ -1,45 +1,73 @@
-.code16                      # 16-bit real mode
-.org 0                       # Start at 0x0000
+# Stage 0 bootloader for AuroraOS, inspiration taken from Tetris OS.
 
-.text
-.global _start
+
+
+.code16             # - 16 bit -
+
+.org 0             
+
+.text             
+.global _start       
 _start:
-    mov %cs, %ax             # Segment setup
-    mov %ax, %ds
-    mov %ax, %es
-    mov %ax, %fs
-    mov %ax, %gs
-    mov %ax, %ss
-    movw $0x3000, %sp        # Stack setup
-    mov %dl, drive_num       # Boot drive
-    sti                      # Enable interrupts
-    movw $welcome_str, %si    # Print welcome
-    call print
-    movw $20, %cx             # Kernel load loop
-    movb drive_num, %dl
-    movw $disk_packet, %si
-    movw $0x1000, segment
-    movw $1, sector
+
+   # - segment setup -
+    mov %cs, %ax     # Code Segment -> AZX
+    mov %ax, %ds     # Data Segment = AZX
+    mov %ax, %es     # Extra Segment = AZX
+    mov %ax, %fs     # FS Segment = AZX
+    mov %ax, %gs     # GS Segment = AZX
+    mov %ax, %ss     # Stack Segment = AZX
+
+    # -stack-
+    movw $0x3000, %sp  # Stack -> 0x3000
+
+    # - boot drive.
+    mov %dl, drive_num # Boot drive number -> drive_num
+
+    sti              
+
+    # Print's Welcome to AuroraOS
+    movw $welcome_str, %si 
+    call print           
+
+    # - Notes for my memory :sob:
+    movw $20, %cx         # How many chunks 
+    movb drive_num, %dl    # Which drive
+    movw $disk_packet, %si # Where to read
+    movw $0x1000, segment  # Segment
+    movw $1, sector       
+
 sector_loop:
-    movb $0x42, %ah           # BIOS read
-    int $0x13
-    jc disk_error            # Error check
-    addw $64, sector
+    movb $0x42, %ah     #  Calls main.
+
+    int $0x13           
+    jc disk_error       # ERROR
+    addw $64, sector      
     jnc sector_same_segment
-    addw $0x1000, segment
-    movw $0x0000, offset
+
+   
+    addw $0x1000, segment # Next chunk
+    movw $0x0000, offset  # Back to start
+
 sector_same_segment:
-    loop sector_loop
-    movb $0x00, %ah           # Graphics mode
-    movb $0x13, %al
-    int $0x10
-    cli                      # Disable interrupts
-    call enable_a20_wait0    # Enable A20
+    loop sector_loop      
+
+    # TODO: Use modern color modes.
+    movb $0x00, %ah     
+    movb $0x13, %al     
+    int $0x10           
+
+    # Enable all ram
+    cli               
+
+   
+    call enable_a20_wait0
     movb $0xD0, %al
     outb $0x64
     call enable_a20_wait1
     xorw %ax, %ax
     inb $0x60
+
     pushw %ax
     call enable_a20_wait0
     movb $0xD1, %al
@@ -48,73 +76,89 @@ sector_same_segment:
     popw %ax
     orw $0x2, %ax
     outb $0x60
-    movl %cr0, %eax           # Protected mode enable
+
+    # - protected mode -
+    movl %cr0, %eax
     orl $0x1, %eax
     movl %eax, %cr0
-    jmp flush                # Jump to 32-bit
 
-.code32                      # 32-bit protected mode
+    # - jump -
+    jmp flush
+
+.code32             # - 32 bit -
 
 flush:
-    lidt idt_ptr             # IDT setup
-    lgdt gdtp                # GDT setup
-    movw $(gdt_data_segment - gdt_start), %ax # Data segments
+    lidt idt         
+    lgdt gdtp         
+    # - data memory views -
+    movw $(gdt_data_segment - gdt_start), %ax
     movw %ax, %ds
+    movw %ax, %es
     movw %ax, %es
     movw %ax, %fs
     movw %ax, %gs
     movw %ax, %ss
-    movl $0x3000, %esp        # Stack setup
-    ljmp $0x8, $entry32       # Long jump to kernel
+    movl $0x3000, %esp # 32 bit stack
+
+    # - jmp to start off loaded kernel -
+    ljmp $0x8, $entry32
 
 entry32:
-    movl $0x10000, %eax       # Kernel start address
-    jmpl *%eax              # Jump to kernel
+    # - run kernel -
+    movl $0x10000, %eax
+    jmpl *%eax
 
 _loop:
-    jmp _loop                # Kernel return loop
+    jmp _loop          # if we get back here somehow js run forever.
 
-.code16                      # 16-bit helpers
+.code16             # 16 bit for all of these helpers.
 
-enable_a20_wait0:           # A20 enable
+enable_a20_wait0:
     xorw %ax, %ax
     inb $0x64
     btw $1, %ax
     jc enable_a20_wait0
     ret
 
-enable_a20_wait1:           # A20 enable
+enable_a20_wait1:
     xorw %ax, %ax
     inb $0x64
     btw $0, %ax
     jnc enable_a20_wait1
     ret
 
-disk_error:                 # Disk error handler
-    movw $disk_error_str, %si
-    call print
+disk_error:
+    movw $disk_error_str, %si 
+    call print            # show error
 
-print:                      # Print string
-    xorb %bh, %bh
-    movb $0x0E, %ah
+# - PRINT TEXT ON SCREEN -
+print:
+    xorb %bh, %bh    
+    movb $0x0E, %ah     
+
 print_char:
-    lodsb
-    cmpb $0, %al
-    je print_end
-    int $0x10
-    jmp print_char
+    lodsb             
+    cmpb $0, %al      
+    je print_end     
+
+    int $0x10         
+    jmp print_char 
+
 print_end:
     ret
 
-welcome_str:                # Messages
+# - MESSAGES -
+welcome_str:
     .asciz "Welcome to AuroraOS!\n"
 disk_error_str:
     .asciz "DISK ERROR\n"
 
-drive_num:                  # Boot drive storage
+# - boot drive num-
+drive_num:
     .word 0x0000
 
-disk_packet:                # Disk transfer struct
+# disk info
+disk_packet:
     .byte 0x10
     .byte 0x00
 num_sectors:
@@ -126,7 +170,8 @@ segment:
 sector:
     .quad 0x00000000
 
-.align 16                   # GDT
+# Memory map smth  (GDT)
+.align 16
 gdtp:
     .word gdt_end - gdt_start - 1
     .long gdt_start
@@ -151,14 +196,11 @@ gdt_data_segment:
     .byte 0x00
 gdt_end:
 
-idt_ptr:                    # IDT
-    .word idt_end - idt - 1
-    .long idt
+# Interrupt map thingy (IDT) - Empty for now
 idt:
-    .rept 256
-        .quad 0
-    .endr
-idt_end:
+    .word 0
+    .long 0
 
-.fill 510-(.-_start), 1, 0  # Boot signature
+# boot signature (bootable)
+.fill 510-(.-_start), 1, 0
 .word 0xAA55
