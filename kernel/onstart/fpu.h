@@ -1,4 +1,7 @@
-#include "fpu.h"
+#ifndef FPU_H
+#define FPU_H
+
+#include "../core/util.h"
 
 void fpu_init() {
     size_t t;
@@ -13,3 +16,5 @@ void fpu_init() {
     asm("mov %0, %%cr4" :: "r"(t));
     asm("fninit");
 }
+
+#endif

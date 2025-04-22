@@ -1,7 +1,6 @@
 #ifndef FONT_H
 #define FONT_H
 
-
 #include "../core/util.h"
 #include "screen.h"
 

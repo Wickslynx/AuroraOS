@@ -1,6 +1,11 @@
+#ifndef IRQ_H
+#define IRQ_H
+
+#include "../core/util.h"
 #include "irq.h"
 #include "idt.h"
 #include "isr.h"
+
 
 // PIC constants
 #define PIC1 0x20
@@ -80,3 +85,5 @@ void irq_init() {
         isr_install(32 + i, stub);
     }
 }
+
+#endif
