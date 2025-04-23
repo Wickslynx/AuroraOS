@@ -1,10 +1,10 @@
 #include "core/util.h"
-#include "ux/screen.h"
+#include "ux/system/screen.h"
 #include "onstart/idt.h"
 #include "onstart/isr.h"
 #include "onstart/irq.h"
 #include "core/timer.h"
-#include "ux/font.h"
+#include "ux/auro.h"
 #include "core/system.h"
 #include "drivers/keyboard.h"
 #include "onstart/fpu.h"
@@ -23,15 +23,7 @@ bool focus_on_username = true; // Start with username focused
 #define CORRECT_USERNAME "test"
 #define CORRECT_PASSWORD "pass"
 
-void draw_rectangle(u16 color, int x, int y, int width, int height) {
-    for (int j = 0; j < height; j++) {
-        screen_fill(color, x, y + j, width, 1);
-    }
-}
 
-void draw_text(const char *text, int x, int y, u8 color) {
-    font_str(text, x, y, color); // Assuming you have a single-size font function now
-}
 
 void display_login_screen() {
     screen_clear(COLOR(2, 2, 3)); // Light blue background

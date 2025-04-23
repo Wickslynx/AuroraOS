@@ -1,7 +1,7 @@
 #ifndef FONT_H
 #define FONT_H
 
-#include "../core/util.h"
+#include "../../core/util.h"
 #include "screen.h"
 
 #define font_width(_s) (strlen((_s)) * 8)
