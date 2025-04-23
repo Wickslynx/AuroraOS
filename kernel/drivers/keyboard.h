@@ -55,25 +55,24 @@
 #define KEY_CHAR(scancode)     (scancode & 0x7F) // this might need adjusting
 
 
+typedef enum {
+    KEYBOARD_LAYOUT_US = 0,
+    KEYBOARD_LAYOUT_SV = 1
+} KeyboardLayout;
+
 struct Keyboard {
-    bool keys[128];     
-    u8 chars[128];       
-    u8 mods;           
+    bool keys[128];
+    u8 chars[128];
+    u8 mods;
     enum {
         KEYBOARD_NONE,
         KEYBOARD_PS2,
         KEYBOARD_USB
     } connected_type;
-
+    KeyboardLayout layout; // Use the typedef'd enum here
 };
 
 void keyboard_init();
-void keyboard_layout(int layout); 
-
-// Different layouts.
-typedef enum {
-    KEYBOARD_LAYOUT_US = 0,
-    KEYBOARD_LAYOUT_SV = 1
-} KeyboardLayout;
+void keyboard_layout(KeyboardLayout layout); // Use the typedef'd enum here
 
 #endif // KEYBOARD_H

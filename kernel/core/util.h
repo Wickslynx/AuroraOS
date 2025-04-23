@@ -199,46 +199,4 @@ static inline size_t strlcpy(char *dst, const char *src, size_t n) {
     return s - src - 1;
 }
 
-
-char *strcpy(char *dest, const char *src) {
-    if (dest == NULL || src == NULL) {
-        return NULL; // Handle null pointer cases
-    }
-
-    char *original_dest = dest; 
-    while (*src != '\0') {
-        *dest = *src;
-        dest++;
-        src++;
-    }
-    *dest = '\0'; // Null-terminate the destination string
-    return original_dest;
-}
-
-
-int strcmp(const char *str1, const char *str2) {
-    if (str1 == NULL || str2 == NULL) {
-        if (str1 == NULL && str2 == NULL) return 0;
-        return (str1 == NULL) ? -1 : 1; // Consider NULL as smaller
-    }
-    while (*str1 != '\0' && *str2 != '\0') {
-        if (*str1 < *str2) {
-            return -1;
-        } else if (*str1 > *str2) {
-            return 1;
-        }
-        str1++;
-        str2++;
-    }
-
-    if (*str1 == '\0' && *str2 == '\0') {
-        return 0; // Both strings are equal
-    } else if (*str1 == '\0') {
-        return -1; // str1 is shorter, so it's less
-    } else {
-        return 1; // str2 is shorter, so str1 is greater
-    }
-}
-
-
 #endif

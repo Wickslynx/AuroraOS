@@ -1,6 +1,6 @@
 #include "system.h"
-#include "screen.h"
-#include "font.h"
+#include "../ux/system/screen.h"
+#include "../ux/system/font.h"
 
 static u32 rseed = 1;
 

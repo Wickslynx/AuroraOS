@@ -1,4 +1,7 @@
-#include "auro.n"
+#include "auro.h"
+#include "../core/util.h"
+
+
 /*
 
 Included files:
@@ -14,9 +17,9 @@ Don't use them.
 --------------------
 */
 
+/*
 
-
-WindowHandler* WindowHandler;
+struct WindowHandler *pWindowHandler; // Define the global pointer
 
 void __AuroRectangle(u16 color, int x, int y, int width, int height) {
     for (int j = 0; j < height; j++) {
@@ -73,12 +76,14 @@ void AurRectangle(AWindow* window, u16 color, int x, int y, int height, int widt
     }
 }
 
+
 void init_auro() {
-    WindowHandler = (WindowHandler*)kmalloc(sizeof(WindowHandler));
+    WindowHandler = (struct WindowHandler*)malloc(sizeof(struct WindowHandler));
     if (WindowHandler) {
         WindowHandler->count = 0;
-        // Initialize the windows array if needed
+        
     } else {
-        // Handle memory allocation failure
+        
     }
 }
+*/
