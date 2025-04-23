@@ -1,6 +1,6 @@
 #include "font.h"
 #include "screen.h"
-#include "system.h"
+#include "../../core/system.h"
 
 // 8x8 font for ASCII 0..127
 static const u8 FONT[128][8] = {

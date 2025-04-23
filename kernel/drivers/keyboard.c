@@ -1,7 +1,7 @@
 #include "keyboard.h"
-#include "irq.h"
-#include "system.h"
-#include "timer.h"
+#include "../onstart/irq.h"
+#include "../core/system.h"
+#include "../core/timer.h"
 
 // Keyboard layouts
 u8 keyboard_layout_us[2][128] = {

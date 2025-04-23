@@ -8,14 +8,14 @@ CCFLAGS+=-Wno-pointer-arith -Wno-unused-parameter
 CCFLAGS+=-nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector
 CCFLAGS+=-fno-builtin-function -fno-builtin
 ASFLAGS=
-LDFLAGS= -m
+LDFLAGS= -m elf_i386
 
 BOOTSECT_SRCS=\
 	kernel/boot/boot.S
 
 BOOTSECT_OBJS=$(BOOTSECT_SRCS:.S=.o)
 
-KERNEL_C_SRCS=$(wildcard kernel/*.c)
+KERNEL_C_SRCS=$(wildcard kernel/*.c kernel/ux/system/*.c kernel/drivers/*.c kernel/ux/*.c kernel/onstart/*.c)
 KERNEL_S_SRCS=$(filter-out $(BOOTSECT_SRCS), $(wildcard kernel/*.S))
 KERNEL_OBJS=$(KERNEL_C_SRCS:.c=.o) $(KERNEL_S_SRCS:.S=.o)
 

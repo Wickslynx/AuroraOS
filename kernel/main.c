@@ -1,14 +1,6 @@
-#include "core/util.h"
 #include "ux/system/screen.h"
-#include "onstart/idt.h"
-#include "onstart/isr.h"
-#include "onstart/irq.h"
-#include "core/timer.h"
-#include "ux/auro.h"
-#include "core/system.h"
-#include "drivers/keyboard.h"
-#include "onstart/fpu.h"
 
+/*
 
 // --- Login Screen State ---
 char username[64] = "";
@@ -48,10 +40,6 @@ void display_login_screen() {
     draw_text("Press Enter to Login", 70, 220, COLOR(6, 6, 6));
 }
 
-void display_desktop() {
-    screen_clear(COLOR(0, 0, 4)); // Solid blue background
-}
-
 void handle_login_input() {
     char key = keyboard_char(); // Corrected function call
 
@@ -87,27 +75,19 @@ void handle_login_input() {
         focus_on_username = !focus_on_username;
     }
 }
+*/
+
+void display_desktop() {
+    screen_clear(COLOR(0, 0, 4)); // Solid blue background
+}
 
 
 
 void _main(u32 magic) {
-    idt_init();
-    isr_init();
-    fpu_init();
-    irq_init();
     screen_init();
-    timer_init();
-    keyboard_init();
 
     while (true) {
-        if (!logged_in) {
-            display_login_screen();
-            handle_login_input();
-        } else {
-            display_desktop();
-            // just a blue screen right now
-        }
-        
+        display_desktop();
     }
 }
 

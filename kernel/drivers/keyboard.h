@@ -1,7 +1,7 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 
-
+#include "../core/util.h"
 
 // Some of these are prob wrong, i let AI write them.
 #define KEY_NULL        0x00
@@ -64,10 +64,7 @@ struct Keyboard {
         KEYBOARD_PS2,
         KEYBOARD_USB
     } connected_type;
-    enum {
-        KEYBOARD_LAYOUT_US,
-        KEYBOARD_LAYOUT_SV
-    } layout;
+
 };
 
 void keyboard_init();
