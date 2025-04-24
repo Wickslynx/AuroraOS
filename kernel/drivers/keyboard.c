@@ -3,7 +3,7 @@
 #include "../core/system.h"
 #include "../core/timer.h"
 
-// Keyboard layouts
+// Keyboard layouts (hope these are right AI wrote them :D)
 u8 keyboard_layout_us[2][128] = {
     {
         KEY_NULL, KEY_ESC, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
@@ -53,57 +53,54 @@ struct Keyboard keyboard;
 
 static bool seeded = false;
 
-// PS2 Controller initialization function
-void init_ps2_controller() {
-    // Disable devices
-    outportb(0x64, 0xAD);  // Disable first PS/2 port
-    outportb(0x64, 0xA7);  // Disable second PS/2 port
 
-    // Flush the output buffer
+void init_ps2_controller() {
+
+    outportb(0x64, 0xAD);
+    outportb(0x64, 0xA7); 
+
+    // flush the output buffer
     inportb(0x60);
 
-    // Configure the controller
-    outportb(0x64, 0x20);  // Get configuration byte
+    // config the controller
+    outportb(0x64, 0x20); 
     u8 config = inportb(0x60);
+    
+    config |= 1;           // enable IRQ1 (keyboard)
+    config &= ~(1 << 1);   // disable IRQ12 (mouse)
+    config &= ~(1 << 6);   // disable translation
 
-    // Modify configuration: enable IRQ1, disable IRQ12, disable translation
-    config |= 1;           // Enable IRQ1 (keyboard)
-    config &= ~(1 << 1);   // Disable IRQ12 (mouse)
-    config &= ~(1 << 6);   // Disable translation
-
-    // Write back the configuration
-    outportb(0x64, 0x60);  // Set configuration byte
+    outportb(0x64, 0x60);  
     outportb(0x60, config);
 
-    // Enable devices
-    outportb(0x64, 0xAE);  // Enable first PS/2 port
+
+    outportb(0x64, 0xAE);  // enable first PS/2 port
 }
 
-// PS2 Keyboard specific initialization
+
 void enable_ps2_keyboard() {
-    // Reset the keyboard
+    // reset the keyboard
     outportb(0x60, 0xFF);
     
-    // Wait for acknowledge
+
     while ((inportb(0x64) & 1) == 0);
     u8 response = inportb(0x60);
     
     if (response != 0xFA) {
-        // Handle keyboard reset failure
         return;
     }
     
-    // Set default parameters
+    // set default parameters
     outportb(0x60, 0xF6);
     
-    // Wait for acknowledge
+
     while ((inportb(0x64) & 1) == 0);
     inportb(0x60);
     
-    // Enable scanning
+
     outportb(0x60, 0xF4);
     
-    // Wait for acknowledge
+
     while ((inportb(0x64) & 1) == 0);
     inportb(0x60);
 }
@@ -118,7 +115,7 @@ static void keyboard_handler(struct Registers *regs) {
         seeded = true;
     }
 
-    // Handle modifier keys
+
     if (scan == KEY_LALT) {
         keyboard.mods = BIT_SET(keyboard.mods, HIBIT(KEY_MOD_ALT), is_press);
     } else if (scan == KEY_LCTRL) {
@@ -136,10 +133,10 @@ static void keyboard_handler(struct Registers *regs) {
         keyboard.mods ^= KEY_MOD_SCROLL_LOCK;
     }
 
-    // Store the key state
+
     keyboard.keys[scan] = is_press;
 
-    // Map to character if it's a keypress
+
     if (is_press) {
         // Determine if we should use shift layout
         bool use_shift = (keyboard.mods & KEY_MOD_SHIFT) ? true : false;
@@ -195,17 +192,17 @@ void keyboard_layout(KeyboardLayout layout) {
     keyboard.layout = layout;
 }
 
-// Helper function to check if a key is currently pressed
+
 bool keyboard_is_key_pressed(u8 scancode) {
     return keyboard.keys[scancode & 0x7F];
 }
 
-// Helper function to get the current character for a key
+
 u8 keyboard_get_char(u8 scancode) {
     return keyboard.chars[scancode & 0x7F];
 }
 
-// Get the last pressed character (for text input)
+
 u8 keyboard_get_last_char() {
     for (int i = 0; i < 128; i++) {
         if (keyboard.chars[i] != 0) {
