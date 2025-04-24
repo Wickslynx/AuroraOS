@@ -2,6 +2,9 @@
 #define ERROR_H
 
 #include "system.h
+#include "../ux/system/screen.h"
+#include "../ux/system/font.h"
+
 
 void panic(const char *err) {
     screen_clear(COLOR(7, 0, 0));
