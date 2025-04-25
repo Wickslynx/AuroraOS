@@ -14,10 +14,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: configure
-      run: ./configure
 
-    - name: Install dependencies
+    - name: Make the OS
       run: make iso
 
     - name: Run check
