@@ -1,7 +1,7 @@
 #ifndef ERROR_H
 #define ERROR_H
 
-#include "system.h
+#include "system.h"
 #include "../ux/system/screen.h"
 #include "../ux/system/font.h"
 
