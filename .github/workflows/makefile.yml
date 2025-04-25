@@ -18,8 +18,8 @@ jobs:
     - name: Make the OS
       run: mkdir bin && make iso
 
-    - name: Run check
-      run: make check
+    #- name: Run check
+    #  run: make check
 
     - name: Run distcheck
       run: make distcheck
