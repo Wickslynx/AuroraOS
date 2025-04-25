@@ -16,7 +16,7 @@ jobs:
 
 
     - name: Make the OS
-      run: make iso
+      run: mkdir bin && make iso
 
     - name: Run check
       run: make check
