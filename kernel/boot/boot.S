@@ -47,6 +47,11 @@ load_kernel_loop:
     /* +segment, reset offset */
     addw $0x1000, kernel_segment
     movw $0x0000, kernel_offset
+
+    /* print another debug message */
+    movw $status_message, %si
+    call print_string
+
 same_segment:
     loop load_kernel_loop
 
@@ -120,10 +125,17 @@ enable_a20_wait_set:
     ret
 
 disk_read_error:
+    pushw %ax           
     movw $disk_error_message, %si
     call print_string
+    popw %ax            
+    movb %ah, %al       
+    call print_hex      
+    cli
+    hlt
+
 disk_error_loop:
-    jmp disk_error_loop   ; just make a infinite loop once a error occurs.
+    jmp disk_error_loop 
 
 /* print function */
 print_string:
@@ -138,10 +150,41 @@ print_char:
 print_string_done:
     ret
 
+print_hex:
+    pusha
+    mov %al, %bl
+    
+    mov %al, %cl
+    shr $4, %cl
+    call print_hex_digit
+    
+    mov %bl, %cl
+    and $0x0F, %cl
+    call print_hex_digit
+    
+    popa
+    ret
+
+print_hex_digit:
+    mov $0x0E, %ah
+    cmp $10, %cl
+    jl print_hex_digit_number
+    add $55, %cl
+    jmp print_hex_digit_output
+print_hex_digit_number:
+    add $48, %cl
+print_hex_digit_output:
+    mov %cl, %al
+    int $0x10
+    ret
+
 welcome_message:
     .asciz "Booting AuroraOS....\n"
 disk_error_message:
     .asciz "DISK ERROR\n"
+
+status_message:
+    .asciz "DEBUG 1 \n"
 
 /* Boot drive number */
 drive_number:
