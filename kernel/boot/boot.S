@@ -122,6 +122,8 @@ enable_a20_wait_set:
 disk_read_error:
     movw $disk_error_message, %si
     call print_string
+disk_error_loop:
+    jmp disk_error_loop   ; just make a infinite loop once a error occurs.
 
 /* print function */
 print_string:
