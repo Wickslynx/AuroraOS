@@ -6,6 +6,10 @@
 #include "../ux/system/font.h"
 
 
+/*
+@arguments: err, error message to write to the screen.
+@returns: N/A
+*/
 void panic(const char *err) {
     screen_clear(COLOR(7, 0, 0));
 

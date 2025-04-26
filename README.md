@@ -1,21 +1,44 @@
-# AuroraOS 
+# AuroraOS (BETA)
 
-Minimalistic OS, still being worked on.
+**Version 1.00**
 
-Wicks 2025: This will be my biggest project, here I'm taking everything I know about to make something great. Thank you for this, this will be my throne project..
+# Features:
+Full custom bootloader.
+Placeholder
 
+# Getting Started:
 
+**1.**
+Run this command to 
 
-Worked on: 
-1. Filesystem, extending it to more than 512 kb
-2. Networking, Implement networking protocols.
-3. Drivers, start getting drivers running. Primarly for OpenGL
-
-Goal: Make an OS that has some basic apps, a cmd line and an app store.
-
-
-Most of the kernel were inspired from here, rewriting alot right now. 
-Give HUGE credits to this guy https://github.com/lucianoforks/falling-block-puzzle-game-os
+***-NOTE-***
 
 
 
+
+
+
+
+
+
+Please see the *docs* folder for further explanation and examples
+
+# Examples:
+
+
+
+![Uhhh ooo, Error! Please contact me.](no-example-rn)
+
+
+
+# Current Issues:
+
+Placeholder
+
+
+
+# Support:
+Please email me on Wickslynx@yahoo.com
+I will respond as soon as possible, updates come regularly. 
+
+***AuroraOS is still in development!***
