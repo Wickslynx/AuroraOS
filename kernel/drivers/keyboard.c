@@ -1,5 +1,5 @@
 #include "keyboard.h"
-#include "../onstart/irq.h"
+#include "../core/interrupts.h"
 #include "../core/system.h"
 #include "../core/timer.h"
 
