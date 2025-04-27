@@ -1,5 +1,5 @@
 #include "interrupts.h"
-#include <string.h> // For memset
+
 
 //=====================================================================
 //                             FPU SUPPORT
