@@ -48,6 +48,10 @@ load_kernel_loop:
     int $0x13
     jc disk_read_error
 
+
+    movb %ah, %al     /* BIOS return status */
+    call print_hex    
+
     addw $64, kernel_sector
     addw $0x8000, kernel_offset
     jnc same_segment
