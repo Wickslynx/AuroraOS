@@ -48,10 +48,6 @@ load_kernel_loop:
     addw $0x1000, kernel_segment
     movw $0x0000, kernel_offset
 
-    /* print another debug message */
-    movw $status_message, %si
-    call print_string
-
 same_segment:
     loop load_kernel_loop
 
@@ -137,7 +133,7 @@ disk_read_error:
 disk_error_loop:
     jmp disk_error_loop 
 
-/* print function */
+/* -- printing functions --- */
 print_string:
     xorw %bx, %bx      
     movb $0x0E, %ah    
@@ -183,8 +179,6 @@ welcome_message:
 disk_error_message:
     .asciz "DISK ERROR\n"
 
-status_message:
-    .asciz "DEBUG 1 \n"
 
 /* Boot drive number */
 drive_number:
@@ -209,13 +203,13 @@ global_descriptor_table_pointer:
     .word GLOBAL_DESCRIPTOR_TABLE_END - GLOBAL_DESCRIPTOR_TABLE_START - 1
     .long GLOBAL_DESCRIPTOR_TABLE_START
 
-/* Interrupt Descriptor Table Pointer */
+/* IDT pointer */
 .align 16
 interrupt_descriptor_table_pointer:
     .word IDT_END - IDT_START - 1
     .long IDT_START
 
-/* Interrupt Descriptor Table */
+/* IDT */
 .align 16
 IDT_START:
     .word 0
