@@ -36,14 +36,11 @@ _start:
     movw $0x1000, kernel_segment
     movw $1, kernel_sector
 load_kernel_loop:
-      /* save the disk params */
+
     pushw %si
-    
     /* Display "Loading kernel..." */
     movw $kernel_load_message, %si
     call print_string
-    
-    /* restore the disk params*/
     popw %si    
 
 
