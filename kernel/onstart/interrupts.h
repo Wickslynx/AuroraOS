@@ -1,7 +1,7 @@
 #ifndef INTERRUPTS_H
 #define INTERRUPTS_H
 
-
+#include "../core/util.h"
 
 struct Registers {
     u32 ds;
