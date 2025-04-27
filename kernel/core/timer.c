@@ -1,6 +1,5 @@
 #include "timer.h"
-#include "../onstart/isr.h"
-#include "../onstart/irq.h"
+#include "interrupts.h"
 
 #define PIT_A 0x40
 #define PIT_B 0x41
