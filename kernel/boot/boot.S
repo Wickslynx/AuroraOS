@@ -36,6 +36,10 @@ _start:
     movw $0x1000, kernel_segment
     movw $1, kernel_sector
 load_kernel_loop:
+     /* Display "Loading kernel..." */
+    movw $kernel_load_message, %si
+    call print_string
+
     movb $0x42, %ah     /* extended read */
     int $0x13
     jc disk_read_error
@@ -50,6 +54,10 @@ load_kernel_loop:
 
 same_segment:
     loop load_kernel_loop
+
+    /* Display "Setting video mode..." */
+    movw $kernel_set_video_message, %si
+    call print_string
 
     /* set video mode: 320x200 */
     movb $0x00, %ah
@@ -185,6 +193,10 @@ disk_error_message:
     .asciz "DISK ERROR\n"
 protected_mode_message:
     .asciz "Entering protected mode...\n"
+kernel_set_video_message:
+    .asciz "Setting video mode..."
+kernel_load_message:
+    .asciz "Loading kernel..."
 
 
 /* Boot drive number */
