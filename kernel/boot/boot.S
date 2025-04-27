@@ -202,9 +202,9 @@ disk_error_message:
 protected_mode_message:
     .asciz "Entering protected mode...\n"
 kernel_set_video_message:
-    .asciz "Setting video mode..."
+    .asciz "Setting video mode...\n"
 kernel_load_message:
-    .asciz "Loading kernel..."
+    .asciz "Loading kernel...\n"
 
 
 /* Boot drive number */
