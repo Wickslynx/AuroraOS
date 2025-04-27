@@ -83,7 +83,12 @@ same_segment:
 
     /* flush pipeline */
     jmp protected_mode_entry
+
 protected_mode_entry:
+    /* Display "Entering protected mode..." */
+    movw $protected_mode_message, %si
+    call print_string
+
     lidt interrupt_descriptor_table_pointer
     lgdt global_descriptor_table_pointer
 
@@ -178,6 +183,8 @@ welcome_message:
     .asciz "Booting AuroraOS....\n"
 disk_error_message:
     .asciz "DISK ERROR\n"
+protected_mode_message:
+    .asciz "Entering protected mode...\n"
 
 
 /* Boot drive number */
