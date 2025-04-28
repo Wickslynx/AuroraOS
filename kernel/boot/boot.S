@@ -35,15 +35,19 @@ _start:
     movw $disk_address_packet, %si
     movw $0x1000, kernel_segment
     movw $1, kernel_sector
+
+    pushw %si
+    /* Display "Loading kernel..." */
+    movw $kernel_load_message, %si
+    call print_string
+    popw %si   
+
 load_kernel_loop:
-
-
-
     movb $0x42, %ah     /* extended read */
     int $0x13
     jc disk_read_error
 
-
+    
     movb %ah, %al     /* BIOS return status */
     call print_hex    
 
@@ -51,17 +55,12 @@ load_kernel_loop:
     addw $0x8000, kernel_offset
     jnc same_segment
 
+
     /* +segment, reset offset */
     addw $0x1000, kernel_segment
     movw $0x0000, kernel_offset
 
-same_segment:
-    pushw %si
-    /* Display "Loading kernel..." */
-    movw $kernel_load_message, %si
-    call print_string
-    popw %si    
-
+same_segment: 
     loop load_kernel_loop
 
     /* Display "Setting video mode..." */
