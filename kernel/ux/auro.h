@@ -6,29 +6,61 @@
 #include "../core/util.h"
 
 /*
-
 Included files:
 system/screen.h
 system/font.h
-
 ---- Information --
 Note: Everything under "__" is internal
-
 Application developers, when you use these functions you are writing to the framebuffer, and not your application.
 Don't use them.
-
 --------------------
 */
+
 
 #define MAX_WINDOWS 16
 #define MAX_WIDGETS 1000
 
-typedef struct Widget {
+namespace Auro {
+
+class Widget {
+public:
+    Widget() : hidden(false), clickable(false) {}
+    
+    bool isHidden() const { return hidden; }
+    void setHidden(bool value) { hidden = value; }
+    
+    bool isClickable() const { return clickable; }
+    void setClickable(bool value) { clickable = value; }
+
+private:
     bool hidden;
     bool clickable;
-} Widget;
+};
 
-typedef struct AWindow {
+class Window {
+public:
+    Window() : layer(0), id(0), x(0), y(0), name(nullptr), height(0), width(0), widgetCount(0) {}
+    ~Window() { if (name) delete[] name; }
+    
+    void create(const char* windowName, int posX, int posY, int windowHeight, int windowWidth);
+    
+    void addRectangle(u16 color, int posX, int posY, int rectHeight, int rectWidth);
+
+
+    // All get operations.
+    int getLayer() const { return layer; }
+    int getId() const { return id; }
+    int getX() const { return x; }
+    int getY() const { return y; }
+    const char* getName() const { return name; }
+    int getHeight() const { return height; }
+    int getWidth() const { return width; }
+
+    // All set operations.
+    void setLayer(int value) { layer = value; }
+    void setId(int value) { id = value; }
+
+private:
     int layer;
     int id;
     int x;
@@ -36,25 +68,44 @@ typedef struct AWindow {
     char* name;
     int height;
     int width;
+    
+    int widgetCount;
+    Widget widgets[MAX_WIDGETS];
+    
+    friend class WindowManager;
+};
 
-    struct Widgets {
-        int count;
-        struct Widget widget[MAX_WIDGETS];
-    } widgets;
-} AWindow;
+class WindowManager {
+public:
+    WindowManager() : windowCount(0) {}
+    
+
+    static WindowManager* initialize();
+    
+
+    bool addWindow(Window* window);
+
+    int getWindowCount() const { return windowCount; }
+    
+    static WindowManager* getInstance() { return instance; }
+
+private:
+    int windowCount;
+    Window* windows[MAX_WINDOWS];
+    
+    static WindowManager* instance;
+};
 
 
-typedef struct WindowHandler {
-    int count;
-    AWindow* windows[MAX_WINDOWS];
-} WindowHandler;
-
-extern struct WindowHandler *g_WindowHandler;
+namespace Internal {
+    void drawRectangle(u16 color, int x, int y, int width, int height);
+    void drawText(const char* text, int x, int y, u8 color);
+}
 
 
-void __AuroRectangle(u16 color, int x, int y, int width, int height);
-void __AuroText(const char *text, int x, int y, u8 color);
-void AurWindowCreate(AWindow* window, char* name, int x, int y, int height, int width);
-void AurRectangle(AWindow* window, u16 color, int x, int y, int height, int width);
+void initialize();
+Window* createWindow(const char* name, int x, int y, int height, int width);
 
-#endif
+} // (namespace) Auro
+
+#endif // AURO_H
