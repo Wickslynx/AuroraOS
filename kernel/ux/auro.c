@@ -1,6 +1,6 @@
 #include "auro.h"
 #include "../core/util.h"
-
+#include <cstring>
 
 /*
 
@@ -9,81 +9,93 @@ system/screen.h
 system/font.h
 
 ---- Information --
-Note: Everything under "__" is internal
 
+Note: Everything under the "Internal" namespace is internal... 
 Application developers, when you use these functions you are writing to the framebuffer, and not your application.
 Don't use them.
 
 --------------------
 */
 
-/*
+namespace Auro {
+WindowManager* WindowManager::instance = nullptr;
 
-struct WindowHandler *pWindowHandler; // Define the global pointer
-
-void __AuroRectangle(u16 color, int x, int y, int width, int height) {
+void Internal::drawRectangle(u16 color, int x, int y, int width, int height) {
     for (int j = 0; j < height; j++) {
         screen_fill(color, x, y + j, width, 1);
     }
 }
 
-void __AuroText(const char *text, int x, int y, u8 color) {
+void Internal::drawText(const char* text, int x, int y, u8 color) {
     font_str(text, x, y, color);
 }
 
-
-void AurWindowCreate(AWindow* window, char* name, int x, int y, int height, int width) {
-    if (!window) {
-        return;
+void Window::create(const char* windowName, int posX, int posY, int windowHeight, int windowWidth) {
+    // free previous name if it exits.
+    if (name) {
+        delete[] name;
     }
-
-    if (WindowHandler->count >= MAX_WINDOWS) {
-        return;
-    }
-
-    WindowHandler->windows[WindowHandler->count] = window;
-    WindowHandler->count++;
-
-
-    window->name = name;
-    window->x = x;
-    window->y = y;
-    window->height = height;
-    window->width = width;
-
-    __AuroRectangle(COLOR(7, 7, 3), x, y, width, height);
-
+    
+    // copy the window name
+    size_t nameLength = strlen(windowName) + 1;
+    name = new char[nameLength];
+    strcpy(name, windowName);
+    
+    // set window properties
+    x = posX;
+    y = posY;
+    height = windowHeight;
+    width = windowWidth;
+    
+    // draw the window border
+    Internal::drawRectangle(COLOR(7, 7, 3), x, y, width, height);
 }
 
-void AurRectangle(AWindow* window, u16 color, int x, int y, int height, int width) {
-    if (!window) {
+void Window::addRectangle(u16 color, int posX, int posY, int rectHeight, int rectWidth) {
+    if (rectHeight > height || rectWidth > width) {
         return;
     }
-
-    if (height > window->height) {
-        return;
-    }
-
-    if (width > window->width) {
-        return;
-    }
-
-
-    if (window->widgets.count < MAX_WIDGETS) {
-        struct Widget widget;
-        window->widgets.widget[window->widgets.count++] = widget;
-        __AuroRectangle(color, window->x + x, window->y + y, width, height);
-    }
-}
-
-
-void init_auro() {
-    WindowHandler = (struct WindowHandler*)malloc(sizeof(struct WindowHandler));
-    if (WindowHandler) {
-        WindowHandler->count = 0;
+    
+    if (widgetCount < MAX_WIDGETS) {
+        // create a new widget
+        Widget widget;
+        widgets[widgetCount++] = widget;
         
-    } else {
-        
+        // Draw the rectangle
+        Internal::drawRectangle(color, x + posX, y + posY, rectWidth, rectHeight);
     }
 }
-*/
+
+WindowManager* WindowManager::initialize() {
+    if (!instance) {
+        instance = new WindowManager();
+    }
+    return instance;
+}
+
+bool WindowManager::addWindow(Window* window) {
+    if (!window || windowCount >= MAX_WINDOWS) {
+        return false;
+    }
+    
+    windows[windowCount++] = window;
+    return true;
+}
+
+void initialize() {
+    WindowManager::initialize();
+}
+
+Window* createWindow(const char* name, int x, int y, int height, int width) {
+    Window* window = new Window();
+    window->create(name, x, y, height, width);
+    
+    WindowManager* manager = WindowManager::getInstance();
+    if (manager) {
+        manager->addWindow(window);
+    }
+    
+    return window;
+}
+
+} // (namespace) Auro
