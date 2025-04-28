@@ -37,11 +37,6 @@ _start:
     movw $1, kernel_sector
 load_kernel_loop:
 
-    pushw %si
-    /* Display "Loading kernel..." */
-    movw $kernel_load_message, %si
-    call print_string
-    popw %si    
 
 
     movb $0x42, %ah     /* extended read */
@@ -61,6 +56,12 @@ load_kernel_loop:
     movw $0x0000, kernel_offset
 
 same_segment:
+    pushw %si
+    /* Display "Loading kernel..." */
+    movw $kernel_load_message, %si
+    call print_string
+    popw %si    
+
     loop load_kernel_loop
 
     /* Display "Setting video mode..." */
