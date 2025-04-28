@@ -46,10 +46,7 @@ load_kernel_loop:
     movb $0x42, %ah     /* extended read */
     int $0x13
     jc disk_read_error
-
-    
-    movb %ah, %al     /* BIOS return status */
-    call print_hex    
+  
 
     addw $64, kernel_sector
     addw $0x8000, kernel_offset
@@ -145,6 +142,9 @@ disk_read_error:
     pushw %ax           
     movw $disk_error_message, %si
     call print_string
+
+    movb %ah, %al     /* BIOS return status */
+    call print_hex  
     popw %ax            
     movb %ah, %al       
     call print_hex      
