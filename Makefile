@@ -1,4 +1,5 @@
 CC=gcc
+CXX = g++
 NASM=nasm
 LD=ld
 
@@ -7,6 +8,7 @@ CCFLAGS=-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing
 CCFLAGS+=-Wno-pointer-arith -Wno-unused-parameter
 CCFLAGS+=-nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector
 CCFLAGS+=-fno-builtin-function -fno-builtin
+CXXFLAGS = -std=c++17 -fno-exceptions -fno-rtti -ffreestanding -nostdlib -Wall -Wextra -O2
 NASMFLAGS=-f elf32
 LDFLAGS=-m elf_i386
 
@@ -62,6 +64,10 @@ clean:
 # Rule to assemble NASM files (.asm)
 %.o: %.asm
 	$(NASM) $(NASMFLAGS) -o $@ $<
+
+# Rule to compile C++ files
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Rule to build bootsector
 bootsect: $(BOOTSECT_OBJS)
