@@ -1,6 +1,5 @@
 #include "auro.h"
 #include "../core/util.h"
-#include <cstring>
 
 /*
 
