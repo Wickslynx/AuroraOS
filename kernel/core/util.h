@@ -140,7 +140,7 @@ static inline void *memcpy(void *dst, const void *src, size_t n) {
 }
 
 static inline void *memmove(void *dst, const void *src, size_t n) {
-    // OK since we know that memcpy copies forwards
+    // since we know that memcpy copies forwards
     if (dst < src) {
         return memcpy(dst, src, n);
     }
@@ -153,6 +153,7 @@ static inline void *memmove(void *dst, const void *src, size_t n) {
     }
 
     return dst;
+}
 
 static inline size_t strlcat(char *dst, const char *src, size_t size) {
     const size_t sl = strlen(src),
