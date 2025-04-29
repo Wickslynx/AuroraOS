@@ -27,16 +27,16 @@ BOOTSECT_OBJS=$(BOOTSECT_SRCS:.S=.o)
 START_OBJS=$(START_SRCS:.S=.o)
 ASM_OBJS=$(ASM_SRCS:.asm=.o)
 
-# Find all C source files
+# find all C source files
 KERNEL_C_SRCS=$(wildcard kernel/*.c kernel/ux/system/*.c kernel/drivers/*.c kernel/ux/*.c kernel/onstart/*.c kernel/core/*.c)
 
-# Convert C source file names to object file names
+# convert C source files to .o
 KERNEL_C_OBJS=$(KERNEL_C_SRCS:.c=.o)
 
-# All kernel objects combined
+# all kernel objects combined
 KERNEL_OBJS=$(KERNEL_C_OBJS) $(START_OBJS) $(ASM_OBJS)
 
-# Output files
+# output files
 BOOTSECT=bootsect.bin
 KERNEL=kernel.bin
 ISO=auroraos.iso
@@ -53,35 +53,35 @@ clean:
 	rm -f ./**/*.elf
 	rm -f ./**/*.bin
 
-# Rule to compile C files
+# rule to compile C files
 %.o: %.c
 	$(CC) -o $@ -c $< $(GFLAGS) $(CCFLAGS)
 
-# Rule to assemble GNU assembler files (.S)
+# rule to assemble GNU asm files (.S)
 %.o: %.S
 	$(CC) -o $@ -c $< $(GFLAGS) $(CCFLAGS)
 
-# Rule to assemble NASM files (.asm)
+# rule to assemble NASM files (.asm)
 %.o: %.asm
 	$(NASM) $(NASMFLAGS) -o $@ $<
 
-# Rule to compile C++ files
+# rule to compile C++ files
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Rule to build bootsector
+# rule to build bootsector
 bootsect: $(BOOTSECT_OBJS)
 	$(LD) -o ./bin/$(BOOTSECT) $^ -Ttext 0x7C00 --oformat=binary -m elf_i386
 
-# Rule to build kernel
+# rule to build kernel
 kernel: $(KERNEL_OBJS)
 	$(LD) -o ./bin/$(KERNEL) $^ $(LDFLAGS) -Tlinker.ld -m elf_i386
 
-# Rule to create bootable ISO
+# rule to create bootable ISO
 iso: bootsect kernel
 	dd if=/dev/zero of=auroraos.iso bs=512 count=2880
 	dd if=./bin/$(BOOTSECT) of=auroraos.iso conv=notrunc bs=512 seek=0 count=1
 	dd if=./bin/$(KERNEL) of=auroraos.iso conv=notrunc bs=512 seek=1 count=2048
 
-# Special targets
+# special targets
 .PHONY: all dirs clean bootsect kernel iso
