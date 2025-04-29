@@ -30,7 +30,7 @@ _start:
     call print_string
 
     /* load kernel from disk */
-    movw $32, %cx         /* (20h * num_sectors) */
+    movw $32, %cx         /* (32 * num_sectors) */
     movb drive_number, %dl
     movw $disk_address_packet, %si
     movw $0x1000, kernel_segment
@@ -164,6 +164,7 @@ print_char:
     je print_string_done
     int $0x10
     jmp print_char
+
 print_string_done:
     ret
 
