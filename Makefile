@@ -39,7 +39,7 @@ KERNEL_OBJS=$(KERNEL_C_OBJS) $(START_OBJS) $(ASM_OBJS)
 # Output files
 BOOTSECT=bootsect.bin
 KERNEL=kernel.bin
-ISO=boot.iso
+ISO=auroraos.iso
 
 all: dirs bootsect kernel 
 
