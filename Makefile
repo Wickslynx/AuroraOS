@@ -78,7 +78,7 @@ kernel: $(KERNEL_OBJS)
 	$(LD) -o ./bin/$(KERNEL) $^ $(LDFLAGS) -Tlinker.ld -m elf_i386
 
 # rule to create bootable ISO
-iso: bootsect kernel
+iso: dirs bootsect kernel
 	dd if=/dev/zero of=auroraos.iso bs=512 count=2880
 	dd if=./bin/$(BOOTSECT) of=auroraos.iso conv=notrunc bs=512 seek=0 count=1
 	dd if=./bin/$(KERNEL) of=auroraos.iso conv=notrunc bs=512 seek=1 count=2048
