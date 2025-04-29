@@ -79,9 +79,9 @@ kernel: $(KERNEL_OBJS)
 
 # Rule to create bootable ISO
 iso: bootsect kernel
-	dd if=/dev/zero of=boot.iso bs=512 count=2880
-	dd if=./bin/$(BOOTSECT) of=boot.iso conv=notrunc bs=512 seek=0 count=1
-	dd if=./bin/$(KERNEL) of=boot.iso conv=notrunc bs=512 seek=1 count=2048
+	dd if=/dev/zero of=auroraos.iso bs=512 count=2880
+	dd if=./bin/$(BOOTSECT) of=auroraos.iso conv=notrunc bs=512 seek=0 count=1
+	dd if=./bin/$(KERNEL) of=auroraos.iso conv=notrunc bs=512 seek=1 count=2048
 
 # Special targets
 .PHONY: all dirs clean bootsect kernel iso
