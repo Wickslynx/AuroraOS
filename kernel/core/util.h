@@ -93,7 +93,7 @@ static inline size_t strlen(const char *str) {
 }
 
 static inline char *itoa(i32 x, char *s, size_t sz) {
-    // TODO: holy god this is bad code we need some error handling here
+    // TODO: omg this is bad code. :sob:
     if (sz < 20) {
         extern void panic(const char *);
         panic("ITOA BUFFER TOO SMALL");
@@ -153,9 +153,7 @@ static inline void *memmove(void *dst, const void *src, size_t n) {
     }
 
     return dst;
-}
 
-// SEE: https://opensource.apple.com/source/Libc/Libc-1158.30.7/string/strlcat.c.auto.html
 static inline size_t strlcat(char *dst, const char *src, size_t size) {
     const size_t sl = strlen(src),
           dl = strlen(dst);
