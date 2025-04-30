@@ -1,7 +1,7 @@
 .code16
 .org 0
 
-/* REAL mode.*/
+
 
 .text
 
@@ -102,8 +102,8 @@ protected_mode_entry:
     movw $protected_mode_message, %si
     call print_string
 
-    lidt idt_pointer
-    lgdt gdt_pointer
+    lidt interrupt_descriptor_table_pointer
+    lgdt global_descriptor_table_pointer
 
     movw $(DATA_SEGMENT - GLOBAL_DESCRIPTOR_TABLE_START), %ax
     movw %ax, %ds
@@ -132,13 +132,6 @@ enable_a20_wait_clear:
     ret
 
 enable_a20_wait_set:
-
-    pushw %si
-    /* Display "Enabling extended memory..." */
-    movw $kernel_extended_memory, %si
-    call print_string
-    popw %si   
-
     xorw %ax, %ax
     inb $0x64
     testb $0x01, %al
@@ -213,8 +206,7 @@ kernel_set_video_message:
     .asciz "Setting video mode...\n"
 kernel_load_message:
     .asciz "Loading kernel...\n"
-kernel_extended_memory:
-    .asciz "Enabling extended memory...."
+
 
 /* Boot drive number */
 drive_number:
@@ -235,13 +227,13 @@ kernel_sector:
 
 /* GDT */
 .align 16
-gdt_pointer:
+global_descriptor_table_pointer:
     .word GLOBAL_DESCRIPTOR_TABLE_END - GLOBAL_DESCRIPTOR_TABLE_START - 1
     .long GLOBAL_DESCRIPTOR_TABLE_START
 
 /* IDT pointer */
 .align 16
-idt_pointer:
+interrupt_descriptor_table_pointer:
     .word IDT_END - IDT_START - 1
     .long IDT_START
 
