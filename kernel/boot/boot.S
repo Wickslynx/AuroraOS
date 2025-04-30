@@ -102,10 +102,10 @@ protected_mode_entry:
     movw $protected_mode_message, %si
     call print_string
 
-    lidt interrupt_descriptor_table_pointer
-    lgdt global_descriptor_table_pointer
+    lidt idt_pointer
+    lgdt gdt_pointer
 
-    movw $(DATA_SEGMENT - GLOBAL_DESCRIPTOR_TABLE_START), %ax
+    movw $(DATA_SEGMENT - GDT_START), %ax
     movw %ax, %ds
     movw %ax, %es
     movw %ax, %fs
@@ -227,13 +227,13 @@ kernel_sector:
 
 /* GDT */
 .align 16
-global_descriptor_table_pointer:
-    .word GLOBAL_DESCRIPTOR_TABLE_END - GLOBAL_DESCRIPTOR_TABLE_START - 1
-    .long GLOBAL_DESCRIPTOR_TABLE_START
+gdt_pointer:
+    .word GDT_END - GDT_START - 1
+    .long GDT_START
 
 /* IDT pointer */
 .align 16
-interrupt_descriptor_table_pointer:
+idt_pointer:
     .word IDT_END - IDT_START - 1
     .long IDT_START
 
@@ -245,7 +245,7 @@ IDT_START:
 IDT_END:
 
 .align 16
-GLOBAL_DESCRIPTOR_TABLE_START:
+GDT_START:
 NULL_DESCRIPTOR:
     .quad 0
 CODE_SEGMENT:
@@ -262,11 +262,11 @@ DATA_SEGMENT:
     .byte 0b10010010      /* access byte */
     .byte 0b11001111      /* no idea */
     .byte 0x00            /* base (24-31) */
-GLOBAL_DESCRIPTOR_TABLE_END:
+GDT_END:
 
 
 
 
 /* boot sign */
 .fill 510-(.-_start), 1, 0
-.word 0xAA55
+.word 0xAA55 
