@@ -71,7 +71,7 @@ same_segment:
 
     cli
     /* GDT */
-    lgdt gdt_pointer
+    lgdt gdt
 
     /*save cstate */
     call enable_a20_wait_clear
@@ -104,7 +104,7 @@ protected_mode_entry:
     movw $protected_mode_message, %si
     call print_string
 
-    lidt idt_pointer
+    lidt idt
 
     movw $(DATA_SEGMENT - GDT_START), %ax
     movw %ax, %ds
@@ -228,13 +228,13 @@ kernel_sector:
 
 /* GDT */
 .align 16
-gdt_pointer:
+gdt:
     .word GDT_END - GDT_START - 1
     .long GDT_START
 
 /* IDT */
 .align 16
-idt_pointer:
+idt:
     .word IDT_END - IDT_START - 1
     .long IDT_START
 
