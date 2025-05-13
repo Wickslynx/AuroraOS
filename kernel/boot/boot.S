@@ -70,8 +70,10 @@ same_segment:
     int $0x10
 
     cli
-    /* GDT */
+
+    /* GDT and IDT*/
     lgdt gdt
+    lidt idt
 
     /*save cstate */
     call enable_a20_wait_clear
@@ -100,12 +102,6 @@ same_segment:
     jmp protected_mode_entry
 
 protected_mode_entry:
-    /* Display "Entering protected mode..." */
-    movw $protected_mode_message, %si
-    call print_string
-
-    lidt idt
-
     movw $(DATA_SEGMENT - GDT_START), %ax
     movw %ax, %ds
     movw %ax, %es
