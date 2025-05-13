@@ -253,14 +253,14 @@ CODE_SEGMENT:
     .word 0x0000          /* base (0-15) */
     .byte 0x00            /* base (16-23) */
     .byte 0b10011010      /* access byte */
-    .byte 0b11001111      /* no idea*/
+    .byte 0b11001111      /* granularity */
     .byte 0x00            /* base (24-31) */
 DATA_SEGMENT:
     .word 0xffff          /* limit (0-15) */
     .word 0x0000          /* base (0-15) */
     .byte 0x00            /* base (16-23) */
     .byte 0b10010010      /* access byte */
-    .byte 0b11001111      /* no idea */
+    .byte 0b11001111      /* granurality  */
     .byte 0x00            /* base (24-31) */
 GDT_END:
 
