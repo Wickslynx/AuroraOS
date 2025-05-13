@@ -113,7 +113,7 @@ enable_a20:
     outb %al, $0x64               /* read outport */
 
     call output_set
-    inb $0x60                     */  output -> AL */
+    inb $0x60                     /*  output -> AL */
     push %ax                      /* save */
 
     call input_clear
