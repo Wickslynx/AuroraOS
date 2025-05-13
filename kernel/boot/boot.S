@@ -26,7 +26,7 @@ _start:
     sti
 
     /* Display "Booting AuroraOS..." */
-    movw $welcome_message, %si
+    movw $booting_message, %si
     call print_string
 
     /* load kernel from disk */
@@ -197,7 +197,7 @@ print_hex_digit_output:
     int $0x10
     ret
 
-welcome_message:
+booting_message:
     .asciz "Booting AuroraOS....\n"
 disk_error_message:
     .asciz "DISK ERROR\n"
