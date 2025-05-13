@@ -75,23 +75,8 @@ same_segment:
     lgdt gdt
     lidt idt
 
-    /*save cstate */
-    call enable_a20_wait_clear
-    movb $0xD0, %al
-    outb $0x64
-    call enable_a20_wait_set
-    xorw %ax, %ax
-    inb $0x60
-
-    /* new state*/
-    pushw %ax
-    call enable_a20_wait_clear
-    movb $0xD1, %al
-    outb $0x64
-    call enable_a20_wait_clear
-    popw %ax
-    orw $0x2, %ax
-    outb $0x60
+    /* enable a20, (mem over 1 mb)*/
+    call enable_a20
 
     /* protected mode */
     movl %cr0, %eax
@@ -121,19 +106,39 @@ infinite_loop:
     jmp infinite_loop
 
 .code16
-enable_a20_wait_clear:
-    xorw %ax, %ax
-    inb $0x64
-    testb $0x02, %al
-    jnz enable_a20_wait_clear
+
+enable_a20:
+    call input_clear         
+    movb $0xD0, %al
+    outb %al, $0x64               ; read outport
+
+    call output_set
+    inb $0x60                     ; output -> AL
+    push %ax                      ; save
+
+    call input_clear
+    movb $0xD1, %al
+    outb %al, $0x64               ;  write outport
+
+    call input_clear
+    pop %ax
+    or $0x02, %al                 ; set a20 bit (bit 1)
+    outb %al, $0x60               ; write new value
     ret
 
-enable_a20_wait_set:
-    xorw %ax, %ax
+input_clear:
     inb $0x64
-    testb $0x01, %al
-    jz enable_a20_wait_set
+    testb $0x02, %al              ; input buffer full? (bit 1)
+    jnz input_clear
     ret
+
+output_set:
+    inb $0x64
+    testb $0x01, %al              ; output buffer full? (bit 0)
+    jz output_set
+    ret
+
+
 
 disk_read_error:
     pushw %ax           
