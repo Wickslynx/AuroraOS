@@ -71,7 +71,7 @@ clean:
 
 # rule to build bootsector
 bootsect: $(BOOTSECT_OBJS)
-	$(LD) -o ./bin/$(BOOTSECT) $^ -Ttext 0x7C00 --oformat=binary -m elf_i386
+	$(LD) -o ./bin/$(BOOTSECT) $^ -Ttext 0x7C00 --oformat=binary -N -m elf_i386
 
 # rule to build kernel
 kernel: $(KERNEL_OBJS)
