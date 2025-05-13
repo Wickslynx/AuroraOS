@@ -70,6 +70,8 @@ same_segment:
     int $0x10
 
     cli
+    /* GDT */
+    lgdt gdt_pointer
 
     /*save cstate */
     call enable_a20_wait_clear
@@ -103,7 +105,6 @@ protected_mode_entry:
     call print_string
 
     lidt idt_pointer
-    lgdt gdt_pointer
 
     movw $(DATA_SEGMENT - GDT_START), %ax
     movw %ax, %ds
