@@ -208,11 +208,11 @@ kernel_load_message:
     .asciz "Loading kernel...\n"
 
 
-/* Boot drive number */
+/* Drive num */
 drive_number:
     .word 0x0000
 
-/* Disk address packet for INT 13h */
+/* INT 13 h */
 disk_address_packet:
     .byte 0x10             /* size */
     .byte 0x00             /* reserved */
@@ -231,7 +231,7 @@ gdt_pointer:
     .word GDT_END - GDT_START - 1
     .long GDT_START
 
-/* IDT pointer */
+/* IDT */
 .align 16
 idt_pointer:
     .word IDT_END - IDT_START - 1
