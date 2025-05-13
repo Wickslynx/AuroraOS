@@ -110,31 +110,31 @@ infinite_loop:
 enable_a20:
     call input_clear         
     movb $0xD0, %al
-    outb %al, $0x64               ; read outport
+    outb %al, $0x64               /* read outport */
 
     call output_set
-    inb $0x60                     ; output -> AL
-    push %ax                      ; save
+    inb $0x60                     */  output -> AL */
+    push %ax                      /* save */
 
     call input_clear
     movb $0xD1, %al
-    outb %al, $0x64               ;  write outport
+    outb %al, $0x64               /*  write outport */
 
     call input_clear
     pop %ax
-    or $0x02, %al                 ; set a20 bit (bit 1)
-    outb %al, $0x60               ; write new value
+    or $0x02, %al                 /* set a20 bit (bit 1) */
+    outb %al, $0x60               /* write new value */
     ret
 
 input_clear:
     inb $0x64
-    testb $0x02, %al              ; input buffer full? (bit 1)
+    testb $0x02, %al              /* input buffer full? (bit 1) */
     jnz input_clear
     ret
 
 output_set:
     inb $0x64
-    testb $0x01, %al              ; output buffer full? (bit 0)
+    testb $0x01, %al              /* output buffer full? (bit 0) */
     jz output_set
     ret
 
