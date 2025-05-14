@@ -49,7 +49,7 @@ load_kernel_loop:
   
 
     addw $64, kernel_sector
-    addw $0x8000, kernel_offset
+    addw $0x800, kernel_offset
     jnc same_segment
 
 
