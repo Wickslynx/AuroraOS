@@ -27,7 +27,7 @@ _start:
     call print_string
 
     /* load kernel from disk */
-    movw $50, %cx         /* (20 * num_sectors) - NEEDS TO BE UPDATED DYNAMICALLY */
+    movw $32, %cx         /* (20 * num_sectors) - NEEDS TO BE UPDATED DYNAMICALLY */
     movb drive_number, %dl
     movw $disk_address_packet, %si
     movw $0x1000, kernel_segment
@@ -46,7 +46,7 @@ load_kernel_loop:
   
 
     addw $64, kernel_sector
-    addw $0x800, kernel_offset
+    addw $0x8000, kernel_offset
     jnc same_segment
 
 
