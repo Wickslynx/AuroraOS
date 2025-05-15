@@ -91,7 +91,7 @@ protected_mode_entry:
     movw %ax, %gs
     movw %ax, %ss
     movl $0x3000, %esp
-    ljmp $0x8, $kernel_entry_point
+    call kernel_trampoline
 
 .code32
 kernel_entry_point:
@@ -263,6 +263,17 @@ DATA_SEGMENT:
     .byte 0x00            /* base (24-31) */
 GDT_END:
 
+kernel_trampoline:
+    cli                      /* disable interrupts. */
+    movw $0x8, %ax           /* load code from gdt */
+    movw %ax, %ds            
+    /* update segment registers */
+    movw %ax, %es
+    movw %ax, %fs
+    movw %ax, %gs
+    movw %ax, %ss
+    movl $0x3000, %esp       /* new stack pointer */
+    jmp kernel_entry_point   /* jump to protected mode */
 
 
 
