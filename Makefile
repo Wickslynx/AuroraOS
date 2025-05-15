@@ -4,7 +4,7 @@ NASM=nasm
 LD=ld
 
 GFLAGS=
-CCFLAGS=-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing -fsanitize=leak,bounds,float-divide-by-zero,float-cast-overflow,signed-integer-overflow,shift,unreachable,vptr
+CCFLAGS=-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing
 
 CCFLAGS+=-Wno-pointer-arith -Wno-unused-parameter
 CCFLAGS+=-nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector
