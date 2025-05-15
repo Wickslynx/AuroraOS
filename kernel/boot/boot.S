@@ -91,7 +91,9 @@ protected_mode_entry:
     movw %ax, %gs
     movw %ax, %ss
     movl $0x3000, %esp
-    call kernel_trampoline
+    ljmp $0x8, $kernel_entry_point
+
+    
 
 .code32
 kernel_entry_point:
