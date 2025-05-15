@@ -68,12 +68,12 @@ same_segment:
 
     cli
 
+    /* enable a20, (mem over 1 mb)*/
+    call enable_a20
+
     /* GDT and IDT*/
     lgdt gdt
     lidt idt
-
-    /* enable a20, (mem over 1 mb)*/
-    call enable_a20
 
     /* protected mode */
     movl %cr0, %eax
