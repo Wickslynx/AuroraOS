@@ -1,4 +1,5 @@
 .code16
+.org 0
 
 .text
 
@@ -27,7 +28,7 @@ _start:
     call print_string
 
     /* load kernel from disk */
-    movw $32, %cx         /* (20 * num_sectors) - NEEDS TO BE UPDATED DYNAMICALLY */
+    movw $20, %cx         /* (20 * num_sectors) - NEEDS TO BE UPDATED DYNAMICALLY */
     movb drive_number, %dl
     movw $disk_address_packet, %si
     movw $0x1000, kernel_segment
