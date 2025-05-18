@@ -11,7 +11,7 @@ CCFLAGS+=-nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector
 CCFLAGS+=-fno-builtin-function -fno-builtin
 CXXFLAGS = -std=c++17 -fno-exceptions -fno-rtti -ffreestanding -nostdlib -Wall -Wextra -O2
 NASMFLAGS=-f elf32
-LDFLAGS=-m elf_i386
+LDFLAGS=-m elf_i386 -g
 
 BOOTSECT_SRCS=\
 	kernel/boot/boot.S
