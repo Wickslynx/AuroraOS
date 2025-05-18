@@ -6,8 +6,7 @@ _start:
     movl $stack, %esp
     andl $-16, %esp
 
-    pushl %esp
-    pushl %eax
+    movl %esp, %eax
 
     cli
     call _main
