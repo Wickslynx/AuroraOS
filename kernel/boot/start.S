@@ -5,11 +5,15 @@
 _start:
     movl $stack, %esp
     andl $-16, %esp
-    movl $0xDEADBEEF, %eax
+
     pushl %esp
     pushl %eax
+
     cli
     call _main
+
+    /* we should never end up here, if we do just return. */
+    hlt
 
 .section .text
 .align 4
@@ -38,6 +42,7 @@ idt_load:
         jmp isr_common
 .endm
 
+/* all ISR's */
 ISR_NO_ERR 0
 ISR_NO_ERR 1
 ISR_NO_ERR 2
@@ -92,12 +97,14 @@ ISR_NO_ERR 47
 .type isr_handler, @function
 
 isr_common:
+    /* to build the Registers struct */
     pusha
     push %ds
     push %es
     push %fs
     push %gs
 
+    /* load kernel */
     mov $0x10, %ax
     mov %ax, %ds
     mov %ax, %es
@@ -105,7 +112,10 @@ isr_common:
     mov %ax, %gs
     cld
 
-    push %esp
+    mov %esp, %eax
+    push %eax /* pass registers as a parameters */
+
+
     call isr_handler
     add $4, %esp
 
@@ -116,11 +126,11 @@ isr_common:
 
     popa
 
-    add $8, %esp
+    add $8, %esp /* remove error code */
     iret
 
 .section .data
 .align 32
 stack_begin:
-    .fill 0x4000
+    .fill 0x4000 /* 16 kb */
 stack:
