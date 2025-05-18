@@ -97,7 +97,7 @@ ISR_NO_ERR 47
 .type isr_handler, @function
 
 isr_common:
-    /* to build the Registers struct */
+    /* for Registers struct */
     pusha
     push %ds
     push %es
