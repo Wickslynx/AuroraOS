@@ -67,6 +67,15 @@ same_segment:
     movb $0x13, %al
     int $0x10
 
+    /* Blue screen */
+    movw $0xA000, %ax        
+    movw %ax, %es            /* es -> video mem */
+    xorw %di, %di            /* offset 0 */
+    movb $1, %al             
+    movw $64000, %cx       
+    cld                     
+    rep stosb  
+        
     cli
 
     /* enable a20, (mem over 1 mb)*/
