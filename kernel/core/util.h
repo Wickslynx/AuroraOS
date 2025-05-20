@@ -179,6 +179,17 @@ static inline size_t strlcat(char *dst, const char *src, size_t size) {
     return sl + dl;
 }
 
+void strcpy(char *dest, const char *src) {
+    while (*src) {
+        *dest = *src;
+        dest++;
+        src++;
+    }
+    *dest = '\0';  // Null-terminate the destination string
+}
+
+
+
 static inline size_t strlcpy(char *dst, const char *src, size_t n) {
     // copy as many bytes as can fit
     char *d = dst;
