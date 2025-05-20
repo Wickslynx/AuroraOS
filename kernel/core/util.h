@@ -125,7 +125,7 @@ static inline char *itoa(i32 x, char *s, size_t sz) {
 }
 
 static inline void memset(void *dst, u8 value, size_t n) {
-    u8 *d = dst;
+    u8 *d = (u8*)dst;
 
     while (n-- > 0) {
         *d++ = value;
@@ -134,7 +134,7 @@ static inline void memset(void *dst, u8 value, size_t n) {
 
 static inline void *memcpy(void *dst, const void *src, size_t n) {
     u8 *d = dst;
-    const u8 *s = src;
+    const u8 *s = (const u8*)src;
 
     while (n-- > 0) {
         *d++ = *s++;
@@ -150,7 +150,7 @@ static inline void *memmove(void *dst, const void *src, size_t n) {
     }
 
     u8 *d = dst;
-    const u8 *s = src;
+    const u8 *s = (const u8*)src;
 
     for (size_t i = n; i > 0; i--) {
         d[i - 1] = s[i - 1];
