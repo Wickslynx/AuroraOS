@@ -19,9 +19,11 @@ typedef u32 uintptr_t;
 typedef float f32;
 typedef double f64;
 
+#ifndef __cplusplus
 typedef u8 bool;
 #define true (1)
 #define false (0)
+#endif
 
 #define NULL (0)
 
@@ -149,7 +151,7 @@ static inline void *memmove(void *dst, const void *src, size_t n) {
         return memcpy(dst, src, n);
     }
 
-    u8 *d = dst;
+    u8 *d = (u8*)dst;
     const u8 *s = (const u8*)src;
 
     for (size_t i = n; i > 0; i--) {
