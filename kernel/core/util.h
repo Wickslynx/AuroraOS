@@ -2,7 +2,7 @@
 #define UTIL_H
 
 #ifdef __cplusplus
-extern C {
+extern "C" {
 #endif 
 
 // fixed width integer types
