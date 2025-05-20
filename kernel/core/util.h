@@ -204,7 +204,7 @@ static inline size_t strlcpy(char *dst, const char *src, size_t n) {
    return s - src - 1;
 }
 
-#ifdef __cplusplus__
+#ifdef __cplusplus
 }
 #endif 
 
