@@ -22,20 +22,18 @@ START_SRCS=\
 
 ASM_SRCS=\
 
-
-# Convert source file names to object file names
-BOOTSECT_OBJS=$(BOOTSECT_SRCS:.S=.o)
-START_OBJS=$(START_SRCS:.S=.o)
-ASM_OBJS=$(ASM_SRCS:.asm=.o)
-
 # find all C source files
 KERNEL_C_SRCS=$(wildcard kernel/*.c kernel/ux/system/*.c kernel/drivers/*.c kernel/ux/*.c kernel/onstart/*.c kernel/core/*.c)
-
+# find all C++ source files
+KERNEL_CPP_SRCS=$(wildcard kernel/*.cpp kernel/ux/system/*.cpp kernel/drivers/*.cpp kernel/ux/*.cpp kernel/onstart/*.cpp kernel/core/*.cpp)
 # convert C source files to .o
 KERNEL_C_OBJS=$(KERNEL_C_SRCS:.c=.o)
+# convert C++ source files to .o
+KERNEL_CPP_OBJS=$(KERNEL_CPP_SRCS:.cpp=.o)
+
 
 # all kernel objects combined
-KERNEL_OBJS=$(KERNEL_C_OBJS) $(START_OBJS) $(ASM_OBJS)
+KERNEL_OBJS=$(KERNEL_C_OBJS) $(KERNEL_CPP_OBJS) $(START_OBJS) $(ASM_OBJS)
 
 # output files
 BOOTSECT=bootsect.bin
