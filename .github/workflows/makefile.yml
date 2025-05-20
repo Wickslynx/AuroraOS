@@ -16,6 +16,6 @@ jobs:
 
 
     - name: Make the OS
-      run: mkdir bin && make iso
+      run: mkdir bin && make img
 
     
