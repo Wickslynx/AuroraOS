@@ -12,10 +12,10 @@ void _main(u32 magic) {
     
     screen_init();
 
-    while (true) {
-         screen_clear(COLOR(255, 0, 0));
-    }
+    while (1) {
+        screen_clear(COLOR(255, 0, 0));
+        screen_swap();
 
-    screen_swap();
+    }
 }
 
