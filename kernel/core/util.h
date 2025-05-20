@@ -1,7 +1,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#ifdef __cplusplus__
+#ifdef __cplusplus
 extern C {
 #endif 
 
