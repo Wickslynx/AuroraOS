@@ -5,7 +5,6 @@ LD=ld
 
 GFLAGS=
 CCFLAGS=-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing
-
 CCFLAGS+=-Wno-pointer-arith -Wno-unused-parameter
 CCFLAGS+=-nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector
 CCFLAGS+=-fno-builtin-function -fno-builtin
@@ -15,10 +14,11 @@ LDFLAGS=-m elf_i386 -g
 
 BOOTSECT_SRCS=\
 	kernel/boot/boot.S
-
+BOOTSECT_OBJS=$(BOOTSECT_SRCS:.S=.o)
 
 START_SRCS=\
 	kernel/boot/start.S
+START_OBJS=$(START_SRCS:.S=.o)
 
 ASM_SRCS=\
 
@@ -40,7 +40,7 @@ BOOTSECT=bootsect.bin
 KERNEL=kernel.bin
 ISO=auroraos.iso
 
-all: dirs bootsect kernel 
+all: dirs bootsect kernel iso
 
 dirs:
 	mkdir -p bin
@@ -52,10 +52,6 @@ clean:
 	rm -f ./**/*.elf
 	rm -f ./**/*.bin
 
-# rule to compile C files
-%.o: %.c
-	$(CC) -o $@ -c $< $(GFLAGS) $(CCFLAGS)
-
 # rule to assemble GNU asm files (.S)
 %.o: %.S
 	$(CC) -o $@ -c $< $(GFLAGS) $(CCFLAGS)
@@ -63,6 +59,10 @@ clean:
 # rule to assemble NASM files (.asm)
 %.o: %.asm
 	$(NASM) $(NASMFLAGS) -o $@ $<
+
+# rule to compile C files
+%.o: %.c
+	$(CC) -o $@ -c $< $(GFLAGS) $(CCFLAGS)
 
 # rule to compile C++ files
 %.o: %.cpp
@@ -76,11 +76,9 @@ bootsect: $(BOOTSECT_OBJS)
 kernel: $(KERNEL_OBJS)
 	$(LD) -o ./bin/$(KERNEL) $^ $(LDFLAGS) -Tlinker.ld -m elf_i386
 
-# rule to create bootable ISO
+# rule to create bootable ISO (more standard approach using mkisofs)
 iso: dirs bootsect kernel
-	dd if=/dev/zero of=auroraos.iso bs=512 count=2880
-	dd if=./bin/$(BOOTSECT) of=auroraos.iso conv=notrunc bs=512 seek=0 count=1
-	dd if=./bin/$(KERNEL) of=auroraos.iso conv=notrunc bs=512 seek=1 count=2048
+	mkisofs -o $(ISO) -b $(BOOTSECT) -c boot.catalog -no-emul-boot -boot-load-size 4 -boot-info-table bin/
 
 # special targets
 .PHONY: all dirs clean bootsect kernel iso
