@@ -37,13 +37,12 @@ void screen_init() {
         outportb(PALETTE_DATA, (((i >> 2) & 0x7) * (256 / 8)) / 4);
         outportb(PALETTE_DATA, (((i >> 0) & 0x3) * (256 / 4)) / 4);
     }
-}
-
-#ifdef __cplusplus
-}
-#endif 
     // set color 255 = white
     outportb(PALETTE_DATA, 0x3F);
     outportb(PALETTE_DATA, 0x3F);
     outportb(PALETTE_DATA, 0x3F);
 }
+
+#ifdef __cplusplus
+}
+#endif 
