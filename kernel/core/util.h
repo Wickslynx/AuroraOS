@@ -179,7 +179,7 @@ static inline size_t strlcat(char *dst, const char *src, size_t size) {
     return sl + dl;
 }
 
-void strcpy(char *dest, const char *src) {
+static inline void strcpy(char *dest, const char *src) {
     while (*src) {
         *dest = *src;
         dest++;
