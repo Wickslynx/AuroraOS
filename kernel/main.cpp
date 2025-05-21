@@ -4,7 +4,7 @@
 
 
 
-void _main(u32 magic) {
+extern "C" void _main(u32 magic) {
     idt_init();
     isr_init();
     fpu_init(); // floating point unit.
