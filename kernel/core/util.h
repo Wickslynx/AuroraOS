@@ -1,7 +1,6 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include "error.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -103,7 +102,8 @@ static inline size_t strlen(const char *str) {
 static inline char *itoa(i32 x, char *s, size_t sz) {
     // TODO: omg this is bad code. :sob:
     if (sz < 20) {
-        panic("ITOA BUFFER TOO SMALL");
+        //panic("ITOA BUFFER TOO SMALL");
+        return 
     }
 
     u32 tmp;
