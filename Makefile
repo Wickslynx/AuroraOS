@@ -23,7 +23,7 @@ START_OBJS=$(START_SRCS:.S=.o)
 ASM_SRCS=\
 
 # find all C source files
-KERNEL_C_SRCS=$(wildcard kernel/*.c kernel/ui/system/*.c kernel/drivers/*.c kernel/ui/*.c kernel/onstart/*.c kernel/core/*.c)
+KERNEL_C_SRCS=$(wildcard kernel/*.c kernel/mem/*.c kernel/ui/system/*.c kernel/drivers/*.c kernel/ui/*.c kernel/home/*.c kernel/core/*.c)
 # find all C++ source files
 KERNEL_CPP_SRCS=$(wildcard kernel/*.cpp kernel/ui/system/*.cpp kernel/drivers/*.cpp kernel/ui/*.cpp kernel/onstart/*.cpp kernel/core/*.cpp)
 # convert C source files to .o
