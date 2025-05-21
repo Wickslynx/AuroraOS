@@ -76,7 +76,7 @@ bootsect: $(BOOTSECT_OBJS)
 kernel: $(KERNEL_OBJS)
 	$(LD) -o ./bin/$(KERNEL) $^ $(LDFLAGS) -Tlinker.ld -m elf_i386
 
-# rule to create bootable ISO (more standard approach using mkisofs)
+# rule to create bootable ISO (using mksisofs
 iso: dirs bootsect kernel
 	mkisofs -o $(ISO) -b $(BOOTSECT) -c boot.catalog -no-emul-boot -boot-load-size 4 -boot-info-table bin/
 
