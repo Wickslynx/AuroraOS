@@ -4,7 +4,7 @@
 #include "system/font.h"
 #include "system/screen.h"
 #include "../core/util.h"
-#include ../mem/mem.h"
+#include "../mem/mem.h"
 
 /*
 Included files:
