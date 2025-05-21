@@ -3,7 +3,7 @@ void* operator new(unsigned int size) {
 }
 
 void* operator new[](unsigned int size) {
-  return new size;
+  return (void*) 0x0000;
 }
 
 void operator delete(void* ptr) {
