@@ -101,10 +101,10 @@ static inline size_t strlen(const char *str) {
 
 static inline char *itoa(i32 x, char *s, size_t sz) {
     // TODO: omg this is bad code. :sob:
-    if (sz < 20) {
-        //panic("ITOA BUFFER TOO SMALL");
-        return 
+    /* if (sz < 20) {
+        //panic("ITOA BUFFER TOO SMALL"); - causes a error
     }
+    */
 
     u32 tmp;
     i32 i, j;
