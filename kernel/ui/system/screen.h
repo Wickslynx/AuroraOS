@@ -1,6 +1,10 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../../core/util.h"
 
 #define SCREEN_WIDTH 320
@@ -49,5 +53,9 @@ extern u8 _sback;
 void screen_swap();
 void screen_clear(u8 color);
 void screen_init();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
