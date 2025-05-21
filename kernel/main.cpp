@@ -6,7 +6,8 @@ extern "C" {
 }
 
 
-
+panic(a"TEST")
+    
 extern "C" void _main(u32 magic) {
     idt_init();
     isr_init();
