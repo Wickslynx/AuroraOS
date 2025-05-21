@@ -14,4 +14,4 @@ USER -> APPLICATION -> DRIVER (C++) -> KERNEL (C)
 USER -> TERMINAL -> KERNEL
 
 
-All low-level kernel programs should be written in C++, all frameworks that intended for user-use is to be written in C++-
+All low-level kernel programs should be written in C, all frameworks that intended for user-use is to be written in C++-
