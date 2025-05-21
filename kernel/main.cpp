@@ -2,6 +2,7 @@ extern "C" {
 #include "ui/auro.h"
 #include "core/interrupts.h"
 #include "ui/system/screen.h"
+#include "core/util.h"
 }
 
 
