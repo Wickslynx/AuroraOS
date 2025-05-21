@@ -6,7 +6,7 @@ extern "C" {
 }
 
 
-panic("TEST")
+panic("TEST");
     
 extern "C" void _main(u32 magic) {
     idt_init();
