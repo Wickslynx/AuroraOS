@@ -1,6 +1,10 @@
 #ifndef FONT_H
 #define FONT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../../core/util.h"
 #include "screen.h"
 
@@ -17,5 +21,9 @@
 
 void font_char(char c, size_t x, size_t y, u8 color);
 void font_str(const char *s, size_t x, size_t y, u8 color);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
