@@ -1,5 +1,5 @@
 void* operator new(unsigned int size) {
-  return;
+  return (void*) 0x0;
 }
 
 void* operator new[](unsigned int size) {
