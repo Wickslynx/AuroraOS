@@ -92,6 +92,10 @@ bool WindowManager::addWindow(Window* window) {
 
 
 bool Image(Window* window, const char* path, int height, int width, int x, int y) {
+    if (!window || !path || !height || !width || !x || !y) {
+        return false;
+    }
+    
     return true;
 }
 //  Public functions without any classes.
