@@ -1,4 +1,5 @@
 #include "auro.h"
+#include "../mem/mem.h"
 #include "../core/util.h"
 
 /*
