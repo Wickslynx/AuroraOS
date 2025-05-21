@@ -6,13 +6,14 @@ extern "C" {
 }
 
 
-panic("TEST");
     
 extern "C" void _main(u32 magic) {
     idt_init();
     isr_init();
     fpu_init(); // floating point unit.
     irq_init();
+
+    panic("TEST");
     
     screen_init();
 
