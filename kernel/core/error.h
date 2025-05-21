@@ -2,8 +2,8 @@
 #define ERROR_H
 
 #include "system.h"
-#include "../ux/system/screen.h"
-#include "../ux/system/font.h"
+#include "../ui/system/screen.h"
+#include "../ui/system/font.h"
 
 
 /*
