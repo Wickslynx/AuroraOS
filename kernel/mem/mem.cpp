@@ -3,13 +3,15 @@ void* operator new(unsigned int size) {
 }
 
 void* operator new[](unsigned int size) {
-  return new(size);
+  return new size;
 }
 
 void operator delete(void* ptr) {
+  (void)ptr;
   return;
 }
 
 void operator delete[](void* ptr) {
+  (void)ptr;
   return;
 }
