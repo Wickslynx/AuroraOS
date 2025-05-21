@@ -1,9 +1,9 @@
 void* operator new(unsigned int size) {
-  return (void*) 0x0;
+  return (void*) 0x0000; // Placeholder, no fs nor memory system is implemented.
 }
 
 void* operator new[](unsigned int size) {
-  return;
+  return new(size);
 }
 
 void operator delete(void* ptr) {
