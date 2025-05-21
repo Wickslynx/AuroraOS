@@ -1,6 +1,10 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "util.h"
 
 #define _assert_0() __error_illegal_macro__
@@ -14,8 +18,11 @@
         _assert_1(__VA_ARGS__),\
         _assert_0(__VA_ARGS__))
 
-void panic(const char *err);
 u32 rand();
 void seed(u32 s);
+
+#ifdef __cplusplus
+}
+#endif 
 
 #endif
