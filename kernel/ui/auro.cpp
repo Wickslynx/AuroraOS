@@ -1,14 +1,18 @@
 #include "auro.h"
 #include "../mem/mem.h"
 #include "../core/util.h"
+#include "../fs/fs.h"
 
 /*
 
 Included files:
-system/screen.h
-system/font.h
+system/screen.h -- Pixel manupilation.
+system/font.h -- Core font functions.
+core/util.h -- Kernel Utils..
+fs/fs.h -- File opening, reading and closing functions.
 
----- Information --
+
+---- Information -------
 
 Note: Everything under the "Internal" namespace is internal... 
 Application developers, when you use these functions you are writing to the framebuffer, and not your application.
@@ -91,14 +95,29 @@ bool WindowManager::addWindow(Window* window) {
 }
 
 
-
-bool Image(Window* window, const char* path, int height, int width, int x, int y) {
-    if (!window || !path || !height || !width || !x || !y) {
+/*
+bool Image(Window* window, const char* path) {
+    if (!window || !path) {
         return false;
     }
+
+    FILE* file = file::open(path, "r");
+    int size = file::sizeof(file);
+
+    if (file[1, 8] != "\x89PNG\r\n\x1a\n") {
+        #include "image/png.h"
+        int pixels[10000][100000][100000] = png::parse(file);
+        for (int i = 0; i < size; i++) {
+            screen_set(pixels[i][i][i]);
+        }
+    }
+
+    file::close(file);
+    
     
     return true;
 }
+*/
 //  Public functions without any classes.
 
 Window* createWindow(const char* name, int x, int y, int height, int width) {
