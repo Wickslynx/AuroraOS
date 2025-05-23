@@ -1,13 +1,11 @@
-# AuroraOS (BETA)
+# AuroraOS (ALPHA)
 The Nordic Operating System...
 
 
-
-**Version 1.00**
-
 # Features:
-Full custom bootloader.
-Placeholder
+Fully custom bootloader.
+Integrated filesystem.
+Custom GUI library.
 
 # Getting Started:
 
