@@ -12,17 +12,23 @@ Placeholder
 # Getting Started:
 
 **1.** Build the OS:
+```
 $ git clone https://github.com/Wickslynx/AuroraOS
 $ cd AuroraOS
 $ make img
+```
 
 
 **2.** Run the OS with QEMU:
+```
 $ qemu-system-i386 -drive -format=raw, auroraos.iso #will be updated i forgot the command :sob:
+```
 
 **Building on real hardware...**
 So you are building AuroraOS on real hardware, I wouldn't recommend it but here is how.
+```
 $ make iso
+```
 Burn the auroraos.iso onto a bootable USB, this might work or not.. Good luck!
 
 
