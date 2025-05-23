@@ -128,6 +128,23 @@ isr_common:
     add $8, %esp /* remove error code */
     iret
 
+global enable_paging
+enable_paging:
+    push ebp
+    mov ebp, esp
+
+    mov eax, [ebp + 8] /* Get first param */
+    mov cr3, eax
+
+    /* enable paging */
+    mov eax, cr0
+    or eax, 0x80000000
+    mov cr0, eax
+
+    pop ebp
+    ret
+    
+
 .section .data
 .align 32
 stack_begin:
