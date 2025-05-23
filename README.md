@@ -27,7 +27,7 @@ Please see the *docs* folder for further explanation and examples
 
 
 Current progress, version 1.00
-![Uhhh ooo, Error! Please contact me.](https://github.com/Wickslynx/AuroraOS/docs/auroraos-example-1.0.png)
+![Uhhh ooo, Error! Please contact me.](https://github.com/Wickslynx/AuroraOS/blob/main/docs/auroraos-example-1.0.png)
 
 
 
