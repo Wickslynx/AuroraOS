@@ -26,8 +26,8 @@ Please see the *docs* folder for further explanation and examples
 # Examples:
 
 
-
-![Uhhh ooo, Error! Please contact me.](no-example-rn)
+Current progress, version 1.00
+![Uhhh ooo, Error! Please contact me.](https://github.com/Wickslynx/AuroraOS/docs/auroraos-example-1.0.png)
 
 
 
