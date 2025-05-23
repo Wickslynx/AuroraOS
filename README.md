@@ -26,7 +26,12 @@ Please see the *docs* folder for further explanation and examples
 # Examples:
 
 
-Current progress, version 1.00
+**Current progress:**
+
+
+1.00 (Early testing)
+
+
 ![Uhhh ooo, Error! Please contact me.](https://github.com/Wickslynx/AuroraOS/blob/main/docs/auroraos-example-1.0.png)
 
 
