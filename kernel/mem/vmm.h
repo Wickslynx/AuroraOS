@@ -26,7 +26,7 @@ typedef struct {
   u32 pat : 1; // page attribute tabel
   u32 global : 1; //global, not flushed
   u32 available : 3; // can be used
-  u32 frame : 39; // frame adress
+  u32 frame : 32; // frame adress
 
 }  page_t;
 
@@ -35,7 +35,7 @@ void init_vmm();
 void vmap(u32 vaddr, u32 paddr, int present, int rw); 
 void imap_kernel();
 void* vmalloc(u32 size);
-void pfault();
+static inline void pfault();
 
 static inline void pfault(struct Registers* regs);
 
