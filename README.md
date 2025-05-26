@@ -3,9 +3,7 @@ The Nordic Operating System...
 
 
 # Features:
-Fully custom bootloader.
-Integrated filesystem.
-Custom GUI library.
+- Fully custom bootloader - Integrated filesystem - Custom GUI library - 
 
 # Getting Started:
 
