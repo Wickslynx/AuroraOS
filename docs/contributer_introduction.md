@@ -24,20 +24,16 @@ Example of a proper file documentation:
 #include "error.h"
 
 /* 
-* @args:
-*     num1 (int): 
-*     num2 (int):
-*
-* @raises:
-*     ValueError: Division by 0.
-* @returns: The sum of two integers
+Returns the division of two nums.
+raises: (PANIC) Division by 0 is not allowed.. (When you divide something with 0...
 */
 
 int divide(int num1, int num2) {
     if (num1 < 0 || num2 < 0) {
-        panic("Division by 0 is not allowed.") 
+        panic("Division by 0 is not allowed."); // TODO: Change this to a warning, gracefully handle it.
     }
-    return num1 / num2;
+
+    return num1 / num2; // NOTE: What if you don't provide two nums?
 }
 
 ```
