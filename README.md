@@ -17,8 +17,9 @@ $ make img
 
 **2.** Run the OS with QEMU:
 ```
-$ qemu-system-i386 -drive -format=raw, auroraos.iso #will be updated i forgot the command :sob:
+$  qemu-system-i386 --drive format=raw,file=auroraos.img -montior stdio -no-reboot -d guest_errors,int,pcall,unimp,out_asm -D debug.log
 ```
+Remove the -monitor stdio and use -nographic to run it just in the terminal.
 
 **Building on real hardware...**
 So you are building AuroraOS on real hardware, I wouldn't recommend it but here is how.
