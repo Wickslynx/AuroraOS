@@ -128,20 +128,20 @@ isr_common:
     add $8, %esp /* remove error code */
     iret
 
-global enable_paging
+.global enable_paging
 enable_paging:
-    push ebp
-    mov ebp, esp
+    pushl %ebp
+    movl %ebp, %esp /* new stack frame */
 
-    mov eax, [ebp + 8] /* Get first param */
-    mov cr3, eax
+    movl 8(%ebp), %eax /* Get first param */
+    movl %eax, %cr3
 
     /* enable paging */
-    mov eax, cr0
-    or eax, 0x80000000
-    mov cr0, eax
+    movl %cr0, %eax
+    orl $0x80000000, %eax
+    movl %eax, %cr0
 
-    pop ebp
+    popl %ebp
     ret
     
 
