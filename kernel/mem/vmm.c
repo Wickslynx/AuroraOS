@@ -1,3 +1,5 @@
+#include "vmm.h"
+
 page_dir_t *kernel_dir __attribute__((aligned(4096)));
 page_table_t *kernel_tables[1024];
 
