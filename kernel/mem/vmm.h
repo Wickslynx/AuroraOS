@@ -7,6 +7,8 @@ extern "C" {
 
 #include "../core/util.h"
 #include "../core/error.h"
+#include "../core/interrupts.h"
+
 
 static u32 heap_ptr = 0x100000 // Heap starts after kernel.
 
