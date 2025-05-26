@@ -35,7 +35,7 @@ void vmalloc(u32 size) {
 
 static inline void pfault(struct Registers* regs) {
     
-    uint32_t fadress; // error adress.
+    u32 fadress; // error adress.
     asm volatile("mov %%cr2, %0" : "=r" (faddress));
     
     // error code
