@@ -6,6 +6,9 @@ extern "C" {
 #endif
 
 #include "../core/util.h"
+#include "../core/error.h"
+
+static u32 heap_ptr = 0x100000 // Heap starts after kernel.
 
 typedef struct {
   u32 present : 1; // page in mem
@@ -25,11 +28,10 @@ typedef struct {
 void init_vmm(); 
 
 void vmap(u32 vaddr, u32 paddr, int present, int rw); 
-void vmap_kernel();
+void imap_kernel();
 void* vmalloc();
 
-
-static inline void pfault();
+static inline void pfault(struct Registers* regs);
 
 #ifdef __cplusplus
 }
