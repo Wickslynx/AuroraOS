@@ -12,6 +12,9 @@ extern "C" {
 
 static u32 heap_ptr = 0x100000 // Heap starts after kernel.
 
+page_dir_t *kernel_dir __attribute__((aligned(4096)));
+page_table_t *kernel_tables[1024];
+
 typedef struct {
   u32 present : 1; // page in mem
   u32 rw : 1; // read/write perms
