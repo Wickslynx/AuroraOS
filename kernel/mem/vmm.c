@@ -24,7 +24,7 @@ void imap_kernel() {
   
 }
 
-void vmalloc(u32 size) {
+int vmalloc(u32 size) {
     heap_ptr = (heap_ptr + 0xFFF) & ~0xFFF; // align heap pointer -> boundary
     
     void* addr = (void*)heap_ptr;
