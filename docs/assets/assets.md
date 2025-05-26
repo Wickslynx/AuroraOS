@@ -1,0 +1,3 @@
+# All AuroraOS's Assets: Images, Executables, Description...
+
+Upload your screenshot! Open a pull-request, write clearly in the description: TYPE:ASSET upload.
