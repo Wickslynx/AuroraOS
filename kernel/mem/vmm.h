@@ -12,9 +12,6 @@ extern "C" {
 
 static u32 heap_ptr = 0x100000; // Heap starts after kernel.
 
-page_dir_t *kernel_dir __attribute__((aligned(4096)));
-page_table_t *kernel_tables[1024];
-
 typedef struct {
   u32 present : 1; // page in mem
   u32 rw : 1; // read/write perms
@@ -28,7 +25,14 @@ typedef struct {
   u32 available : 3; // can be used
   u32 frame : 32; // frame adress
 
-}  page_t;
+} page_t;
+
+typedef page_t page_dir_t[1024];
+typedef page_t page_table_t[1024];
+
+
+page_dir_t *kernel_dir __attribute__((aligned(4096)));
+page_table_t *kernel_tables[1024];
 
 void init_vmm(); 
 
