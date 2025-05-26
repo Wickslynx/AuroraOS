@@ -81,7 +81,7 @@ iso: dirs bootsect kernel
 	mkisofs -o $(ISO) -b $(BOOTSECT) -c boot.catalog -no-emul-boot -boot-load-size 4 -boot-info-table bin/
 
 img: dirs bootsect kernel
-	dd if=/dev/zero of=auroraos.iso bs=512 count=2880
+	dd if=/dev/zero of=auroraos.img bs=512 count=2880
 	dd if=./bin/$(BOOTSECT) of=auroraos.img conv=notrunc bs=512 seek=0 count=1
 	dd if=./bin/$(KERNEL) of=auroraos.img conv=notrunc bs=512 seek=1 count=2048
 
