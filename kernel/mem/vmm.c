@@ -1,5 +1,6 @@
 #include "vmm.h"
 
+extern void enable_paging(u32 page_directory); // defined in ../boot/start.S
 
 void init_vmm() {
    kernel_dir = (page_dir_t*)vmalloc(sizeof(page_dir_t));
@@ -9,7 +10,7 @@ void init_vmm() {
 
    idt_set(14, pfault, 0x08, 0x8E);
 
-   enable_paging((u32)kernel_dir); // defined in ../boot/start.S
+   enable_paging((u32)kernel_dir);
 }
 
 void imap_kernel() {
@@ -19,7 +20,7 @@ void imap_kernel() {
     memset(kernel_tables[0], 0, sizeof(page_table_t));
 
     // fill the page dir.
-    for (i; i < 1024; i++) {
+    for (i = 0; i < 1024; i++) {
          (*kernel_tables[0])[i].present = 1;
          (*kernel_tables[0])[i].rw = 1;
          (*kernel_tables[0])[i].user = 0;
