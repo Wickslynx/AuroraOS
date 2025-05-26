@@ -31,7 +31,7 @@ void init_vmm();
 
 void vmap(u32 vaddr, u32 paddr, int present, int rw); 
 void imap_kernel();
-int vmalloc(u32 size);
+void* vmalloc(u32 size);
 void pfault();
 
 static inline void pfault(struct Registers* regs);
