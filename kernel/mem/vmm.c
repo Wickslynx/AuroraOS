@@ -34,14 +34,14 @@ void* vmalloc(u32 size) {
 }
 
 static inline void pfault(struct Registers* regs) {
-    
-    u32 fadress; // error adress.
-    asm volatile("mov %%cr2, %0" : "=r" (faddress));
+    u32 faddress; // error adress.
+   
+    asm("mov %%cr2, %0" : "=r" (faddress));
     
     // error code
-    int present = !(regs->error_code & 0x1);
-    int rw = regs->error_code & 0x2;
-    int us = regs->error_code & 0x4;
+    int present = !(regs->err_code & 0x1);
+    int rw = regs->err_code & 0x2;
+    int us = regs->err_code & 0x4;
     
     panic("Page fault...."); // There is no printf yet, so i can't print the error code.. TODO: Make this possible
     
