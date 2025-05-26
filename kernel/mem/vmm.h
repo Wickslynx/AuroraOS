@@ -12,6 +12,9 @@ extern "C" {
 
 static u32 heap_ptr = 0x100000; // Heap starts after kernel.
 
+
+extern void enable_paging(u32 page_directory); // defined in ../boot/start.S
+
 typedef struct {
   u32 present : 1; // page in mem
   u32 rw : 1; // read/write perms
