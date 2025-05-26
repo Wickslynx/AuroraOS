@@ -9,7 +9,7 @@ void init_vmm() {
 
    imap_kernel();
 
-   idt_set(14, page_error_handler, 0x08, 0x8E);
+   idt_set(14, pfault, 0x08, 0x8E);
 
    enable_paging((u32)kernel_directory); // defined in ../boot/start.S
 }
