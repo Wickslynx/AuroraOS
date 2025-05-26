@@ -1,7 +1,5 @@
 #include "vmm.h"
 
-extern void enable_paging(u32 page_directory); // defined in ../boot/start.S
-
 void init_vmm() {
    kernel_dir = (page_dir_t*)vmalloc(sizeof(page_dir_t));
    memset(kernel_dir, 0, sizeof(page_dir_t));
