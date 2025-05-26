@@ -1,9 +1,15 @@
 name: Makefile CI
 
 on:
-  push:
+  push: #Only run if it changes code.
+    paths: 
+     - "kernel/**" 
+     - "apps/**" 
+     - "Makefile"
+     - "linker.ld"
+    
     branches: [ "main" ]
-  pull_request:
+  pull_request: #Always run on pull-requests.
     branches: [ "main" ]
 
 jobs:
