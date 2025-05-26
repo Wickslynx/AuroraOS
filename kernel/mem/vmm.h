@@ -10,7 +10,7 @@ extern "C" {
 #include "../core/interrupts.h"
 
 
-static u32 heap_ptr = 0x100000 // Heap starts after kernel.
+static u32 heap_ptr = 0x100000; // Heap starts after kernel.
 
 page_dir_t *kernel_dir __attribute__((aligned(4096)));
 page_table_t *kernel_tables[1024];
