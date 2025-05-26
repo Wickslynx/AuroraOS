@@ -13,12 +13,25 @@ void init_vmm() {
 }
 
 void imap_kernel() {
-  u32 i;
+    u32 i;
 
-  kernel_tables[0] = (page_table_t*)vmalloc(sizeof(page_table_t));
-  memset(kernel_tables[0], 0, sizeof(page_table_t));
+    kernel_tables[0] = (page_table_t*)vmalloc(sizeof(page_table_t));
+    memset(kernel_tables[0], 0, sizeof(page_table_t));
 
-  for (;;); // NOTE: Finish this..
+    // fill the page dir.
+    for (i; i < 1024; i++) {
+         (*kernel_tables[0])[i].present = 1;
+         (*kernel_tables[0])[i].rw = 1;
+         (*kernel_tables[0])[i].user = 0;
+         (*kernel_tables[0])[i].frame = i; // physical frame -> virtual frame..
+   
+    }
+
+    // set the entry
+    (*kernel_tables[0])[i].present = 1;
+    (*kernel_tables[0])[i].rw = 1;
+    (*kernel_tables[0])[i].user = 0;
+    (*kernel_tables[0])[i].frame = ((u32)kernel_tables[0]) >> 12;
   
 }
 
