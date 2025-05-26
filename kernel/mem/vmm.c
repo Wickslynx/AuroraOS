@@ -3,7 +3,7 @@
 
 void init_vmm() {
    kernel_dir = (page_dir_t*)vmalloc(sizeof(page_dir_t));
-   memset(kernel_dir, 0, sizeof(page_dir_t))
+   memset(kernel_dir, 0, sizeof(page_dir_t));
 
    imap_kernel();
 
