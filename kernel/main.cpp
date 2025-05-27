@@ -4,6 +4,7 @@
 #include "core/util.h"
 #include "mem/vmm.h"
 #include "core/error.h"
+#include "home/home.h"
 
 
 
@@ -16,7 +17,9 @@ extern "C" void _main(u32 magic) {
     imap_kernel();
     init_vmm();
     screen_init();
-
-
-    panic("TEST");
+    
+    while (true) {
+        screen_clear(COLOR(255, 0, 0));
+        screen_swap();
+    }
 }
