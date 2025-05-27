@@ -19,10 +19,4 @@ extern "C" void _main(u32 magic) {
 
 
     panic("TEST");
-    
-    while (1) {
-        screen_clear(COLOR(255, 0, 0));
-        screen_swap();
-
-    }
 }
