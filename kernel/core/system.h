@@ -7,6 +7,10 @@ extern "C" {
 
 #include "util.h"
 
+typedef struct { // Not finished, this should hold all system level stuff.
+        bool quit;
+} system;
+
 #define _assert_0() __error_illegal_macro__
 #define _assert_1(_e) do { if (!(_e)) panic(NULL); } while (0)
 #define _assert_2(_e, _m) do { if (!(_e)) panic((_m)); } while (0)

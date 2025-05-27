@@ -51,6 +51,8 @@ clean:
 	rm -f ./*.iso
 	rm -f ./**/*.elf
 	rm -f ./**/*.bin
+	rm -f ./*.img
+	rm -f ./*.log
 
 # rule to assemble GNU asm files (.S)
 %.o: %.S

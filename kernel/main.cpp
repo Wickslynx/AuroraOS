@@ -1,6 +1,7 @@
 #include "ui/auro.h"
 #include "core/interrupts.h"
 #include "ui/system/screen.h"
+#include "core/system.h"
 #include "core/util.h"
 #include "mem/vmm.h"
 #include "core/error.h"
@@ -15,9 +16,16 @@ extern "C" void _main(u32 magic) {
     imap_kernel();
     init_vmm();
     screen_init();
+
+    bool quit = false;
     
-    while (true) {
-        screen_clear(COLOR(255, 0, 0));
+    while (quit != true) {
+        screen_clear(COLOR(0, 255, 0));
         screen_swap();
     }
+
+    
+
+    // if we ever end up here, loop infinitly...
+    for (;;) {}
 }
