@@ -3,6 +3,7 @@
 #include "ui/system/screen.h"
 #include "core/util.h"
 #include "mem/vmm.h"
+#include "core/error.h"
 
 
 
