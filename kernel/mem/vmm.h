@@ -1,7 +1,7 @@
 #ifndef VMM_H
 #define VMM_H
 
-#ifdef __cpluslus
+#ifdef __cplusplus
 extern "C" {
 #endif
 
