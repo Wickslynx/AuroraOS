@@ -1,5 +1,9 @@
 #include "vmm.h"
 
+
+page_dir_t *kernel_dir __attribute__((aligned(4096)));
+page_table_t *kernel_tables[1024];
+
 void init_vmm() {
    kernel_dir = (page_dir_t*)vmalloc(sizeof(page_dir_t));
    memset(kernel_dir, 0, sizeof(page_dir_t));
