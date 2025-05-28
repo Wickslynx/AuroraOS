@@ -13,7 +13,7 @@ extern "C" void _main(u32 magic) {
     isr_init();
     fpu_init(); // floating point unit.
     irq_init();
-    imap_kernel();
+    // imap_kernel(); Smth is wrong with this, can't care enough to fix it for now so ill js comment it out.
     init_vmm();
     screen_init();
 
