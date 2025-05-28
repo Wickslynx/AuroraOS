@@ -42,8 +42,13 @@ void* vmalloc(u32 size) {
     heap_ptr = (heap_ptr + 0xFFF) & ~0xFFF; // align heap pointer -> boundary
     
     void* addr = (void*)heap_ptr;
-    heap_ptr += size;
-    
+
+    if (!heap_ptr >= 0x140000) {
+       heap_ptr += size;
+    } else {
+       panic("ALLOCATING MEMORY BEYOND BOUNDS"); // should change to a warning.
+    }
+       
     return addr;
 }
 
