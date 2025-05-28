@@ -40,7 +40,7 @@ Please see the *docs* folder for further explanation and examples
 
 
 ![Uhhh ooo, Error! Please contact me.](https://github.com/Wickslynx/AuroraOS/blob/main/docs/assets/auroraos-example-1.0.png)
-![Uhhh ooo, Error! Please contact me.](https://github.com/Wickslynx/AuroraOS/blob/main/docs/assets/auroraos-example-application-1.0.png)
+![Uhhh ooo, Error! Please contact me.](https://github.com/Wickslynx/AuroraOS/blob/main/docs/assets/auroraos-example-window-1.0.png)
 
 # Our goal:
 It's not our goal to make the next windows, just learn and practice modern OS developing in modern C and C++....
