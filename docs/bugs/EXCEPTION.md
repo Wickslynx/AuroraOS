@@ -15,3 +15,7 @@ This was the thoughest one to solve, I still don't know what I did. After a mont
  
  **``0xE``**:
   
+``
+Invalid access at addr 0xF000E000, size 4, region '(null)', reason: rejected
+check_exception old: 0xffffffff new 0xe
+`` 
