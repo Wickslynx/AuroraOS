@@ -6,7 +6,6 @@
 .global _start
 
 .global setVideoMode /* declared in ui/system/screen.h */
-extern setVideoMode
 
 _start:
     cli
@@ -94,6 +93,11 @@ same_segment:
     push %ax         
     call setVideoMode
     add %esp, 4    
+
+    mov ax, 0x4F03  // get current VBE mode
+    int 0x10
+    mov [CURRENT_VIDEO_MODE], bx  // store for later.
+
 
     /* protected mode */
     movl %cr0, %eax
