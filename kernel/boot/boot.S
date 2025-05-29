@@ -104,7 +104,7 @@ same_segment:
     movw $0x2000, %di   
     int $0x10           
     
-    movl [es:0x228], %eax  /* get FB */
+    movl [es + 0x228], %eax  /* get FB */
     movl %eax, [FB_ADDR]   
 
 
