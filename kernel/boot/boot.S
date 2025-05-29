@@ -97,15 +97,15 @@ same_segment:
     /* Get current VBE mode */
     movw %ax, 0x4F03  
     int 0x10
-    movw [CURRENT_VIDEO_MODE], %bx  // store for later.
+    movw [CURRENT_VIDEO_MODE], %bx  /* store for later. */
 
     movw $0x4F01, %ax   
     movw [CURRENT_VIDEO_MODE], %cx    
     movw $0x2000, %di   
     int $0x10           
     
-    movl [es:0x228], %eax
-    movl [FB_ADDR], %eax 
+    movl [es:0x228], %eax  /* get FB */
+    movl %eax, [FB_ADDR]   
 
 
 
