@@ -88,17 +88,18 @@ void Window::create(const char* windowName, int posX, int posY, int windowHeight
     width = windowWidth;
     
     // draw the window border
-    Internal::drawRectangle(COLOR(7, 7, 3), x, y, width, height, 10);
+    Internal::drawRectangle(COLOR(7, 7, 3), x, y, width, height, 5);
     Internal::drawRectangle(COLOR(86, 86, 86), x, y-(y/10*9), width, height/10, 0);
-    Internal::drawRectangle(COLOR(0, 0, 0), x+5, y-5, 10, 10, 0);
-    Internal::drawRectangle(COLOR(0, 0, 0), x+20, y-5, 10, 10, 0);
-    Internal::drawRectangle(COLOR(0, 0, 0), x+35, y-5, 10, 10, 0); 
+    Internal::drawRectangle(COLOR(0, 0, 0), x+5, y-5, 10, 10, 5);
+    Internal::drawRectangle(COLOR(0, 0, 0), x+20, y-5, 10, 10, 5);
+    Internal::drawRectangle(COLOR(0, 0, 0), x+35, y-5, 10, 10, 5); 
 
 
     
 }
 
 int setVideoMode(unsigned short mode) {
+    u16 result;
     if (mode >= 0x100) {
         // VESA mode 
         asm (
@@ -107,6 +108,7 @@ int setVideoMode(unsigned short mode) {
             : "a" (0x4F02), "b" (mode | 0x4000)
             : "memory"
         );
+        return (result == 0x004F) ? 1 : 0; // Error check.
     } else {
         // VGA Mode
         asm (
