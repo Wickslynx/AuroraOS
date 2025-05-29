@@ -7,6 +7,8 @@ extern "C" {
 extern u32 FB_ADDR;
 u32 CURRENT_VIDEO_MODE = 0x001;
 
+extern u8* BUFFER;
+
 // double buffers
 u8 _sbuffers[2][SCREEN_SIZE];
 u8 _sback = 0;
@@ -30,10 +32,11 @@ void screen_clear(u8 color) {
         for (size_t i = 0; i < SCREEN_SIZE / 2; i++) {
             ((u16 *)CURRENT)[i] = color; // 16-bit write
         }
+        return;
     } else {
         memset(&CURRENT, color, SCREEN_SIZE);
+        return;
     }
-}
 }
 
 void screen_init() {
@@ -58,6 +61,7 @@ void screen_init() {
 }
 
 
+
 int setVideoMode(unsigned short mode) {
     u16 result;
     if (mode >= 0x100) {
@@ -78,7 +82,9 @@ int setVideoMode(unsigned short mode) {
             : "a" (mode)
             : "memory"
         );
+        return 1;
     }
+    return 0;  // should never reach here.
 }
 
 
