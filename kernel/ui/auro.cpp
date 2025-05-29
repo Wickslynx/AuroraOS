@@ -1,4 +1,4 @@
-#include "auro.h"
+ #include "auro.h"
 #include "../mem/mem.h"
 #include "../core/util.h"
 #include "../fs/fs.h"
@@ -91,7 +91,7 @@ void Window::addRectangle(u16 color, int posX, int posY, int rectHeight, int rec
         widgets[widgetCount++] = widget;
         
         // Draw the rectangle
-        Internal::drawRectangle(color, x + posX, y + posY, rectWidth, rectHeight);
+        Internal::drawRectangle(color, x + posX, y + posY, rectWidth, rectHeight, 0);
     }
 }
 
