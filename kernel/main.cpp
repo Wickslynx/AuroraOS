@@ -5,7 +5,7 @@
 #include "core/util.h"
 #include "mem/vmm.h"
 #include "core/error.h"
-#include "../../terminal/terminal.cpp"
+#include "../terminal/terminal.cpp"
 
 void test() {
     terminal();
