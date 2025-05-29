@@ -9,7 +9,8 @@ extern "C" {
 
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 200
-#define SCREEN_SIZE (SCREEN_WIDTH * SCREEN_HEIGHT)
+#define BPP 1
+#define SCREEN_SIZE (SCREEN_WIDTH * SCREEN_HEIGHT * BPP)
 
 // 8 bit format
 #define COLOR(_r, _g, _b)((u8)( \
@@ -63,6 +64,7 @@ extern u8 _sback;
 void screen_swap();
 void screen_clear(u8 color);
 void screen_init();
+int setVideoMode(u16 mode);
 
 #ifdef __cplusplus
 }
