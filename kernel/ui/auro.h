@@ -26,21 +26,6 @@ Don't use them.
 
 namespace Auro {
 
-// To get all VBE modes.
-typedef struct {
-    u16 mode_num;
-    u16 width;
-    u16 height;
-    u8 bpp;
-    u8 reserved;
-    u32 framebuffer;
-} VBE;
-
-u16 mode_count = *(u16*)0x5000;
-VBE *modes = (VBE*)0x5002;
-
-
-
 class Widget {
 public:
     Widget() : hidden(false), clickable(false) {}
