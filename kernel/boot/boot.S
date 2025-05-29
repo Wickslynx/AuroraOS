@@ -4,6 +4,9 @@
 .text
 
 .global _start
+
+extern setVideoMode
+
 _start:
     cli
 
@@ -85,6 +88,11 @@ same_segment:
     lgdt gdt
     lidt idt
 
+    /* For now i'll just set the video mode manually (1024x768 16 bit), ill figure out a better solution later.*/
+    movw %eax, 0x117     
+    push eax         
+    call setVideoMode
+    add esp, 4    
 
     /* protected mode */
     movl %cr0, %eax
