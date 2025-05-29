@@ -5,6 +5,7 @@
 
 .global _start
 
+.global setVideoMode /* declared in ui/system/screen.h */
 extern setVideoMode
 
 _start:
@@ -89,10 +90,10 @@ same_segment:
     lidt idt
 
     /* For now i'll just set the video mode manually (1024x768 16 bit), ill figure out a better solution later.*/
-    movw %eax, 0x117     
-    push eax         
+    movw %ax, 0x117     
+    push %ax         
     call setVideoMode
-    add esp, 4    
+    add %esp, 4    
 
     /* protected mode */
     movl %cr0, %eax
