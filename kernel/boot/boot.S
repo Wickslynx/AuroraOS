@@ -94,9 +94,19 @@ same_segment:
     call setVideoMode
     add %esp, 4    
 
-    mov ax, 0x4F03  // get current VBE mode
+    /* Get current VBE mode */
+    movw %ax, 0x4F03  
     int 0x10
-    mov [CURRENT_VIDEO_MODE], bx  // store for later.
+    movw [CURRENT_VIDEO_MODE], %bx  // store for later.
+
+    movw $0x4F01, %ax   
+    movw [CURRENT_VIDEO_MODE], %cx    
+    movw $0x2000, %di   
+    int $0x10           
+    
+    movl [es:0x228], %eax
+    movl [FB_ADDR], %eax 
+
 
 
     /* protected mode */
