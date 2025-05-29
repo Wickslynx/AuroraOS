@@ -102,7 +102,7 @@ private:
 
 
 namespace Internal {
-    void drawRectangle(u16 color, int x, int y, int width, int height);
+    void drawRectangle(u16 color, int x, int y, int width, int height, int border_radius);
     void drawText(const char* text, int x, int y, u8 color);
 }
 
