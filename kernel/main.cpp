@@ -8,7 +8,7 @@
 
 
 void test() {
-    Auro::SetVideoMode(0x117);
+    Auro::setVideoMode(0x117);
     Auro::Window window;
     window.create("Test", 10, 10, SCREEN_HEIGHT - 20, SCREEN_WIDTH - 20);
 }
