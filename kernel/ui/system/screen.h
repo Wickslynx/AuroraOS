@@ -7,7 +7,7 @@ extern "C" {
 
 #include "../../core/util.h"
 
-#define SCREEN_WIDTH 300
+#define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 200
 #define BPP 1
 #define SCREEN_SIZE (SCREEN_WIDTH * SCREEN_HEIGHT * BPP)
