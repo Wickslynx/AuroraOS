@@ -40,8 +40,10 @@ void screen_clear(u8 color) {
 }
 
 void screen_init() {
-    if (CURRENT_VIDEO_MODE < 0x100) { // VGA - rn this aint used.
-        u8 *BUFFER = (u8 *) 0xA0000;
+    if (CURRENT_VIDEO_MODE >= 0x100) { // VGA - rn this aint used.
+       BUFFER = (u8 *) FB_ADDR;
+    } else { // VBE
+        BUFFER = (u8 *) 0xA0000;
         // configure palette with 8-bit RRRGGGBB color
         outportb(PALETTE_MASK, 0xFF);
         outportb(PALETTE_WRITE, 0);
@@ -54,8 +56,6 @@ void screen_init() {
         outportb(PALETTE_DATA, 0x3F);
         outportb(PALETTE_DATA, 0x3F);
         outportb(PALETTE_DATA, 0x3F);
-    } else { // VBE
-        u8 *BUFFER = (u8 *) FB_ADDR;
     }
     
 }
