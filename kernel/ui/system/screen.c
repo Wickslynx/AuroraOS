@@ -4,7 +4,7 @@
 extern "C" {
 #endif 
 
-extern u32 FB_ADDR;
+//extern u32 FB_ADDR;
 u32 CURRENT_VIDEO_MODE = 0x001;
 
 
@@ -41,9 +41,10 @@ void screen_clear(u8 color) {
 }
 
 void screen_init() {
-    if (CURRENT_VIDEO_MODE >= 0x100) { // VGA - rn this aint used.
-       BUFFER = (u8 *) FB_ADDR;
-    } else { // VBE
+    if (CURRENT_VIDEO_MODE >= 0x100) { // VBE - rn this aint used.
+        //BUFFER = (u8 *) FB_ADDR;
+        return;
+    } else { // VGA
         // configure palette with 8-bit RRRGGGBB color
         outportb(PALETTE_MASK, 0xFF);
         outportb(PALETTE_WRITE, 0);
