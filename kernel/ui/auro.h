@@ -26,6 +26,7 @@ Don't use them.
 
 namespace Auro {
 
+// To get all VBE modes.
 typedef struct {
     u16 mode_num;
     u16 width;
