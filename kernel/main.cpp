@@ -8,7 +8,7 @@
 
 
 void test() {
-    if (Auro::setVideoMode(0x117)) {
+    if (!Auro::setVideoMode(0x117)) {
 	    panic("VIDEO MODE NOT SUPPORTED!");
     }
     Auro::Window window;
