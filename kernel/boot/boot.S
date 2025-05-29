@@ -95,7 +95,7 @@ same_segment:
     add %esp, 4    
 
     /* Get current VBE mode */
-    movw 0x4F03, %ax  
+    movw $0x4F03, %ax  
     int 0x10
     movw %bx, [CURRENT_VIDEO_MODE]  /* store for later. */
 
