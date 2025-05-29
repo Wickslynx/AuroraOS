@@ -8,7 +8,7 @@
 #include "../../terminal/terminal.cpp"
 
 void test() {
-	terminal();
+    terminal();
 }
     
 extern "C" void _main(u32 magic) {
