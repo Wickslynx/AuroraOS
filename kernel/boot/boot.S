@@ -89,7 +89,7 @@ same_segment:
     lidt idt
 
     /* For now i'll just set the video mode manually (1024x768 16 bit), ill figure out a better solution later.*/
-    movw %ax, 0x117     
+    movw $0x117, %ax     
     push %ax         
     call setVideoMode
     add %esp, 4    
@@ -97,7 +97,7 @@ same_segment:
     /* Get current VBE mode */
     movw %ax, 0x4F03  
     int 0x10
-    movw [CURRENT_VIDEO_MODE], %bx  /* store for later. */
+    movw %bx, [CURRENT_VIDEO_MODE]  /* store for later. */
 
     movw $0x4F01, %ax   
     movw [CURRENT_VIDEO_MODE], %cx    
