@@ -11,6 +11,7 @@ extern "C" {
 #define SCREEN_HEIGHT 200
 #define SCREEN_SIZE (SCREEN_WIDTH * SCREEN_HEIGHT)
 
+// 8 bit format
 #define COLOR(_r, _g, _b)((u8)( \
     (((_r) & 0x7) << 5) |       \
     (((_g) & 0x7) << 2) |       \
@@ -28,6 +29,15 @@ extern "C" {
             CLAMP(COLOR_G(_c) + __d, 0, 7),     \
             CLAMP(COLOR_B(_c) + __d, 0, 3)      \
         );})
+
+// 32 bit format:
+
+#define __COLOR(_r, _g, _b) ((u32)(((_r) << 16) | ((_g) << 8) | (_b)))
+    
+#define __COLOR_R(_color) (((_color) >> 16) & 0xFF) 
+#define __COLOR_G(_color) (((_color) >> 8) & 0xFF)  
+#define __COLOR_B(_color) (((_color) >> 0) & 0xFF)   
+
 
 extern u8 _sbuffers[2][SCREEN_SIZE];
 extern u8 _sback;
