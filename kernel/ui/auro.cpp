@@ -99,15 +99,26 @@ void Window::create(const char* windowName, int posX, int posY, int windowHeight
 }
 
 int setVideoMode(unsigned short mode) {
-    union REGS regs;
-    
-    regs.x.ax = 0x4F02;              // Set VESA mode
-    regs.x.bx = mode | 0x4000;       // Mode + linear framebuffer bit
-    
-    int86(0x10, &regs, &regs);
-    
-    return (regs.x.ax == 0x004F) ? 1 : 0;  // Return 1 for success, 0 for failure
+    if (mode >= 0x100) {
+        // VESA mode 
+        asm volatile (
+            "int $0x10"
+            :
+            : "a" (0x4F02), "b" (mode | 0x4000)
+            : "memory"
+        );
+    } else {
+        // VGA Mode
+        asm volatile (
+            "int $0x10"
+            :
+            : "a" (mode)
+            : "memory"
+        );
+    }
+    return 1;
 }
+
 
 
 
