@@ -26,11 +26,18 @@ void screen_swap() {
 }
 
 void screen_clear(u8 color) {
-    memset(&CURRENT, color, SCREEN_SIZE);
+    if (CURRENT_VIDEO_MODE < 0x100) {
+        for (size_t i = 0; i < SCREEN_SIZE / 2; i++) {
+            ((u16 *)CURRENT)[i] = color; // 16-bit write
+        }
+    } else {
+        memset(&CURRENT, color, SCREEN_SIZE);
+    }
+}
 }
 
 void screen_init() {
-    if (CURRENT_VIDEO_MODE <= 0x100) { // VGA - rn this aint used.
+    if (CURRENT_VIDEO_MODE < 0x100) { // VGA - rn this aint used.
         u8 *BUFFER = (u8 *) 0xA0000;
         // configure palette with 8-bit RRRGGGBB color
         outportb(PALETTE_MASK, 0xFF);
