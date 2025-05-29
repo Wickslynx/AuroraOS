@@ -5,7 +5,7 @@ extern "C" {
 #endif 
 
 extern u32 FB_ADDR;
-extern u32 CURRENT_VIDEO_MODE;
+u32 CURRENT_VIDEO_MODE = 0x001;
 
 // double buffers
 u8 _sbuffers[2][SCREEN_SIZE];
