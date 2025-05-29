@@ -30,9 +30,19 @@ WindowManager* WindowManager::instance = nullptr;
 
 //  Func defs
 
-void Internal::drawRectangle(u16 color, int x, int y, int width, int height) {
+void Internal::drawRectangle(u16 color, int x, int y, int width, int height, int border-radius) {
     for (int j = 0; j < height; j++) {
-        screen_fill(color, x, y + j, width, 1);
+        for (int i = 0; i < width; i++) {
+            bool inRoundedCorner = // Just alot of advanced math that i don't understand.
+                (i < round && j < round && (i*i + j*j) < (round*round)) || // Top-left
+                (i < round && j > height - round && (i*i + (height-j)*(height-j)) < (round*round)) || // Bottom-left
+                (i > width - round && j < round && ((width-i)*(width-i) + j*j) < (round*round)) || // Top-right
+                (i > width - round && j > height - round && ((width-i)*(width-i) + (height-j)*(height-j)) < (round*round)); // Bottom-right
+            
+            if (!inRoundedCorner) {
+                screen_fill(color, x + i, y + j, 1, 1);
+            }
+        }
     }
 }
 
@@ -60,7 +70,7 @@ void Window::create(const char* windowName, int posX, int posY, int windowHeight
     width = windowWidth;
     
     // draw the window border
-    Internal::drawRectangle(COLOR(7, 7, 3), x, y, width, height);
+    Internal::drawRectangle(COLOR(7, 7, 3), x, y, width, height, 10);
     Internal::drawRectangle(COLOR(86, 86, 86), x, y-(y/10*9), width, height/10);
     Internal::drawRectangle(COLOR(0, 0, 0), x+5, y-5, 10, 10);
     Internal::drawRectangle(COLOR(0, 0, 0), x+20, y-5, 10, 10);
