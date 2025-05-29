@@ -8,9 +8,11 @@
 
 
 void test() {
+    /* This needs to be done in real mode, i have no idea how tho.
     if (!Auro::setVideoMode(0x117)) {
 	    panic("VIDEO MODE NOT SUPPORTED!");
     }
+    */
     Auro::Window window;
     window.create("Test", 10, 10, SCREEN_HEIGHT - 20, SCREEN_WIDTH - 20);
 }
