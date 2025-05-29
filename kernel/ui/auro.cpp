@@ -102,7 +102,7 @@ void Window::create(const char* windowName, int posX, int posY, int windowHeight
 
 
 
-void Window::addRectangle(u16 color, int posX, int posY, int rectHeight, int rectWidth) {
+void Window::Rectangle(u16 color, int posX, int posY, int rectHeight, int rectWidth) {
     if (rectHeight > height || rectWidth > width) {
         return;
     }
@@ -115,6 +115,22 @@ void Window::addRectangle(u16 color, int posX, int posY, int rectHeight, int rec
         // Draw the rectangle
         Internal::drawRectangle(color, x + posX, y + posY, rectWidth, rectHeight, 0);
     }
+}
+
+void Window::Text(const char* text, u16 color, int posX, int posY, int Height) {
+    if (Height < height) {
+        return;
+    }
+    
+    if (widgetCount < MAX_WIDGETS) {
+        // create a new widget
+        Widget widget;
+        widgets[widgetCount++] = widget;
+        
+        // Draw the rectangle
+        Internal::drawText(text, x + posX, y + posY, color);
+    }
+}
 }
 
 WindowManager* WindowManager::initialize() {
