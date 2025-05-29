@@ -9,6 +9,6 @@ int terminal() {
   window.create("Aurora Terminal", 10, 10, WINDOW_HEIGHT, WINDOW_WIDTH);
 
   window.rectangle(COLOR(0, 0, 0), 0, 0, WINDOW_HEIGHT, WINDOW_WIDTH);
-  window.text("user@aurora - $ ", WINDOW_HEIGHT - 10, WINDOW_WIDTH / 20, COLOR(0, 7, 0);
+  window.text("user@aurora - $ ", WINDOW_HEIGHT - 10, WINDOW_WIDTH / 20, COLOR(0, 7, 0));
   return 0;
 }
