@@ -85,8 +85,6 @@ same_segment:
     lgdt gdt
     lidt idt
 
-    /* Get all VBE modes for later */
-    call get_vbe_mode 
 
     /* protected mode */
     movl %cr0, %eax
@@ -278,81 +276,6 @@ DATA_SEGMENT:
     .byte 0x00            /* base (24-31) */
 GDT_END:
 
-
-/* VBE Modes */
-.section .text
-.equ VBE_MODE_COUNT, 0x5000
-.equ VBE_MODE_DATA, 0x5002
-.global get_vbe_mode
-
-get_vbe_mode:
-    pusha
-    pushw %es
-    movw $0, VBE_MODE_COUNT
-    movw $0x7000, %ax
-    movw %ax, %es
-    xorw %di, %di
-    movw $256, %cx
-    xorw %ax, %ax
-    rep stosw
-    movl $0x32454256, %es:0
-    movw $0x4F00, %ax
-    xorw %di, %di
-    int $0x10
-    cmpw $0x004F, %ax
-    jne .done
-    cmpl $0x41534556, %es:0
-    jne .done
-    movw %es:14, %ax
-    movw %es:16, %dx
-    shlw $4, %dx
-    addw %dx, %ax
-    movw %ax, %si
-    xorw %cx, %cx
-.loop:
-    movw (%si), %ax
-    cmpw $0xFFFF, %ax
-    je .done
-    cmpw $32, %cx
-    jge .done
-    pushw %ax
-    pushw %cx
-    pushw %si
-    movw $0x4F01, %ax
-    movw (%si), %cx
-    movw $0x200, %di
-    int $0x10
-    popw %si
-    popw %cx
-    popw %dx
-    cmpw $0x004F, %ax
-    jne .next
-    testw $0x90, %es:0x200
-    jnz .store
-    jmp .next
-.store:
-    movw %cx, %bx
-    imulw $12, %bx
-    addw $VBE_MODE_DATA, %bx
-    movw %dx, (%bx)
-    movw %es:0x212, %ax
-    movw %ax, 2(%bx)
-    movw %es:0x214, %ax
-    movw %ax, 4(%bx)
-    movb %es:0x219, %al
-    movb %al, 6(%bx)
-    movb $0, 7(%bx)
-    movl %es:0x228, %eax
-    movl %eax, 8(%bx)
-    incw %cx
-.next:
-    addw $2, %si
-    jmp .loop
-.done:
-    movw %cx, VBE_MODE_COUNT
-    popw %es
-    popa
-    ret
 
 
 
