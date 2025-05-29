@@ -88,7 +88,7 @@ same_segment:
     lgdt gdt
     lidt idt
 
-    /* For now i'll just set the video mode manually (1024x768 16 bit), ill figure out a better solution later.*/
+    /* For now i'll just set the video mode manually (1024x768 16 bit), ill figure out a better solution later. - scrapped, just caused errors.
     movw $0x117, %ax     
     push %ax         
     call setVideoMode
@@ -107,7 +107,7 @@ same_segment:
     movl [es + 0x228], %eax  /* get FB */
     movl %eax, [FB_ADDR]   
 
-
+    */
 
     /* protected mode */
     movl %cr0, %eax
