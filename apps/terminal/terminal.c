@@ -10,4 +10,5 @@ int terminal() {
 
   window.rectangle(COLOR(0, 0, 0), 0, 0, WINDOW_HEIGHT, WINDOW_WIDTH);
   window.text("user@aurora - $ ", WINDOW_HEIGHT - 10, WINDOW_WIDTH / 20);
+  return 0;
 }
