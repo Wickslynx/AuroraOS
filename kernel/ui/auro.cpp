@@ -104,10 +104,11 @@ int setVideoMode(unsigned short mode) {
         // VESA mode 
         asm (
             "int $0x10"
-            :
+            : "=a" (result)
             : "a" (0x4F02), "b" (mode | 0x4000)
             : "memory"
         );
+
         return (result == 0x004F) ? 1 : 0; // Error check.
     } else {
         // VGA Mode
