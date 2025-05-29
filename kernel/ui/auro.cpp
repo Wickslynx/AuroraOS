@@ -101,7 +101,7 @@ void Window::create(const char* windowName, int posX, int posY, int windowHeight
 int setVideoMode(unsigned short mode) {
     if (mode >= 0x100) {
         // VESA mode 
-        asm volatile (
+        asm (
             "int $0x10"
             :
             : "a" (0x4F02), "b" (mode | 0x4000)
@@ -109,7 +109,7 @@ int setVideoMode(unsigned short mode) {
         );
     } else {
         // VGA Mode
-        asm volatile (
+        asm (
             "int $0x10"
             :
             : "a" (mode)
