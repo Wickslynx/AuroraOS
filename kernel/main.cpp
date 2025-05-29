@@ -8,6 +8,7 @@
 
 
 void test() {
+    Auro::SetVideoMode(0x117);
     Auro::Window window;
     window.create("Test", 10, 10, SCREEN_HEIGHT - 20, SCREEN_WIDTH - 20);
 }
@@ -22,7 +23,6 @@ extern "C" void _main(u32 magic) {
     init_vmm();
     */
     screen_init();
-
     bool quit = false;
     
     while (quit != true) {
