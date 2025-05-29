@@ -48,7 +48,8 @@ public:
     
     void create(const char* windowName, int posX, int posY, int windowHeight, int windowWidth);
     
-    void addRectangle(u16 color, int posX, int posY, int rectHeight, int rectWidth);
+    void rectangle(u16 color, int posX, int posY, int rectHeight, int rectWidth);
+    void text(const char *text, int posX, int posY, u16 color);
 
 
     // All get operations.
