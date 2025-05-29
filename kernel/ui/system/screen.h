@@ -7,9 +7,9 @@ extern "C" {
 
 #include "../../core/util.h"
 
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 200
-#define BPP 1
+#define SCREEN_WIDTH 1024
+#define SCREEN_HEIGHT 768
+#define BPP 2
 #define SCREEN_SIZE (SCREEN_WIDTH * SCREEN_HEIGHT * BPP)
 
 // 8 bit format
