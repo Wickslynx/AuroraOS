@@ -106,6 +106,7 @@ namespace Internal {
     void drawText(const char* text, int x, int y, u8 color);
 }
 
+int setVideoMode(unsigned short mode);
 
 void initialize();
 Window* createWindow(const char* name, int x, int y, int height, int width);
