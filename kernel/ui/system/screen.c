@@ -4,7 +4,8 @@
 extern "C" {
 #endif 
 
-static u8 *BUFFER = (u8 *) 0xA0000;
+extern u32 FB_ADDR;
+extern u32 CURRENT_VIDEO_MODE;
 
 // double buffers
 u8 _sbuffers[2][SCREEN_SIZE];
@@ -29,19 +30,26 @@ void screen_clear(u8 color) {
 }
 
 void screen_init() {
-    // configure palette with 8-bit RRRGGGBB color
-    outportb(PALETTE_MASK, 0xFF);
-    outportb(PALETTE_WRITE, 0);
-    for (u8 i = 0; i < 255; i++) {
-        outportb(PALETTE_DATA, (((i >> 5) & 0x7) * (256 / 8)) / 4);
-        outportb(PALETTE_DATA, (((i >> 2) & 0x7) * (256 / 8)) / 4);
-        outportb(PALETTE_DATA, (((i >> 0) & 0x3) * (256 / 4)) / 4);
+    if (CURRENT_VIDEO_MODE <= 0x100) { // VGA - rn this aint used.
+        u8 *BUFFER = (u8 *) 0xA0000;
+        // configure palette with 8-bit RRRGGGBB color
+        outportb(PALETTE_MASK, 0xFF);
+        outportb(PALETTE_WRITE, 0);
+        for (u8 i = 0; i < 255; i++) {
+            outportb(PALETTE_DATA, (((i >> 5) & 0x7) * (256 / 8)) / 4);
+            outportb(PALETTE_DATA, (((i >> 2) & 0x7) * (256 / 8)) / 4);
+            outportb(PALETTE_DATA, (((i >> 0) & 0x3) * (256 / 4)) / 4);
+        }
+        // set color 255 = white
+        outportb(PALETTE_DATA, 0x3F);
+        outportb(PALETTE_DATA, 0x3F);
+        outportb(PALETTE_DATA, 0x3F);
+    } else { // VBE
+        u8 *BUFFER = (u8 *) FB_ADDR;
     }
-    // set color 255 = white
-    outportb(PALETTE_DATA, 0x3F);
-    outportb(PALETTE_DATA, 0x3F);
-    outportb(PALETTE_DATA, 0x3F);
+    
 }
+
 
 int setVideoMode(unsigned short mode) {
     u16 result;
