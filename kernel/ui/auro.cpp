@@ -102,7 +102,7 @@ void Window::create(const char* windowName, int posX, int posY, int windowHeight
 
 
 
-void Window::Rectangle(u16 color, int posX, int posY, int rectHeight, int rectWidth) {
+void Window::rectangle(u16 color, int posX, int posY, int rectHeight, int rectWidth) {
     if (rectHeight > height || rectWidth > width) {
         return;
     }
@@ -117,7 +117,7 @@ void Window::Rectangle(u16 color, int posX, int posY, int rectHeight, int rectWi
     }
 }
 
-void Window::Text(const char* text, u16 color, int posX, int posY, int Height) {
+void Window::text(const char* text, u16 color, int posX, int posY, int Height) {
     if (Height < height) {
         return;
     }
