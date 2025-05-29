@@ -33,13 +33,31 @@ WindowManager* WindowManager::instance = nullptr;
 void Internal::drawRectangle(u16 color, int x, int y, int width, int height, int border_radius) {
     for (int j = 0; j < height; j++) {
         for (int i = 0; i < width; i++) {
-            bool inRoundedCorner = // Just alot of advanced math that i don't understand.
-                (i < border_radius && j < border_radius && (i*i + j*j) < (border_radius*border_radius)) || // Top-left
-                (i < border_radius && j > height - border_radius && (i*i + (height-j)*(height-j)) < (border_radius*border_radius)) || // Bottom-left
-                (i > width - border_radius && j < border_radius && ((width-i)*(width-i) + j*j) < (border_radius*border_radius)) || // Top-right
-                (i > width - border_radius && j > height - border_radius && ((width-i)*(width-i) + (height-j)*(height-j)) < (border_radius*border_radius)); // Bottom-right
+            bool shouldDraw = true;
             
-            if (!inRoundedCorner) {
+            // Just alot of advanced math, i don't understand anything..
+            if (i < border_radius && j < border_radius) {
+                int dx = border_radius - i;
+                int dy = border_radius - j;
+                shouldDraw = (dx*dx + dy*dy) <= (border_radius*border_radius);
+            }
+            else if (i >= width - border_radius && j < border_radius) {
+                int dx = i - (width - border_radius - 1);
+                int dy = border_radius - j;
+                shouldDraw = (dx*dx + dy*dy) <= (border_radius*border_radius);
+            }
+            else if (i < border_radius && j >= height - border_radius) {
+                int dx = border_radius - i;
+                int dy = j - (height - border_radius - 1);
+                shouldDraw = (dx*dx + dy*dy) <= (border_radius*border_radius);
+            }
+            else if (i >= width - border_radius && j >= height - border_radius) {
+                int dx = i - (width - border_radius - 1);
+                int dy = j - (height - border_radius - 1);
+                shouldDraw = (dx*dx + dy*dy) <= (border_radius*border_radius);
+            }
+            
+            if (shouldDraw) {
                 screen_fill(color, x + i, y + j, 1, 1);
             }
         }
