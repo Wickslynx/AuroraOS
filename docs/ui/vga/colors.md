@@ -1,0 +1,6 @@
+0x24 (36 decimal) - Dark gray (R=1, G=1, B=0)
+0x49 (73 decimal) - Medium-dark gray (R=2, G=2, B=1)
+0x6D (109 decimal) - Medium gray (R=3, G=3, B=1)
+0x92 (146 decimal) - Medium-light gray (R=4, G=4, B=2)
+0xB6 (182 decimal) - Light gray (R=5, G=5, B=2)
+0xDB (219 decimal) - Very light gray (R=6, G=6, B=3)
