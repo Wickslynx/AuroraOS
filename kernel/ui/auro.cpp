@@ -110,7 +110,15 @@ void Window::create(const char* windowName, int posX, int posY, int windowHeight
 }
 
 
+void Window::clear(u16 color) {
 
+    // exlude titlebar.
+    y += (height / 10);  
+    height -= (height / 10);  
+    
+  
+    Internal::drawRectangle(color, x + 5, y, width - 10, height, 0);
+}
 
 
 void Window::rectangle(u16 color, int posX, int posY, int rectHeight, int rectWidth) {
