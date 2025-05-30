@@ -144,18 +144,18 @@ void Window::text(const char* text, int posX, int posY, u16 color) {
 }
 
 Auro::WindowManager* WindowManager::initialize() {
-    if (!instance) {
-        instance = new WindowManager();
+    if (!WindowManager::instance) {
+        WindowManager::instance = new Auro::WindowManager();
     }
-    return instance;
+    return WindowManager::instance;
 }
 
 bool WindowManager::addWindow(Auro::Window* window) {
-    if (!window || windowCount >= MAX_WINDOWS) {
+    if (WindowManager::windowCount >= MAX_WINDOWS) {
         return false;
     }
     
-    windows[windowCount++] = window;
+    WindowManager::windows[WindowManager::windowCount++] = window;
     return true;
 }
 
