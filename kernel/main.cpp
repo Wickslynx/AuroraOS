@@ -24,7 +24,7 @@ extern "C" void _main(u32 magic) {
     bool quit = false;
     
     while (quit != true) {
-        screen_clear(COLOR(0, 255, 0));
+        screen_clear(COLOR(0, 0, 7));
 	test();
         screen_swap();
     }
