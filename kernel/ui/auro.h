@@ -50,6 +50,7 @@ public:
     
     void rectangle(u16 color, int posX, int posY, int rectHeight, int rectWidth);
     void text(const char *text, int posX, int posY, u16 color);
+    void clear(u16 color);
 
 
     // All get operations.
