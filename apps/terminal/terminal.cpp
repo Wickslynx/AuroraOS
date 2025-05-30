@@ -8,7 +8,7 @@ int terminal() {
   
   window.create("Aurora Terminal", 10, 10, height, width);
 
-  window.rectangle(COLOR(0, 0, 0), 0, 0, height, width);
-  window.text("user@aurora - $ ", (width - font_width("user@aurora - $")) / 10, 10, COLOR(0, 7, 0));
+  window.clear(COLOR(0, 0, 0));
+  window.text("user@aurora - $ ", (width - font_width("user@aurora - $")) / 20, 10, COLOR(0, 7, 0));
   return 0;
 }
