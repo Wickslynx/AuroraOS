@@ -100,8 +100,7 @@ void Window::create(const char* windowName, int posX, int posY, int windowHeight
     Internal::drawRectangle(COLOR(0, 0, 0), x+20, y-5, 10, 10, 5);
     Internal::drawRectangle(COLOR(0, 0, 0), x+35, y-5, 10, 10, 5); 
 
-    manager = instance;
- 
+    WindowManager* manager = getInstance(); 
     if (manager) {
         manager->addWindow(this);
     }
