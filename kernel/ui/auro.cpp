@@ -76,11 +76,6 @@ void Window::create(const char* windowName, int posX, int posY, int windowHeight
         delete[] name;
     }
 
-    WindowManager* manager = WindowManager::getInstance();
- 
-    if (manager) {
-        manager->addWindow(window);
-    }
     
     // copy the window name
     size_t nameLength = strlen(windowName) + 1;
@@ -99,6 +94,13 @@ void Window::create(const char* windowName, int posX, int posY, int windowHeight
     Internal::drawRectangle(COLOR(0, 0, 0), x+5, y-5, 10, 10, 5);
     Internal::drawRectangle(COLOR(0, 0, 0), x+20, y-5, 10, 10, 5);
     Internal::drawRectangle(COLOR(0, 0, 0), x+35, y-5, 10, 10, 5); 
+
+    /*
+    WindowManager* manager = WindowManager::getInstance();
+    if (manager) {
+        manager->addWindow(window);
+    }
+    */
 
 
     
@@ -135,7 +137,7 @@ void Window::text(const char* text, int posX, int posY, u16 color) {
 }
 }
 
-WindowManager* WindowManager::initialize() {
+Auro::WindowManager* WindowManager::initialize() {
     if (!instance) {
         instance = new WindowManager();
     }
