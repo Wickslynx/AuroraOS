@@ -117,7 +117,7 @@ void Window::rectangle(u16 color, int posX, int posY, int rectHeight, int rectWi
     }
 }
 
-void Window::text(const char* text, u16 color, int posX, int posY) {
+void Window::text(const char* text, int posX, int posY, u16 color) {
     
     if (widgetCount < MAX_WIDGETS) {
         // create a new widget
