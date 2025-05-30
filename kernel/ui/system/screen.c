@@ -8,7 +8,7 @@ extern "C" {
 u32 CURRENT_VIDEO_MODE = 0x001;
 
 
-static u8* BUFFER = 0xA0000;
+static u8* BUFFER = (u8*) 0xA0000;
 
 // double buffers
 u8 _sbuffers[2][SCREEN_SIZE];
