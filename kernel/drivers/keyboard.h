@@ -74,5 +74,7 @@ struct Keyboard {
 
 void keyboard_init();
 void keyboard_layout(KeyboardLayout layout); // Use the typedef'd enum here
+u8 keyboard_get_last_char();
+u8 stoc(u8 scancode);
 
-#endif // KEYBOARD_H
+
