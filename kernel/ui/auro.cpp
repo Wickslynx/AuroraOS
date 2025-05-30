@@ -142,7 +142,7 @@ WindowManager* WindowManager::initialize() {
     return instance;
 }
 
-bool WindowManager::addWindow(Window* window) {
+bool WindowManager::addWindow(Auro::Window* window) {
     if (!window || windowCount >= MAX_WINDOWS) {
         return false;
     }
