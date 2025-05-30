@@ -81,7 +81,6 @@ void Window::create(const char* windowName, int posX, int posY, int windowHeight
     if (name) {
         delete[] name;
     }
-
     
     // copy the window name
     size_t nameLength = strlen(windowName) + 1;
@@ -91,7 +90,7 @@ void Window::create(const char* windowName, int posX, int posY, int windowHeight
     // set window props
     x = posX;
     y = posY;
-    height = windowHeight;
+    height = windowHeight - (windowHeight/10);
     width = windowWidth;
     
     // draw the window border
@@ -101,12 +100,11 @@ void Window::create(const char* windowName, int posX, int posY, int windowHeight
     Internal::drawRectangle(COLOR(0, 0, 0), x+20, y-5, 10, 10, 5);
     Internal::drawRectangle(COLOR(0, 0, 0), x+35, y-5, 10, 10, 5); 
 
-    /*
-    WindowManager* manager = WindowManager::getInstance();
+    manager = instance;
+ 
     if (manager) {
-        manager->addWindow(window);
+        manager->addWindow(this);
     }
-    */
 
 
     
