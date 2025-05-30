@@ -1,14 +1,11 @@
 #include "../../kernel/ui/auro.h"
-// #include "../../kernel/drivers/keyboard.h"
-
-#define WINDOW_WIDTH SCREEN_WIDTH - 20
-#define WINDOW_HEIGHT SCREEN_HEIGHT - 20
+#include "../../kernel/drivers/keyboard.h"
 
 int terminal() {
   Auro::Window window;
-  window.create("Aurora Terminal", 10, 10, WINDOW_HEIGHT, WINDOW_WIDTH);
+  window.create("Aurora Terminal", 10, 10, window.height, window.width);
 
-  window.rectangle(COLOR(0, 0, 0), 0, 0, WINDOW_HEIGHT, WINDOW_WIDTH);
-  window.text("user@aurora - $ ", WINDOW_HEIGHT - 10, WINDOW_WIDTH / 20, COLOR(0, 7, 0));
+  window.rectangle(COLOR(0, 0, 0), 0, 0, window.height, window.width);
+  window.text("user@aurora - $ ", window.height - 10, window.width / 20, COLOR(0, 7, 0));
   return 0;
 }
