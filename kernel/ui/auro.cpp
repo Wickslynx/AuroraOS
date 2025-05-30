@@ -117,7 +117,7 @@ void Window::clear(u16 color) {
     height -= (height / 10);  
     
   
-    Internal::drawRectangle(color, x + 5, y, width - 10, height, 0);
+    Internal::drawRectangle(color, x + 5, y, width - 8, height, 0);
 }
 
 
