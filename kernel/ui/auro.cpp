@@ -25,7 +25,13 @@ Everything under
 namespace Auro {
 
 
-WindowManager* WindowManager::instance = nullptr;
+Auro::WindowManager* WindowManager::instance = nullptr;
+
+
+
+
+
+
 
 
 //  Func defs
