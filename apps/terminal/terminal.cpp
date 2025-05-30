@@ -3,8 +3,8 @@
 
 int terminal() {
   Auro::Window window;
-  width = window.getWidth();
-  height = window.getHeight();
+  int width = window.getWidth();
+  int height = window.getHeight();
   
   window.create("Aurora Terminal", 10, 10, height, width);
 
