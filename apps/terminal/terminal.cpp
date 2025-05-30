@@ -3,9 +3,12 @@
 
 int terminal() {
   Auro::Window window;
-  window.create("Aurora Terminal", 10, 10, window.height, window.width);
+  width = window.getWidth();
+  height = window.getHeight();
+  
+  window.create("Aurora Terminal", 10, 10, height, width);
 
-  window.rectangle(COLOR(0, 0, 0), 0, 0, window.height, window.width);
-  window.text("user@aurora - $ ", window.height - 10, window.width / 20, COLOR(0, 7, 0));
+  window.rectangle(COLOR(0, 0, 0), 0, 0, height, width);
+  window.text("user@aurora - $ ", height - 10, width / 20, COLOR(0, 7, 0));
   return 0;
 }
