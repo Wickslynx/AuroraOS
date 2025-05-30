@@ -75,6 +75,12 @@ void Window::create(const char* windowName, int posX, int posY, int windowHeight
     if (name) {
         delete[] name;
     }
+
+    WindowManager* manager = WindowManager::getInstance();
+ 
+    if (manager) {
+        manager->addWindow(window);
+    }
     
     // copy the window name
     size_t nameLength = strlen(windowName) + 1;
@@ -108,7 +114,6 @@ void Window::rectangle(u16 color, int posX, int posY, int rectHeight, int rectWi
     }
     
     if (widgetCount < MAX_WIDGETS) {
-        // create a new widget
         Widget widget;
         widgets[widgetCount++] = widget;
         
@@ -148,7 +153,7 @@ bool WindowManager::addWindow(Window* window) {
 
 
 /*
-bool Image(Window* window, const char* path) {
+bool Window::Image(Window* window, const char* path) {
     if (!window || !path) {
         return false;
     }
@@ -170,18 +175,5 @@ bool Image(Window* window, const char* path) {
     return true;
 }
 */
-//  Public functions without any classes.
-
-Window* createWindow(const char* name, int x, int y, int height, int width) {
-    Window* window = new Window();
-    window->create(name, x, y, height, width);
-    
-    WindowManager* manager = WindowManager::getInstance();
-    if (manager) {
-        manager->addWindow(window);
-    }
-    
-    return window;
-}
 
 } // (namespace) Auro
