@@ -141,21 +141,26 @@ void Window::text(const char* text, int posX, int posY, u16 color) {
         Internal::drawText(text, x + posX, y + posY, color);
     }
 }
-}
 
-Auro::WindowManager* WindowManager::initialize() {
-    if (!WindowManager::instance) {
-        WindowManager::instance = new Auro::WindowManager();
+
+WindowManager* WindowManager::initialize() {
+    if (!instance) {  
+        instance = new WindowManager();  
     }
-    return WindowManager::instance;
+    return instance;
 }
 
-bool WindowManager::addWindow(Auro::Window* window) {
-    if (WindowManager::windowCount >= MAX_WINDOWS) {
+bool WindowManager::addWindow(Window* window) {
+    if (!window) { 
         return false;
     }
     
-    WindowManager::windows[WindowManager::windowCount++] = window;
+    WindowManager* mgr = getInstance();
+    if (!mgr || mgr->windowCount >= MAX_WINDOWS) {
+        return false;
+    }
+    
+    mgr->windows[mgr->windowCount++] = window;
     return true;
 }
 
