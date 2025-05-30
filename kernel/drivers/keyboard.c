@@ -192,6 +192,10 @@ void keyboard_layout(KeyboardLayout layout) {
     keyboard.layout = layout;
 }
 
+u8 stoc(u8 scancode) {
+    return keyboard.chars[scancode & 0x7F];
+}
+
 
 bool keyboard_is_key_pressed(u8 scancode) {
     return keyboard.keys[scancode & 0x7F];
