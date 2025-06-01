@@ -73,7 +73,7 @@ int COLOR(float _r, float _b, float _g) {
         _r /= 255;
         _b /= 255;
         _g /= 255;
-        return (u8)  (((_r) & 0x7) << 5) | (((_g) & 0x7) << 2) | (((_b) & 0x3) << 0)));
+        return (u8)(((_r) & 0x7) << 5) | (((_g) & 0x7) << 2) | (((_b) & 0x3) << 0));
     } else {
         panic("ERROR: UNKNOWN ERROR!");
     };
