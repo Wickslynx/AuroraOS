@@ -12,24 +12,24 @@
 
 // Superblock Structure
 typedef struct {
-    uint32_t magic;           // Magic number to identify filesystem
-    uint32_t total_blocks;    // Total number of blocks
-    uint32_t inode_blocks;    // Number of inode blocks
-    uint32_t data_blocks;     // Number of data blocks
-    uint32_t free_inode_bitmap; // Position of inode bitmap
-    uint32_t free_data_bitmap;  // Position of data bitmap
+    u32 magic;           // Magic number to identify filesystem
+    u32 total_blocks;    // Total number of blocks
+    u32 inode_blocks;    // Number of inode blocks
+    u32 data_blocks;     // Number of data blocks
+    u32 free_inode_bitmap; // Position of inode bitmap
+    u32 free_data_bitmap;  // Position of data bitmap
 } superblock_t;
 
 // Inode Structure
 typedef struct {
-    uint32_t size;                 // File size
-    uint32_t data_block_indices[12]; // Indices of data blocks
+    u32 size;                 // File size
+    u32 data_block_indices[12]; // Indices of data blocks
 } inode_t;
 
 // Directory Entry Structure
 typedef struct {
     char filename[MAX_FILENAME_LENGTH]; // Filename
-    uint32_t inode_index;               // Index of corresponding inode
+    u32 inode_index;               // Index of corresponding inode
 } dir_entry_t;
 
 // Function Prototypes
