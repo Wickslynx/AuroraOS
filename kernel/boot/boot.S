@@ -88,26 +88,24 @@ same_segment:
     lgdt gdt
     lidt idt
 
-    /* For now i'll just set the video mode manually (1024x768 16 bit), ill figure out a better solution later. - scrapped, just caused errors.
-    movw $0x117, %ax     
-    push %ax         
-    call setVideoMode
-    add %esp, 4    
+    movw $0x4F02, %ax        
+    movw $0x117, %bx         
+    int $0x10                /* BIOS interrupt */ 
 
-     Get current VBE mode 
+    /* Get current VBE mode */
     movw $0x4F03, %ax  
-    int 0x10
-    movw %bx, [CURRENT_VIDEO_MODE]   store for later. 
+    int  $0x10
+    movw %bx, CURRENT_VIDEO_MODE  /* store for later. */
 
     movw $0x4F01, %ax   
-    movw [CURRENT_VIDEO_MODE], %cx    
+    movw CURRENT_VIDEO_MODE, %cx    
     movw $0x2000, %di   
     int $0x10           
     
-    movl [es + 0x228], %eax   get FB 
-    movl %eax, [FB_ADDR]   
+    movl %es:0x228, %eax  /* get FB */
+    movl %eax, FB_ADDR   
 
-    */
+    /* TEST */
 
     /* protected mode */
     movl %cr0, %eax
@@ -279,6 +277,14 @@ IDT_START:
     .long 0
 IDT_END:
 
+
+CURRENT_VIDEO_MODE:
+    .word 0x0000
+
+FB_ADDR:
+    .long 0x00000000
+
+    
 .align 16
 GDT_START:
 NULL_DESCRIPTOR:
@@ -303,5 +309,4 @@ GDT_END:
 
 
 /* boot sign */
-.fill 510-(.-_start), 1, 0
 .word 0xAA55 
