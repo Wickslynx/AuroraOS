@@ -27,12 +27,15 @@ int terminal() {
   if (key == 'KEY_ENTER') {
     runcmd(cmd); // placeholder
   } else {
-    len++;
-    cmd[len] = key;
-    char buffer[1];
-    itoa(key, buffer, sizeof(key));
-    font_str(buffer, twidth+3, 10, COLOR(7, 7, 3));
-  }
-  
+    if (len < 1024) {
+      cmd[len] = key;
+    }
 
+    char buffer[1]; // one char
+    itoa(key, buffer, sizeof(key));
+    window.text(buffer, twidth+2, 10, COLOR(7, 7, 3));
+    len++;
+  }
+
+  return 0;
 }
