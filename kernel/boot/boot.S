@@ -174,11 +174,6 @@ disk_read_error:
     movw $disk_error_message, %si
     call print_string
 
-    movb %ah, %al     /* BIOS return status */
-    call print_hex  
-    popw %ax            
-    movb %ah, %al       
-    call print_hex      
     cli
     hlt
 
@@ -199,33 +194,6 @@ print_char:
 print_string_done:
     ret
 
-print_hex:
-    pusha
-    mov %al, %bl
-    
-    mov %al, %cl
-    shr $4, %cl
-    call print_hex_digit
-    
-    mov %bl, %cl
-    and $0x0F, %cl
-    call print_hex_digit
-    
-    popa
-    ret
-
-print_hex_digit:
-    mov $0x0E, %ah
-    cmp $10, %cl
-    jl print_hex_digit_number
-    add $55, %cl
-    jmp print_hex_digit_output
-print_hex_digit_number:
-    add $48, %cl
-print_hex_digit_output:
-    mov %cl, %al
-    int $0x10
-    ret
 
 booting_message:
     .asciz "Booting AuroraOS....\n"
