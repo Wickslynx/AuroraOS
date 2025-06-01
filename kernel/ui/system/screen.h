@@ -7,37 +7,12 @@ extern "C" {
 
 #include "../../core/util.h"
 
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 200
-#define BPP 1
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 720
+#define BPP 2
 #define SCREEN_SIZE (SCREEN_WIDTH * SCREEN_HEIGHT * BPP)
 
-// 8 bit format
-#define COLOR(_r, _g, _b)((u8)( \
-    (((_r) & 0x7) << 5) |       \
-    (((_g) & 0x7) << 2) |       \
-    (((_b) & 0x3) << 0)))
 
-#define COLOR_R(_index) (((_index) >> 5) & 0x7)
-#define COLOR_G(_index) (((_index) >> 2) & 0x7)
-#define COLOR_B(_index) (((_index) >> 0) & 0x3)
-
-#define COLOR_ADD(_index, _d) __extension__({   \
-        __typeof__(_index) _c = (_index);       \
-        __typeof__(_d) __d = (_d);              \
-        COLOR(                                  \
-            CLAMP(COLOR_R(_c) + __d, 0, 7),     \
-            CLAMP(COLOR_G(_c) + __d, 0, 7),     \
-            CLAMP(COLOR_B(_c) + __d, 0, 3)      \
-        );})
-
-// 32 bit format:
-
-#define __COLOR(_r, _g, _b) ((u32)(((_r) << 16) | ((_g) << 8) | (_b)))
-    
-#define __COLOR_R(_color) (((_color) >> 16) & 0xFF) 
-#define __COLOR_G(_color) (((_color) >> 8) & 0xFF)  
-#define __COLOR_B(_color) (((_color) >> 0) & 0xFF)   
 
 
 extern u8 _sbuffers[2][SCREEN_SIZE];
@@ -65,6 +40,8 @@ void screen_swap();
 void screen_clear(u8 color);
 void screen_init();
 int setVideoMode(u16 mode);
+
+int COLOR(int _r, int  _b, int _g);
 
 #ifdef __cplusplus
 }
