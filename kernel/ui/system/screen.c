@@ -4,8 +4,7 @@
 extern "C" {
 #endif 
 
-//extern u32 FB_ADDR;
-u32 CURRENT_VIDEO_MODE = 0x001;
+extern u32 FB_ADDR
 
 
 static u8* BUFFER = (u8*) 0xA0000;
@@ -29,7 +28,9 @@ void screen_swap() {
 }
 
 void screen_clear(u8 color) {
-    if (CURRENT_VIDEO_MODE >= 0x100) {
+    if (!CURRENT_VIDEO_MODE) {
+        panic("ERROR: VARIABLE - CURRENT_VIDEO_MODE not found!")
+    } else if (CURRENT_VIDEO_MODE >= 0x100) {
         for (size_t i = 0; i < SCREEN_SIZE / 2; i++) {
             ((u16 *)CURRENT)[i] = color; // 16-bit write
         }
@@ -41,7 +42,9 @@ void screen_clear(u8 color) {
 }
 
 void screen_init() {
-    if (CURRENT_VIDEO_MODE >= 0x100) { // VBE - rn this aint used.
+    if (!CURRENT_VIDEO_MODE) {
+        panic("ERROR: VARIABLE - CURRENT_VIDEO_MODE not found!")
+    } else if (CURRENT_VIDEO_MODE >= 0x100) { // VBE - rn this aint used.
         BUFFER = (u8 *) FB_ADDR;
         return;
     } else { // VGA
@@ -61,15 +64,19 @@ void screen_init() {
     
 }
 
-int COLOR(int _r, int _b, int _g) {
-    if (CURRENT_VIDEO_MODE >= 0x100) { // VBE - rn this aint used.
+int COLOR(float _r, float _b, float _g) {
+    if (!CURRENT_VIDEO_MODE) {
+        panic("ERROR: VARIABLE - CURRENT_VIDEO_MODE not found!")
+    } else if (CURRENT_VIDEO_MODE >= 0x100) { // VBE - rn this aint used.
         return ((u32)(((_r) << 16) | ((_g) << 8) | (_b)));
-    } else { // VGA
+    } else if (CURRENT_VIDEO_MODe < 0x100) { // VGA
         _r /= 255;
         _b /= 255;
         _g /= 255;
         return (u8)  (((_r) & 0x7) << 5) | (((_g) & 0x7) << 2) | (((_b) & 0x3) << 0)));
-    }
+    } else {
+        panic("ERROR: UNKNOWN ERROR!");
+    };
 }
 
 int setVideoMode(unsigned short mode) {
