@@ -94,8 +94,8 @@ void Window::create(const char* windowName, int posX, int posY, int windowHeight
     width = windowWidth;
     
     // draw the window border
-    Internal::drawRectangle(0x88888, x, y, width, height, 5);
-    Internal::drawRectangle(0x66666, x, y-(y/10*9), width, height/10, 0);
+    Internal::drawRectangle(0x6D, x, y, width, height, 5);
+    Internal::drawRectangle(0xB6, x, y-(y/10*9), width, height/10, 0);
     Internal::drawRectangle(COLOR(0, 0, 0), x+5, y-5, 10, 10, 5);
     Internal::drawRectangle(COLOR(0, 0, 0), x+20, y-5, 10, 10, 5);
     Internal::drawRectangle(COLOR(0, 0, 0), x+35, y-5, 10, 10, 5); 
