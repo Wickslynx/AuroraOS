@@ -3,6 +3,10 @@
 
 #include "../core/util.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Some of these are prob wrong, i let AI write them.
 #define KEY_NULL        0x00
 #define KEY_ESC         0x01
@@ -76,6 +80,10 @@ void keyboard_init();
 void keyboard_layout(KeyboardLayout layout); // Use the typedef'd enum here
 u8 keyboard_get_last_char();
 u8 stoc(u8 scancode);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 
