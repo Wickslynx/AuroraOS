@@ -1,5 +1,4 @@
-#include "file_sys.h"
-#include "macros.h"
+#include "fs.h"
 
 //----------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------
@@ -28,9 +27,7 @@ Memory layout:
 [Superblock][Inode Bitmap][Data Bitmap][Inode Table][Data Blocks]
 
 Additional declarations:
-
-memcpy, memset: mem/memory.c
-true, false: utils/macros/macros.c
+memset: core/util.h
 
 
 */ 
