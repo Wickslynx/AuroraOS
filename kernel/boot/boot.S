@@ -5,8 +5,6 @@
 
 .global _start
 
-.global setVideoMode /* declared in ui/system/screen.h */
-
 _start:
     cli
 
