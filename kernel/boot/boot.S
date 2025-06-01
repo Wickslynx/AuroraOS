@@ -275,4 +275,5 @@ GDT_END:
 
 
 /* boot sign */
+.fill 510 - (. - _start), 1, 0
 .word 0xAA55 
