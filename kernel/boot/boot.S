@@ -4,6 +4,8 @@
 .text
 
 .global _start
+.global CURRENT_VIDEO_MODE
+.global FB_ADDR
 
 _start:
     cli
