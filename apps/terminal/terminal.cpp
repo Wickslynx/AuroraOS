@@ -31,7 +31,7 @@ int terminal() {
       cmd[len] = key;
     }
 
-    char buffer[1]; // one char
+    char buffer[32]; // one char
     itoa(key, buffer, sizeof(key));
     window.text(buffer, twidth+2, 10, COLOR(7, 7, 3));
     len++;
