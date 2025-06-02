@@ -23,5 +23,7 @@ jobs:
 
     - name: Make the OS
       run: mkdir bin && make img
+    - name: Run additional tests..
+      run: ./docs/tests/cmp-tests.sh
 
     
