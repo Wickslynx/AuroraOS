@@ -1,6 +1,6 @@
 #!/bin/bash
 
-file_to_check="bin/bootsect.bin"
+file_to_check="../../bin/bootsect.bin"
 
 if [ -f "$file_to_check" ]; then
   file_size=$(ls -l "$file_to_check" | awk '{print $5}')
