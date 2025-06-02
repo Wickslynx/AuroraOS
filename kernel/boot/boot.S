@@ -4,8 +4,6 @@
 .text
 
 .global _start
-.global CURRENT_VIDEO_MODE
-.global FB_ADDR
 
 _start:
     cli
@@ -244,13 +242,6 @@ IDT_START:
     .word 0
     .long 0
 IDT_END:
-
-
-CURRENT_VIDEO_MODE:
-    .word 0x0000
-
-FB_ADDR:
-    .long 0x00000000
 
     
 .align 16
