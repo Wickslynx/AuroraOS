@@ -21,6 +21,10 @@ START_SRCS=\
 START_OBJS=$(START_SRCS:.S=.o)
 
 ASM_SRCS=\
+	kernel/boot/global.S
+
+#all asm sources
+ASM_OBJS=$(ASM_SRCS:.S=.o)
 
 # find all C source files
 KERNEL_C_SRCS=$(wildcard kernel/*.c kernel/mem/*.c kernel/ui/system/*.c kernel/drivers/*.c kernel/ui/*.c kernel/home/*.c kernel/core/*.c)
@@ -76,7 +80,7 @@ bootsect: $(BOOTSECT_OBJS)
 
 # rule to build kernel
 kernel: $(KERNEL_OBJS)
-	$(LD) -o ./bin/$(KERNEL) $^ $(LDFLAGS) -Tlinker.ld -m elf_i386
+	$(LD) -o ./bin/$(KERNEL)  $^ $(LDFLAGS) -Tlinker.ld -m elf_i386
 
 # rule to create bootable ISO (using mkisofs)
 iso: dirs bootsect kernel
