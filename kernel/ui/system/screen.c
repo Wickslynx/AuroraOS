@@ -5,7 +5,7 @@ extern "C" {
 #endif 
 
 extern u32 FB_ADDR;
-extern u32 CURRENT_VIDEO_MODE;
+extern u16 CURRENT_VIDEO_MODE;
 static u8* BUFFER = (u8*) 0xA0000;
 
 
