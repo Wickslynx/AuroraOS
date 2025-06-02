@@ -19,8 +19,9 @@ extern "C" void _main(u32 magic) {
     irq_init();
     /*
     imap_kernel();
-    init_vmm();
     */
+    init_vmm();
+
     screen_init();
     bool quit = false;
     
