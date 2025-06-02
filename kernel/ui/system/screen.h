@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include "../../core/util.h"
+#include "../../core/error.h"
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
