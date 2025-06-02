@@ -5,11 +5,11 @@ extern "C" {
 #endif 
 
 extern u32 FB_ADDR;
-extern u32 CURRENT_VIDEO_MODE; // Add missing declaration
+extern u32 CURRENT_VIDEO_MODE;
 static u8* BUFFER = (u8*) 0xA0000;
 
 // double buffers
-u8 *_sbuffers[2][SCREEN_SIZE]; // Fix variable name and add missing underscore
+u8 *_sbuffers[2][SCREEN_SIZE]; 
 u8 _sback = 0;
 #define CURRENT (_sbuffers[_sback])
 #define SWAP() (_sback = 1 - _sback)
@@ -27,7 +27,7 @@ void screen_swap() {
 
 void screen_clear(u8 color) {
     if (!CURRENT_VIDEO_MODE) {
-        panic("ERROR: VARIABLE - CURRENT_VIDEO_MODE not found!"); // Add missing semicolon
+        panic("ERROR: VARIABLE - CURRENT_VIDEO_MODE not found!");
     } else if (CURRENT_VIDEO_MODE >= 0x100) {
         for (size_t i = 0; i < SCREEN_SIZE / 2; i++) {
             ((u16 *)CURRENT)[i] = color; // 16-bit write
