@@ -37,11 +37,11 @@ _start:
     movw $0x1000, kernel_segment
     movw $1, kernel_sector
 
-    pushw %si
+    push %si
     /* Display "Loading kernel..." */
     movw $kernel_load_message, %si
     call print_string
-    popw %si   
+    pop %si   
 
 load_kernel_loop:
     movb $0x42, %ah     /* extended read */
@@ -61,10 +61,6 @@ load_kernel_loop:
 same_segment: 
     loop load_kernel_loop
 
-    /* Display "Setting video mode..." */
-    movw $kernel_set_video_message, %si
-    call print_string
-
     /* set video mode: 320x200 */
     movb $0x00, %ah
     movb $0x13, %al
@@ -75,8 +71,7 @@ same_segment:
     movw %ax, %es            /* es -> video mem */
     xorw %di, %di            /* offset 0 */
     movb $1, %al             
-    movw $64000, %cx       
-    cld                     
+    mov $64000, %cx                      
     rep stosb  
         
     cli
@@ -270,5 +265,5 @@ GDT_END:
 
 
 /* boot sign */
-.fill 510 - (. - _start), 1, 0
+.org 510
 .word 0xAA55 
