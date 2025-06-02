@@ -20,6 +20,7 @@ extern "C" void _main(u32 magic) {
     /*
     imap_kernel();
     */
+	
     init_vmm();
 
     screen_init();
