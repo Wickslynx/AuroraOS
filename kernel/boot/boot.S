@@ -5,6 +5,8 @@
 
 .global _start
 
+.include "kernel/boot/global.S"
+
 _start:
     cli
 
