@@ -8,9 +8,9 @@ extern u32 FB_ADDR;
 extern u32 CURRENT_VIDEO_MODE;
 static u8* BUFFER = (u8*) 0xA0000;
 
-#include "../../core/util.h"
+
 // double buffers
-u8 *_sbuffers[2][SCREEN_SIZE]; 
+u8 _sbuffers[2][SCREEN_SIZE]; 
 u8 _sback = 0;
 #define CURRENT (_sbuffers[_sback])
 #define SWAP() (_sback = 1 - _sback)
