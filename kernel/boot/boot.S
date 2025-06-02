@@ -79,10 +79,7 @@ same_segment:
     /* enable a20, (mem over 1 mb)*/
     call enable_a20
 
-    /* GDT and IDT*/
-    lgdt gdt
-    lidt idt
-
+    /* Set video mode to 1024x768 - 16 bit*/
     movw $0x4F02, %ax        
     movw $0x117, %bx         
     int $0x10                /* BIOS interrupt */ 
@@ -100,7 +97,10 @@ same_segment:
     movl %es:0x228, %eax  /* get FB */
     movl %eax, FB_ADDR   
 
-    /* TEST */
+    /* GDT and IDT*/
+    lgdt gdt
+    lidt idt
+
 
     /* protected mode */
     movl %cr0, %eax
