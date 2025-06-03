@@ -1,6 +1,4 @@
 #include "screen.h"
-#include <string.h>
-#include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {
