@@ -58,7 +58,7 @@ int setVideoMode(u16 mode) {
     
     if (mode >= 0x100) {
         // VESA mode 
-        asm volatile (
+        asm (
             "int $0x10"
             : "=a" (result)
             : "a" (0x4F02), "b" (mode | 0x4000)  // 0x4000 enables linear framebuffer
@@ -67,7 +67,7 @@ int setVideoMode(u16 mode) {
         return (result == 0x004F) ? 1 : 0;
     } else {
         // VGA Mode
-        asm volatile (
+        asm (
             "int $0x10"
             :
             : "a" (mode)
