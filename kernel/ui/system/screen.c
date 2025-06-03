@@ -30,6 +30,7 @@ void screen_clear(u16 color) {
     }
 }
 
+
 void screen_init() {
     if (!CURRENT_VIDEO_MODE) {
         panic("ERROR: VARIABLE - CURRENT_VIDEO_MODE not found!");
