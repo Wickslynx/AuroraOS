@@ -7,6 +7,7 @@ extern "C" {
 
 #include "../../core/util.h"
 #include "../../core/error.h"
+#include "../../mem/vmm.h"
 
 
 #define SCREEN_WIDTH 1024
