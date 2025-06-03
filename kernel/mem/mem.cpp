@@ -18,7 +18,6 @@ void operator delete[](void* ptr) {
   return;
 }
 
-#include "vmm.h"
 
 typedef struct block {
     u32 size;
