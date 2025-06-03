@@ -31,18 +31,19 @@ extern u8 _sback;
 
 
 #define screen_fill(_c, _x, _y, _w, _h) do { \
-    typeof(_x) __x = (_x); \
-    typeof(_y) __y = (_y); \
-    typeof(_w) __w = (_w); \
-    typeof(_h) __h = (_h); \
-    typeof(_c) __c = (_c); \
+    int __x = (_x); \
+    int __y = (_y); \
+    int __w = (_w); \
+    int __h = (_h); \
+    u16 __c = (_c); \
     u16 *buffer = (u16*)screen_buffer(); \
-    for (typeof(_y) row = 0; row < __h; row++) { \
-        for (typeof(_x) col = 0; col < __w; col++) { \
+    for (int row = 0; row < __h; row++) { \
+        for (int col = 0; col < __w; col++) { \
             buffer[((__y + row) * SCREEN_WIDTH + (__x + col))] = __c; \
         } \
     } \
 } while (0)
+
 
 // Function declarations
 void screen_swap();
