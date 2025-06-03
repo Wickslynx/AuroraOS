@@ -41,8 +41,8 @@ void screen_init() {
     
 
     size_t buffer_size = SCREEN_SIZE; 
-    sbuffers[0] = (u8 *)malloc(buffer_size);
-    sbuffers[1] = (u8 *)malloc(buffer_size);
+    sbuffers[0] = (u8 *)vmalloc(buffer_size);
+    sbuffers[1] = (u8 *)vmalloc(buffer_size);
     
     if (!sbuffers[0] || !sbuffers[1]) {
         panic("UNABLE TO ALLOCATE BUFFERS");
