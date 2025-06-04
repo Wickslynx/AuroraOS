@@ -4,13 +4,30 @@
 
 > **⚠ Warning**<br> This page is still under development!
 
-## Hello!
+## **Skill dosen't matter, or does it?**
+Do you really need to be a rocket scientist to contribute to AuroraOS? I don't belive so. 
 
-Great that you are interested in helping AuroraOS grow. Under here I will provide a brief overview on how to learn the codebase and my style of writing code:
+Here's some things you can do at any level:
+- Translating AuroraOS into different languages.
+- Taking screenshots for our documents.
+<br>
 
-Thank you! 
+Here's some things you can do if you know a bit about code:
+- Documenting undocumented code in our drivers.
+- Making small apps. (I appreciate all apps, even "Hello World" ones.)
 
-Signed: @Wicks
+<br>
+Here's some things you can do if you know a a lot about code:
+- Designing frontend libraries, writing additional apps.
+- Closing issues. [BUG]
+
+<br>
+Here's some things you can do if you know too much about code:
+- Porting to different architectures.
+- Working in the kernel, implementing new features as you like. 
+
+## **Reading my codebase?**
+
 
 ## **How do I document?**
 
