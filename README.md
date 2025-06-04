@@ -1,12 +1,18 @@
 
 <p align="center">
-<img src="docs/assets/auroraos-logo.png" width="192" />
+<img src="docs/assets/auroraos-logo.png" width="250" />
 </p>
 
+<p align="center">
+<a href="https://wickslynx.github.io/AuroraOS">Website</a> -
+<a href="https://discord.com/invite/">Discord</a> -
+<a href="https://github.com/Wickslynx/AuroraOS/tree/main/docs">Documentation</a>
+</p>
+  
 > **⚠ Warning**<br> AuroraOS is still in REALLY early development.
 
+<br>
 
-# AuroraOS (ALPHA)
 The Nordic Operating System...
 
 
