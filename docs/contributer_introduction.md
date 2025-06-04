@@ -33,7 +33,6 @@ Here's some things you can do if you know too much about code:
 
 <br>
 
-Don't have the time or motivation to do any of these? Even a small donation helps!
 
 ## **Reading my codebase?**
 
