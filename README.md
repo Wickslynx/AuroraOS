@@ -1,6 +1,6 @@
 
 <p align="center">
-<img src="docs/assets/auroraos-logo.png" width="250" />
+<img src="docs/assets/auroraos-logo-bg.png" width="250" />
 </p>
 
 <p align="center">
