@@ -31,7 +31,7 @@ Example of a proper file documentation:
 
 /* 
 Returns the division of two nums.
-raises: (PANIC) Division by 0 is not allowed.. (When you divide something with 0...
+raises: (PANIC) Division by 0 is not allowed.. (When you divide something with 0...)
 */
 
 int divide(int num1, int num2) {
@@ -44,4 +44,4 @@ int divide(int num1, int num2) {
 
 ```
 
-
+> Feel free to add documenting to my functions, I might or might not document...
