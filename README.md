@@ -32,7 +32,10 @@ Please see the *docs* folder for further explanation and examples
 
 # Specifications:
 
-## 7. Memory Layout 
+
+
+
+## Memory Layout 
 | Section                | Address Range       | Description |
 |------------------------|--------------------|-------------|
 | Bootloader            | `0x0000 - 0x3000`   | Initializes segment registers and stack. |
