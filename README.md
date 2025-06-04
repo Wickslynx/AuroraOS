@@ -4,12 +4,11 @@
 </p>
 
 <p align="center">
-<a href="https://wickslynx.github.io/AuroraOS">Website</a> -
 <a href="https://discord.com/invite/">Discord</a> -
 <a href="https://github.com/Wickslynx/AuroraOS/tree/main/docs">Documentation</a>
 </p>
   
-> **⚠ Warning**<br> AuroraOS is still in REALLY early development.
+> **⚠ Warning**<br> AuroraOS is still in REALLY early development, sometimes it dosen't even boot. Don't let it come near any production enviroment. Stay safe!
 
 <br>
 
