@@ -10,8 +10,8 @@ Do you really need to be a rocket scientist to contribute to AuroraOS? I don't b
 Here's some things you can do at any level:
 - Translating AuroraOS into different languages.
 - Taking screenshots for our documents.
-<br>
 
+<br>
 Here's some things you can do if you know a bit about code:
 - Documenting undocumented code in our drivers.
 - Making small apps. (I appreciate all apps, even "Hello World" ones.)
