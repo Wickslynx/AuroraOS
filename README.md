@@ -67,4 +67,4 @@ It's not our goal to make the next windows, just learn and practice modern OS de
 Please email me on Wickslynx@yahoo.com
 I will respond as soon as possible, updates come regularly. 
 
-> **★ Also see** <br>Visit our [docs](https://github.com/Wickslynx/AuroraOS/tree/main/docs/auroraos.md) for more examples, images and information.
+> **★ Also see** <br> Our [docs](https://github.com/Wickslynx/AuroraOS/tree/main/docs/auroraos.md) for more examples, images and information.
