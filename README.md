@@ -1,3 +1,11 @@
+
+<p align="center">
+<img src="docs/assets/auroraos-logo.png" width="192" />
+</p>
+
+> **⚠ Warning**<br> AuroraOS is still in REALLY early development.
+
+
 # AuroraOS (ALPHA)
 The Nordic Operating System...
 
