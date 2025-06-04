@@ -43,5 +43,5 @@ int divide(int num1, int num2) {
 }
 
 ```
-> Feel free to add documentation to functions which dosen't have them, even though they are not yours.
+> **✉ Note** <br> Feel free to add documentation to functions which dosen't have it, even though they are not yours.
 
