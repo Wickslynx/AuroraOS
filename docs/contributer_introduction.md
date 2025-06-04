@@ -19,7 +19,7 @@ Here's some things you can do if you know a bit about code:
 <br>
 Here's some things you can do if you know a a lot about code:
 - Designing frontend libraries, writing additional apps.
-- Closing issues. [BUG]
+- Closing issues. 
 
 <br>
 Here's some things you can do if you know too much about code:
