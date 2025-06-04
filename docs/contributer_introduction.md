@@ -12,16 +12,19 @@ Here's some things you can do at any level:
 - Taking screenshots for our documents.
 
 <br>
+
 Here's some things you can do if you know a bit about code:
 - Documenting undocumented code in our drivers.
 - Making small apps. (I appreciate all apps, even "Hello World" ones.)
 
 <br>
+
 Here's some things you can do if you know a a lot about code:
 - Designing frontend libraries, writing additional apps.
 - Closing issues. 
 
 <br>
+
 Here's some things you can do if you know too much about code:
 - Porting to different architectures.
 - Working in the kernel, implementing new features as you like. 
