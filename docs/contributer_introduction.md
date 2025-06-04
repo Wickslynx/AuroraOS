@@ -12,7 +12,7 @@ Thank you!
 
 Signed: @Wicks
 
-**How do I document?**
+## **How do I document?**
 
 Rules:
 - Always add documentation for every commit you make, if you do not document your pull-request will not be merged.
@@ -43,5 +43,5 @@ int divide(int num1, int num2) {
 }
 
 ```
+> Feel free to add documentation to functions which dosen't have them, even though they are not yours.
 
-> Feel free to add documenting to my functions, I might or might not document...
