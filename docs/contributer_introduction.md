@@ -2,6 +2,8 @@
 <img src="assets/auroraos.png" width="250" />
 </p>
 
+> **⚠ Warning**<br> This page is still under development!
+
 ## Hello!
 
 Great that you are interested in helping AuroraOS grow. Under here I will provide a brief overview on how to learn the codebase and my style of writing code:
