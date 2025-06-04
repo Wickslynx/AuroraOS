@@ -42,11 +42,10 @@ Burn the auroraos.iso onto a bootable USB, this might work or not.. Good luck!
 
 ***-NOTE-***
 
-Please see the *docs* folder for further explanation and examples
+> Please see the [docs](https://github.com/Wickslynx/AuroraOS/tree/main/docs) folder for further explanation and examples
 
 # Specifications:
-
-
+<br>
 
 
 ## Memory Layout 
@@ -60,15 +59,6 @@ Please see the *docs* folder for further explanation and examples
 
 ---
 
-# Examples:
-
-
-**Current progress:**
-
-
-![Uhhh ooo, Error! Please contact me.](https://github.com/Wickslynx/AuroraOS/blob/main/docs/assets/images/auroraos-example-1.0.png)
-![Uhhh ooo, Error! Please contact me.](https://github.com/Wickslynx/AuroraOS/blob/main/docs/assets/images/auroraos-example-window-1.0.png)
-![Uhhh ooo, Error! Please contact me.](https://github.com/Wickslynx/AuroraOS/blob/main/docs/assets/images/auroraos-example-terminal-1.0.png)
 
 # Our goal:
 It's not our goal to make the next windows, just learn and practice modern OS developing in modern C and C++....
@@ -79,4 +69,4 @@ It's not our goal to make the next windows, just learn and practice modern OS de
 Please email me on Wickslynx@yahoo.com
 I will respond as soon as possible, updates come regularly. 
 
-***AuroraOS is still in development!***
+> For more examples, photos and images. Visit our [docs](https://github.com/Wickslynx/AuroraOS/tree/main/docs/auroraos.md).
