@@ -41,7 +41,7 @@ Burn the auroraos.iso onto a bootable USB, this might work or not.. Good luck!
 
 
 
-> **Note** <br> Please see the [docs](https://github.com/Wickslynx/AuroraOS/tree/main/docs) folder for further explanation and examples
+> **✉ Note** <br> Please see the [docs](https://github.com/Wickslynx/AuroraOS/tree/main/docs) folder for further explanation and examples
 
 # Specifications:
 <br>
@@ -68,4 +68,4 @@ It's not our goal to make the next windows, just learn and practice modern OS de
 Please email me on Wickslynx@yahoo.com
 I will respond as soon as possible, updates come regularly. 
 
-> **Also see** <br> For more examples, photos and images. Visit our [docs](https://github.com/Wickslynx/AuroraOS/tree/main/docs/auroraos.md).
+> **★ Also see** <br> For more examples, photos and images. Visit our [docs](https://github.com/Wickslynx/AuroraOS/tree/main/docs/auroraos.md).
