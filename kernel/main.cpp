@@ -7,7 +7,9 @@
 #include "core/error.h"
 
 
-
+void test() {
+	return;
+}
     
 extern "C" void _main(u32 magic) {
     idt_init();
