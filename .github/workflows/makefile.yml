@@ -7,6 +7,7 @@ on:
      - "apps/**" 
      - "Makefile"
      - "linker.ld"
+     - "user/**"
     
     branches: [ "main" ]
   pull_request: #Always run on pull-requests.
