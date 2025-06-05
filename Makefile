@@ -21,7 +21,7 @@ START_SRCS=\
 START_OBJS=$(START_SRCS:.S=.o)
 
 ASM_SRCS=\
-	kernel/boot/global.S
+
 
 #all asm sources
 ASM_OBJS=$(ASM_SRCS:.S=.o)
