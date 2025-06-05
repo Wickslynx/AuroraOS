@@ -11,7 +11,7 @@ void test() {
 	return;
 }
     
-extern "C" void _main(u32 magic, u16 video_mode, u32 fb_addr) {
+extern "C" void _main(u32 magic) {
     idt_init();
     isr_init();
     fpu_init(); // floating point unit.
