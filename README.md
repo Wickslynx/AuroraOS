@@ -15,7 +15,7 @@
 The Nordic Operating System...
 
 
-# Getting Started:
+## Getting Started:
 
 **1.** Build the OS:
 ```
@@ -42,28 +42,14 @@ Burn the auroraos.iso onto a bootable USB, this might work or not.. Good luck!
 
 > **✉ Note** <br> Please see the [docs](https://github.com/Wickslynx/AuroraOS/tree/main/docs) folder for further explanation and examples
 
-# Specifications:
-<br>
 
 
-## Memory Layout 
-| Section                | Address Range       | Description |
-|------------------------|--------------------|-------------|
-| Bootloader            | `0x0000 - 0x3000`   | Initializes segment registers and stack. |
-| Kernel Loading        | `0x1000+`           | Loads kernel into memory. |
-| Video Framebuffer     | `FB_ADDR (BIOS)`    | Stores pixel data for display. |
-| Heap Region           | `0x140000 - 0x540000` | Dynamic memory allocation. |
-| Kernel Execution      | `0x10000+`          | Protected mode kernel execution. |
-
----
-
-
-# Our goal:
+## Our goal:
 It's not our goal to make the next windows, just learn and practice modern OS developing in modern C and C++....
 
 
 
-# Support:
+## Support:
 Please email me on Wickslynx@yahoo.com
 I will respond as soon as possible, updates come regularly. 
 
