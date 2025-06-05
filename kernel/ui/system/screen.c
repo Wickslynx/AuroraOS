@@ -4,8 +4,8 @@
 extern "C" {
 #endif 
 
-extern u32 FB_ADDR;
-extern u16 CURRENT_VIDEO_MODE;
+#define FB_ADDR 0xE0000000
+#define VIDEO_MODE 0x117 
 
 
 static u16* BUFFER = NULL;
@@ -32,8 +32,8 @@ void screen_clear(u16 color) {
 
 
 void screen_init() {
-    if (!CURRENT_VIDEO_MODE) {
-        panic("ERROR: VARIABLE - CURRENT_VIDEO_MODE not found!");
+    if (!VIDEO_MODE) {
+        panic("ERROR: VARIABLE - VIDEO_MODE not found!");
     }
     
     BUFFER = (u16 *)FB_ADDR;
@@ -52,29 +52,6 @@ void screen_init() {
     memset(sbuffers[1], 0, buffer_size);
 }
 
-int setVideoMode(u16 mode) {
-    u16 result;
-    
-    if (mode >= 0x100) {
-        // VESA mode 
-        asm (
-            "int $0x10"
-            : "=a" (result)
-            : "a" (0x4F02), "b" (mode | 0x4000)  // 0x4000 enables linear framebuffer
-            : "memory"
-        );
-        return (result == 0x004F) ? 1 : 0;
-    } else {
-        // VGA Mode
-        asm (
-            "int $0x10"
-            :
-            : "a" (mode)
-            : "memory"
-        );
-        return 1;
-    }
-}
 
 
 #ifdef __cplusplus
