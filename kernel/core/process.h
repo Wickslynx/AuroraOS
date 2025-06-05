@@ -3,6 +3,7 @@
 
 #include "error.h"
 #include "util.h"
+#include "../mem/vmm.h"
 
 #include "domain.h"
 #include "cpu.h"
