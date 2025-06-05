@@ -4,7 +4,7 @@
 extern "C" {
 #endif 
 
-#define FB_ADDR 0xE0000000
+#define FB_ADDR 0xFD000000
 #define VIDEO_MODE 0x117 
 
 
