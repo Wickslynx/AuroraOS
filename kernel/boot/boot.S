@@ -5,8 +5,6 @@
 
 .global _start
 
-.include "kernel/boot/global.S"
-
 _start:
     cli
 
@@ -84,18 +82,6 @@ same_segment:
     movw $0x117, %bx         
     int $0x10                /* BIOS interrupt */ 
 
-    /* Get current VBE mode */
-    movw $0x4F03, %ax  
-    int  $0x10
-    movw %bx, CURRENT_VIDEO_MODE  /* store for later. */
-
-    movw $0x4F01, %ax   
-    movw CURRENT_VIDEO_MODE, %cx    
-    movw $0x2000, %di   
-    int $0x10           
-    
-    movl %es:0x228, %eax  /* get FB */
-    movl %eax, FB_ADDR   
 
     /* GDT and IDT*/
     lgdt gdt
