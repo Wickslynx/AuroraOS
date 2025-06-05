@@ -6,9 +6,11 @@
 
 ## The AuroraOS Project.
 
-# Techinal details
+What is the AuroraOS project? When did it start and by who?
 
-## Memory Layout 
+## Techinal details
+
+**Memory Layout** 
 | Section                | Address Range       | Description |
 |------------------------|--------------------|-------------|
 | Bootloader            | `0x0000 - 0x3000`   | Initializes segment registers and stack. |
@@ -19,7 +21,6 @@
 
 ---
 
-# Exampels
 
 # History
 
