@@ -5,11 +5,7 @@
 #include "core/util.h"
 #include "mem/vmm.h"
 #include "core/error.h"
-#include "../apps/terminal/terminal.cpp"
 
-void test() {
-    terminal();
-}
 
 
     
