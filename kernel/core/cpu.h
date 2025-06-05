@@ -3,5 +3,5 @@
 
 typedef struct {
   int placeholder;
-} cpu_page_t;
+} cpu_state_t;
 #endif
