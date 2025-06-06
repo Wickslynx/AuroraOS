@@ -80,6 +80,7 @@ void keyboard_init();
 void keyboard_layout(KeyboardLayout layout); 
 u8 keyboard_get_last_char();
 u8 stoc(u8 scancode);
+void mouse_init();
 
 #ifdef __cplusplus
 }
