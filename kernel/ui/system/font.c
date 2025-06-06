@@ -171,7 +171,7 @@ void font_str(const char *s, size_t x, size_t y, u8 color, u8 scale) {
     size_t char_width = 8 * scale;
 
     while ((c = *s++) != 0) {
-        font_char_scaled(c, x, y, color, scale);
+        font_char(c, x, y, color, scale);
         x += char_width;
     }
 }
