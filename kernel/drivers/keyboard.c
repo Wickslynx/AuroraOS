@@ -153,7 +153,7 @@ void proc_mouse(u8 byte) {
         bool middle = packet[0] && inportb(0x03);
 
         int x = (int) packet[1];
-        int y = (int) packet[2]:
+        int y = (int) packet[2];
 
         screen_fill(COLOR(255, 255, 255), x, y, 20, 20);
     }
