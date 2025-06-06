@@ -15,7 +15,7 @@ int terminal() {
   int len = 0;
 
   Auro::Internal::drawRectangle(COLOR(5, 10, 5), 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
-  Auro::Internal::drawText(" -$ ", 0, 0, COLOR(255, 255, 255));
+  Auro::Internal::drawText(" -$ ", 0, 0, COLOR(255, 255, 255), 15);
   char key = stoc(keyboard_get_last_char());
   
   
