@@ -49,7 +49,7 @@ public:
     void create(const char* windowName, int posX, int posY, int windowHeight, int windowWidth);
     
     void rectangle(u16 color, int posX, int posY, int rectHeight, int rectWidth);
-    void text(const char *text, int posX, int posY, u16 color);
+    void text(const char *text, int posX, int posY, u16 color, u8 size);
     void clear(u16 color);
 
 
