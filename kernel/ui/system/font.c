@@ -2,6 +2,10 @@
 #include "screen.h"
 #include "../../core/system.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif 
+
 // 8x8 font for ASCII 0..127
 static const u8 FONT[128][8] = {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // U+0000 (nul)
@@ -156,3 +160,7 @@ void font_str(const char *s, size_t x, size_t y, u8 color) {
         x += 8;
     }
 }
+
+#ifdef __cplusplus
+}
+#endif 

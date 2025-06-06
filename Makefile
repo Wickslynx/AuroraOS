@@ -8,7 +8,7 @@ CCFLAGS=-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing
 CCFLAGS+=-Wno-pointer-arith -Wno-unused-parameter
 CCFLAGS+=-nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector
 CCFLAGS+=-fno-builtin-function -fno-builtin
-CXXFLAGS = -std=c++17 -fno-exceptions -fno-rtti -ffreestanding -nostdlib -Wall -Wextra -O2
+CXXFLAGS = -m32 -std=c++17 -fno-exceptions -fno-rtti -ffreestanding -nostdlib -Wall -Wextra -O2 -fno-pie
 NASMFLAGS=-f elf32
 LDFLAGS=-m elf_i386 -g
 
@@ -22,10 +22,14 @@ START_OBJS=$(START_SRCS:.S=.o)
 
 ASM_SRCS=\
 
+
+#all asm sources
+ASM_OBJS=$(ASM_SRCS:.S=.o)
+
 # find all C source files
-KERNEL_C_SRCS=$(wildcard kernel/*.c kernel/ux/system/*.c kernel/drivers/*.c kernel/ux/*.c kernel/onstart/*.c kernel/core/*.c)
+KERNEL_C_SRCS=$(wildcard kernel/*.c kernel/mem/*.c kernel/ui/system/*.c kernel/drivers/*.c kernel/ui/*.c kernel/home/*.c kernel/core/*.c)
 # find all C++ source files
-KERNEL_CPP_SRCS=$(wildcard kernel/*.cpp kernel/ux/system/*.cpp kernel/drivers/*.cpp kernel/ux/*.cpp kernel/onstart/*.cpp kernel/core/*.cpp)
+KERNEL_CPP_SRCS=$(wildcard kernel/*.cpp kernel/ui/system/*.cpp kernel/drivers/*.cpp kernel/ui/*.cpp kernel/mem/*.cpp kernel/core/*.cpp)
 # convert C source files to .o
 KERNEL_C_OBJS=$(KERNEL_C_SRCS:.c=.o)
 # convert C++ source files to .o
@@ -51,6 +55,8 @@ clean:
 	rm -f ./*.iso
 	rm -f ./**/*.elf
 	rm -f ./**/*.bin
+	rm -f ./*.img
+	rm -f ./*.log
 
 # rule to assemble GNU asm files (.S)
 %.o: %.S
@@ -74,14 +80,14 @@ bootsect: $(BOOTSECT_OBJS)
 
 # rule to build kernel
 kernel: $(KERNEL_OBJS)
-	$(LD) -o ./bin/$(KERNEL) $^ $(LDFLAGS) -Tlinker.ld -m elf_i386
+	$(LD) -o ./bin/$(KERNEL)  $^ $(LDFLAGS) -Tlinker.ld -m elf_i386
 
-# rule to create bootable ISO (more standard approach using mkisofs)
+# rule to create bootable ISO (using mkisofs)
 iso: dirs bootsect kernel
 	mkisofs -o $(ISO) -b $(BOOTSECT) -c boot.catalog -no-emul-boot -boot-load-size 4 -boot-info-table bin/
 
 img: dirs bootsect kernel
-	dd if=/dev/zero of=auroraos.iso bs=512 count=2880
+	dd if=/dev/zero of=auroraos.img bs=512 count=2880
 	dd if=./bin/$(BOOTSECT) of=auroraos.img conv=notrunc bs=512 seek=0 count=1
 	dd if=./bin/$(KERNEL) of=auroraos.img conv=notrunc bs=512 seek=1 count=2048
 

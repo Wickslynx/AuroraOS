@@ -1,9 +1,13 @@
 #ifndef AURO_H
 #define AURO_H
 
+extern "C" {
 #include "system/font.h"
 #include "system/screen.h"
+}
+
 #include "../core/util.h"
+#include "../mem/mem.h"
 
 /*
 Included files:
@@ -44,7 +48,9 @@ public:
     
     void create(const char* windowName, int posX, int posY, int windowHeight, int windowWidth);
     
-    void addRectangle(u16 color, int posX, int posY, int rectHeight, int rectWidth);
+    void rectangle(u16 color, int posX, int posY, int rectHeight, int rectWidth);
+    void text(const char *text, int posX, int posY, u16 color);
+    void clear(u16 color);
 
 
     // All get operations.
@@ -98,10 +104,11 @@ private:
 
 
 namespace Internal {
-    void drawRectangle(u16 color, int x, int y, int width, int height);
+    void drawRectangle(u16 color, int x, int y, int width, int height, int border_radius);
     void drawText(const char* text, int x, int y, u8 color);
 }
 
+int setVideoMode(unsigned short mode);
 
 void initialize();
 Window* createWindow(const char* name, int x, int y, int height, int width);

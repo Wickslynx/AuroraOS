@@ -1,6 +1,11 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif 
+
 // fixed width integer types
 typedef unsigned char u8;
 typedef unsigned short u16;
@@ -15,9 +20,11 @@ typedef u32 uintptr_t;
 typedef float f32;
 typedef double f64;
 
+#ifndef __cplusplus
 typedef u8 bool;
 #define true (1)
 #define false (0)
+#endif
 
 #define NULL (0)
 
@@ -94,10 +101,10 @@ static inline size_t strlen(const char *str) {
 
 static inline char *itoa(i32 x, char *s, size_t sz) {
     // TODO: omg this is bad code. :sob:
-    if (sz < 20) {
-        extern void panic(const char *);
-        panic("ITOA BUFFER TOO SMALL");
+    /* if (sz < 20) {
+        //panic("ITOA BUFFER TOO SMALL"); - causes a error
     }
+    */
 
     u32 tmp;
     i32 i, j;
@@ -121,7 +128,7 @@ static inline char *itoa(i32 x, char *s, size_t sz) {
 }
 
 static inline void memset(void *dst, u8 value, size_t n) {
-    u8 *d = dst;
+    u8 *d = (u8*)dst;
 
     while (n-- > 0) {
         *d++ = value;
@@ -129,8 +136,8 @@ static inline void memset(void *dst, u8 value, size_t n) {
 }
 
 static inline void *memcpy(void *dst, const void *src, size_t n) {
-    u8 *d = dst;
-    const u8 *s = src;
+    u8 *d = (u8*)dst;
+    const u8 *s = (const u8*)src;
 
     while (n-- > 0) {
         *d++ = *s++;
@@ -145,8 +152,8 @@ static inline void *memmove(void *dst, const void *src, size_t n) {
         return memcpy(dst, src, n);
     }
 
-    u8 *d = dst;
-    const u8 *s = src;
+    u8 *d = (u8*)dst;
+    const u8 *s = (const u8*)src;
 
     for (size_t i = n; i > 0; i--) {
         d[i - 1] = s[i - 1];
@@ -173,6 +180,17 @@ static inline size_t strlcat(char *dst, const char *src, size_t size) {
     return sl + dl;
 }
 
+static inline void strcpy(char *dest, const char *src) {
+    while (*src) {
+        *dest = *src;
+        dest++;
+        src++;
+    }
+    *dest = '\0';  // Null-terminate the destination string
+}
+
+
+
 static inline size_t strlcpy(char *dst, const char *src, size_t n) {
     // copy as many bytes as can fit
     char *d = dst;
@@ -195,7 +213,12 @@ static inline size_t strlcpy(char *dst, const char *src, size_t n) {
         while (*s++);
     }
 
-    return s - src - 1;
+   return s - src - 1;
 }
+
+#ifdef __cplusplus
+}
+#endif 
+
 
 #endif

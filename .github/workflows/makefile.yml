@@ -1,9 +1,16 @@
 name: Makefile CI
 
 on:
-  push:
+  push: #Only run if it changes code.
+    paths: 
+     - "kernel/**" 
+     - "apps/**" 
+     - "Makefile"
+     - "linker.ld"
+     - "user/**"
+    
     branches: [ "main" ]
-  pull_request:
+  pull_request: #Always run on pull-requests.
     branches: [ "main" ]
 
 jobs:
@@ -17,5 +24,7 @@ jobs:
 
     - name: Make the OS
       run: mkdir bin && make img
+    - name: Run additional tests..
+      run: cd docs/tests/ && chmod +x size.sh && ./size.sh
 
     

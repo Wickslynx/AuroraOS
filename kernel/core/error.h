@@ -1,9 +1,13 @@
 #ifndef ERROR_H
 #define ERROR_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "system.h"
-#include "../ux/system/screen.h"
-#include "../ux/system/font.h"
+#include "../ui/system/screen.h"
+#include "../ui/system/font.h"
 
 
 /*
@@ -12,5 +16,9 @@
 */
 void panic(const char *err);
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //ERROR_H

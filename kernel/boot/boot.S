@@ -4,6 +4,7 @@
 .text
 
 .global _start
+
 _start:
     cli
 
@@ -34,11 +35,11 @@ _start:
     movw $0x1000, kernel_segment
     movw $1, kernel_sector
 
-    pushw %si
+    push %si
     /* Display "Loading kernel..." */
     movw $kernel_load_message, %si
     call print_string
-    popw %si   
+    pop %si   
 
 load_kernel_loop:
     movb $0x42, %ah     /* extended read */
@@ -58,10 +59,6 @@ load_kernel_loop:
 same_segment: 
     loop load_kernel_loop
 
-    /* Display "Setting video mode..." */
-    movw $kernel_set_video_message, %si
-    call print_string
-
     /* set video mode: 320x200 */
     movb $0x00, %ah
     movb $0x13, %al
@@ -72,8 +69,7 @@ same_segment:
     movw %ax, %es            /* es -> video mem */
     xorw %di, %di            /* offset 0 */
     movb $1, %al             
-    movw $64000, %cx       
-    cld                     
+    mov $64000, %cx                      
     rep stosb  
         
     cli
@@ -81,9 +77,16 @@ same_segment:
     /* enable a20, (mem over 1 mb)*/
     call enable_a20
 
+    /* Set video mode to 1024x768 - 16 bit*/
+    movw $0x4F02, %ax        
+    movw $0x117, %bx         
+    int $0x10                /* BIOS interrupt */ 
+
+
     /* GDT and IDT*/
     lgdt gdt
     lidt idt
+
 
     /* protected mode */
     movl %cr0, %eax
@@ -154,11 +157,6 @@ disk_read_error:
     movw $disk_error_message, %si
     call print_string
 
-    movb %ah, %al     /* BIOS return status */
-    call print_hex  
-    popw %ax            
-    movb %ah, %al       
-    call print_hex      
     cli
     hlt
 
@@ -179,33 +177,6 @@ print_char:
 print_string_done:
     ret
 
-print_hex:
-    pusha
-    mov %al, %bl
-    
-    mov %al, %cl
-    shr $4, %cl
-    call print_hex_digit
-    
-    mov %bl, %cl
-    and $0x0F, %cl
-    call print_hex_digit
-    
-    popa
-    ret
-
-print_hex_digit:
-    mov $0x0E, %ah
-    cmp $10, %cl
-    jl print_hex_digit_number
-    add $55, %cl
-    jmp print_hex_digit_output
-print_hex_digit_number:
-    add $48, %cl
-print_hex_digit_output:
-    mov %cl, %al
-    int $0x10
-    ret
 
 booting_message:
     .asciz "Booting AuroraOS....\n"
@@ -255,6 +226,7 @@ IDT_START:
     .long 0
 IDT_END:
 
+    
 .align 16
 GDT_START:
 NULL_DESCRIPTOR:
@@ -279,5 +251,5 @@ GDT_END:
 
 
 /* boot sign */
-.fill 510-(.-_start), 1, 0
+.org 510
 .word 0xAA55 

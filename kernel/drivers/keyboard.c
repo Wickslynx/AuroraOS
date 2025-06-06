@@ -202,6 +202,10 @@ u8 keyboard_get_char(u8 scancode) {
     return keyboard.chars[scancode & 0x7F];
 }
 
+u8 stoc(u8 scancode) {
+    return keyboard.chars[scancode & 0x7F];
+}
+
 
 u8 keyboard_get_last_char() {
     for (int i = 0; i < 128; i++) {
