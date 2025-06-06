@@ -125,11 +125,6 @@ void enable_ps2_mouse() {
     inportb(0x60);
 }
 
-void init_mouse() {
-    enable_ps2_mouse();
-    irq_install(12, mouse_handler);
-}
-
 static void mouse_handler(struct Registers *regs) {
     u8 status = inportb(0x64);
 
@@ -223,6 +218,12 @@ static void keyboard_handler(struct Registers *regs) {
         keyboard.chars[scan] = 0;
     }
 }
+
+void mouse_init() {
+    enable_ps2_mouse();
+    irq_install(12, mouse_handler);
+}
+
 
 void keyboard_init() {
     // Clear keyboard state
