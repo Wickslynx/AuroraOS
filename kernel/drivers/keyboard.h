@@ -73,11 +73,11 @@ struct Keyboard {
         KEYBOARD_PS2,
         KEYBOARD_USB
     } connected_type;
-    KeyboardLayout layout; // Use the typedef'd enum here
+    KeyboardLayout layout; 
 };
 
 void keyboard_init();
-void keyboard_layout(KeyboardLayout layout); // Use the typedef'd enum here
+void keyboard_layout(KeyboardLayout layout); 
 u8 keyboard_get_last_char();
 u8 stoc(u8 scancode);
 
