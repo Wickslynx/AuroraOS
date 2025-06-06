@@ -1,6 +1,6 @@
-#include "../../kernel/ui/auro.h"
-#include "../../kernel/drivers/keyboard.h"
-#include "../../kernel/core/util.h"
+#include "../../../kernel/ui/auro.h"
+#include "../../../kernel/drivers/keyboard.h"
+#include "../../../kernel/core/util.h"
 
 
 void runcmd(const char *cmd) {
