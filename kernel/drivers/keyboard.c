@@ -145,7 +145,9 @@ static void mouse_handler(struct Registers *regs) {
 void proc_mouse(u8 byte) {
     static u8 packet[3]; // 1: Flags ( Mouse presses etc..) 2: X 3: Y
     u8 i;
-    if (i < 3) {
+    packet[i++] = byte;
+    if (i == 3) {
+        i = 0;
         bool left = packet[0] && inportb(0x01);
         bool right = packet[0] && inportb(0x02);
         bool middle = packet[0] && inportb(0x03);
