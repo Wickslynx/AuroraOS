@@ -67,7 +67,7 @@ void init_ps2_controller() {
     u8 config = inportb(0x60);
     
     config |= 1;           // enable IRQ1 (keyboard)
-    config &= ~(1 << 1);   // disable IRQ12 (mouse)
+    config |= ~(1 << 1);   // disable IRQ12 (mouse)
     config &= ~(1 << 6);   // disable translation
 
     outportb(0x64, 0x60);  
@@ -103,6 +103,58 @@ void enable_ps2_keyboard() {
 
     while ((inportb(0x64) & 1) == 0);
     inportb(0x60);
+}
+
+
+void enable_ps2_mouse() {
+    // Reset the mouse
+    outportb(0x60, 0xFF);
+    while ((inportb(0x64) & 1) == 0);
+    u8 response = inportb(0x60);
+    
+    if (response != 0xFA) return;
+
+    // Set default settings
+    outportb(0x60, 0xF6);
+    while ((inportb(0x64) & 1) == 0);
+    inportb(0x60);
+
+    // Enable data reporting
+    outportb(0x60, 0xF4);
+    while ((inportb(0x64) & 1) == 0);
+    inportb(0x60);
+}
+
+void init_mouse() {
+    enable_ps2_mouse();
+    irq_install(12, mouse_handler);
+}
+
+static void mouse_handler(struct Registers *regs) {
+    u8 status = inportb(0x64);
+
+    if (status != 1) {
+        return; // no new data since last time.
+    }
+
+    u8 mouseb = inportb(0x60);
+    proc_mouse(mouseb);
+    
+}
+
+void proc_mouse(u8 byte) {
+    static u8 packet[3]; // 1: Flags ( Mouse presses etc..) 2: X 3: Y
+    u8 i;
+    if (i < 3) {
+        left = packet[0] && inportb(0x01);
+        right = packet[0] && inportb(0x02);
+        middle = packet[0] && inportb(0x03);
+
+        x = (int) packet[1];
+        y = (int) packet[2]:
+
+        screen_fill(COLOR(255, 255, 255), x, y, 20, 20);
+    }
 }
 
 static void keyboard_handler(struct Registers *regs) {
