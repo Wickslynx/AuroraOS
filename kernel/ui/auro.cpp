@@ -143,7 +143,7 @@ void Window::text(const char* text, int posX, int posY, u16 color, u8 size) {
         widgets[widgetCount++] = widget;
         
         // Draw the rectangle
-        Internal::drawText(text, x + posX, y + posY, color, u8 size);
+        Internal::drawText(text, x + posX, y + posY, color, size);
     }
 }
 
