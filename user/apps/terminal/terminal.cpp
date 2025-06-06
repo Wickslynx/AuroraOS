@@ -19,7 +19,7 @@ int terminal() {
   window.create("Aurora Terminal", 10, 10, height, width);
 
   window.clear(COLOR(0, 0, 0));
-  window.text("user@aurora - $ ", twidth, 10, COLOR(0, 7, 0));
+  window.text("user@aurora - $ ", twidth, 10, COLOR(0, 63, 0));
 
   char key = stoc(keyboard_get_last_char());
   
