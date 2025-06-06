@@ -146,12 +146,12 @@ void proc_mouse(u8 byte) {
     static u8 packet[3]; // 1: Flags ( Mouse presses etc..) 2: X 3: Y
     u8 i;
     if (i < 3) {
-        left = packet[0] && inportb(0x01);
-        right = packet[0] && inportb(0x02);
-        middle = packet[0] && inportb(0x03);
+        bool left = packet[0] && inportb(0x01);
+        bool right = packet[0] && inportb(0x02);
+        bool middle = packet[0] && inportb(0x03);
 
-        x = (int) packet[1];
-        y = (int) packet[2]:
+        int x = (int) packet[1];
+        int y = (int) packet[2]:
 
         screen_fill(COLOR(255, 255, 255), x, y, 20, 20);
     }
