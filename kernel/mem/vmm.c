@@ -4,45 +4,69 @@
 page_dir_t *kernel_dir __attribute__((aligned(4096)));
 page_table_t *kernel_tables[1024];
 
+
 void init_vmm() {
    kernel_dir = (page_dir_t*)vmalloc(sizeof(page_dir_t));
    memset(kernel_dir, 0, sizeof(page_dir_t));
-
    imap_kernel();
-
    idt_set(14, pfault, 0x08, 0x8E);
-
    enable_paging((u32)kernel_dir);  // defined in ../boot/start.S
 }
-
 void imap_kernel() {
-    u32 i;
-
     kernel_tables[0] = (page_table_t*)vmalloc(sizeof(page_table_t));
     memset(kernel_tables[0], 0, sizeof(page_table_t));
-
-    // fill the page dir.
-    for (i = 0; i < 1024; i++) {
-         (*kernel_tables[0])[i].present = 1;
-         (*kernel_tables[0])[i].rw = 1;
-         (*kernel_tables[0])[i].user = 0;
-         (*kernel_tables[0])[i].frame = i; // physical frame -> virtual frame..
-   
+    
+    // i map first 1024 pages.
+    for (u32 i = 0; i < 1024; i++) {
+        (*kernel_tables[0])[i].present = 1;
+        (*kernel_tables[0])[i].rw = 1;
+        (*kernel_tables[0])[i].user = 0;
+        (*kernel_tables[0])[i].frame = i;
     }
-
-    // set the entry
-    (*kernel_tables[0])[i].present = 1;
-    (*kernel_tables[0])[i].rw = 1;
-    (*kernel_tables[0])[i].user = 0;
-    (*kernel_tables[0])[i].frame = ((u32)kernel_tables[0]) >> 12;
+    
+    // install pages.
+    (*kernel_dir)[0].present = 1;
+    (*kernel_dir)[0].rw = 1;
+    (*kernel_dir)[0].user = 0;
+    (*kernel_dir)[0].table = ((u32)kernel_tables[0]) >> 12;
   
+}
+
+page_dir_t* create_page() {
+   page_dir_t* new_dir = (page_dir_t*)vmalloc(sizeof(page_dir_t));
+   memset(new_dir, 0, sizeof(page_dir_t));
+   (*new_dir)[0] = (*kernel_dir)[0];
+   return new_dir;
+}
+
+void imap_user(page_dir_t *dir, u32 vaddr, u32 pframe) {
+    u32 dir_index = vaddr >> 22;
+    u32 table_index = (vaddr >> 12) & 0x3FF;
+    
+    if (!(*dir)[dir_index].present) { // if dir exists.
+        page_table_t *new_table = (page_table_t*)vmalloc(sizeof(page_table_t));
+        memset(new_table, 0, sizeof(page_table_t));
+        
+        (*dir)[dir_index].present = 1;
+        (*dir)[dir_index].rw = 1;
+        (*dir)[dir_index].user = 1;
+        (*dir)[dir_index].table = ((u32)new_table) >> 12;
+    }
+    
+    // get page table
+    page_table_t *table = (page_table_t*)((*dir)[dir_index].table << 12);
+    
+    // map it.
+    (*table)[table_index].present = 1;
+    (*table)[table_index].rw = 1;
+    (*table)[table_index].user = 1;
+    (*table)[table_index].frame = pframe;
 }
 
 void* vmalloc(u32 size) {
     heap_ptr = (heap_ptr + 0xFFF) & ~0xFFF; // align heap pointer -> boundary
     
     void* addr = (void*)heap_ptr;
-
     if (!(heap_ptr >= 0x140000)) {
        heap_ptr += size;
     } else {
