@@ -28,7 +28,7 @@ void imap_kernel() {
     (*kernel_dir)[0].present = 1;
     (*kernel_dir)[0].rw = 1;
     (*kernel_dir)[0].user = 0;
-    (*kernel_dir)[0].table = ((u32)kernel_tables[0]) >> 12;
+    (*kernel_dir)[0].frame = ((u32)kernel_tables[0]) >> 12;
   
 }
 
@@ -50,11 +50,11 @@ void imap_user(page_dir_t *dir, u32 vaddr, u32 pframe) {
         (*dir)[dir_index].present = 1;
         (*dir)[dir_index].rw = 1;
         (*dir)[dir_index].user = 1;
-        (*dir)[dir_index].table = ((u32)new_table) >> 12;
+        (*dir)[dir_index].frame = ((u32)new_table) >> 12;
     }
     
     // get page table
-    page_table_t *table = (page_table_t*)((*dir)[dir_index].table << 12);
+    page_table_t *table = (page_table_t*)((*dir)[dir_index].frame << 12);
     
     // map it.
     (*table)[table_index].present = 1;
