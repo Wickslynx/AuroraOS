@@ -9,18 +9,13 @@ void runcmd(const char *cmd) {
 
 
 int terminal() {
-  Auro::Window window;
-  int width = SCREEN_WIDTH - 20;
-  int height = SCREEN_HEIGHT - 30;
-  int twidth =  (width - font_width("user@aurora - $ ")) / 20; // Starting width
+
+  int twidth =  (font_width("user@aurora - $ ")); // Starting width
   char cmd[1024]; //
   int len = 0;
-  
-  window.create("Aurora Terminal", 10, 10, height, width);
 
-  window.clear(COLOR(0, 0, 0));
-  window.text("user@aurora - $ ", twidth, 10, COLOR(0, 63, 0));
-
+  Auro::Internal::drawRectangle(COLOR(5, 10, 5), 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+  Auro::Internal::drawText(" -$ ", 0, 0, COLOR(255, 255, 255));
   char key = stoc(keyboard_get_last_char());
   
   
@@ -31,11 +26,14 @@ int terminal() {
       cmd[len] = key;
     }
 
-    char buffer[32]; // one char
-    itoa(key, buffer, sizeof(key));
-    window.text(buffer, twidth+2, 10, COLOR(7, 7, 3));
-    len++;
+    if (!key == 0) {
+    	char buffer[32]; // one char
+    	itoa(key, buffer, sizeof(key));
+    	//Auro::Internal::drawText(buffer, twidth+2, 10, COLOR(7, 7, 3));
+    	len++;
+    }
   }
 
   return 0;
 }
+
