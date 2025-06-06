@@ -178,10 +178,6 @@ void font_str(const char *s, size_t x, size_t y, u8 color, u8 scale) {
 
 
 
-#ifdef __cplusplus
-}
-#endif
-
 
 #ifdef __cplusplus
 }
