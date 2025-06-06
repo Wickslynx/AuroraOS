@@ -5,10 +5,10 @@
 #include "core/util.h"
 #include "mem/vmm.h"
 #include "core/error.h"
-
+#include "../user/apps/terminal/terminal.cpp"
 
 void test() {
-	return;
+	terminal();
 }
     
 extern "C" void _main(u32 magic) {
