@@ -137,14 +137,6 @@ static const u8 FONT[128][8] = {
     { 0x6E, 0x3B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // U+007E (~)
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}    // U+007F
 };
-#include "font.h"
-#include "screen.h"
-#include "../../core/system.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif 
-}
 
 void font_char(char c, size_t x, size_t y, u8 color, u8 scale) {
     assert(c >= 0, "INVALID CHARACTER");
