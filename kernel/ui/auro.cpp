@@ -135,7 +135,7 @@ void Window::rectangle(u16 color, int posX, int posY, int rectHeight, int rectWi
     }
 }
 
-void Window::text(const char* text, int posX, int posY, u16 color) {
+void Window::text(const char* text, int posX, int posY, u16 color, u8 size) {
     
     if (widgetCount < MAX_WIDGETS) {
         // create a new widget
@@ -143,7 +143,7 @@ void Window::text(const char* text, int posX, int posY, u16 color) {
         widgets[widgetCount++] = widget;
         
         // Draw the rectangle
-        Internal::drawText(text, x + posX, y + posY, color);
+        Internal::drawText(text, x + posX, y + posY, color, u8 size);
     }
 }
 
