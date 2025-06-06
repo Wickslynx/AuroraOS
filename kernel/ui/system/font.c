@@ -137,29 +137,51 @@ static const u8 FONT[128][8] = {
     { 0x6E, 0x3B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // U+007E (~)
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}    // U+007F
 };
+#include "font.h"
+#include "screen.h"
+#include "../../core/system.h"
 
-void font_char(char c, size_t x, size_t y, u8 color) {
+#ifdef __cplusplus
+extern "C" {
+#endif 
+}
+
+void font_char(char c, size_t x, size_t y, u8 color, u8 scale) {
     assert(c >= 0, "INVALID CHARACTER");
+    assert(scale > 0, "SCALE MUST BE POSITIVE");
 
     const u8 *glyph = FONT[(size_t) c];
 
     for (size_t yy = 0; yy < 8; yy++) {
         for (size_t xx = 0; xx < 8; xx++) {
             if (glyph[yy] & (1 << xx)) {
-                screen_set(color, x + xx, y + yy);
+                // draw a scale block for each.
+                for (size_t sy = 0; sy < scale; sy++) {
+                    for (size_t sx = 0; sx < scale; sx++) {
+                        screen_set(color, x + (xx * scale) + sx, y + (yy * scale) + sy);
+                    }
+                }
             }
         }
     }
 }
 
-void font_str(const char *s, size_t x, size_t y, u8 color) {
+void font_str(const char *s, size_t x, size_t y, u8 color, u8 scale) {
     char c;
+    size_t char_width = 8 * scale;
 
     while ((c = *s++) != 0) {
-        font_char(c, x, y, color);
-        x += 8;
+        font_char_scaled(c, x, y, color, scale);
+        x += char_width;
     }
 }
+
+
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #ifdef __cplusplus
 }
