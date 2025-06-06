@@ -70,8 +70,8 @@ void Internal::drawRectangle(u16 color, int x, int y, int width, int height, int
     }
 }
 
-void Internal::drawText(const char* text, int x, int y, u8 color) {
-    font_str(text, x, y, color);
+void Internal::drawText(const char* text, int x, int y, u8 color, u8 size) {
+    font_str(text, x, y, color, size);
 }
 
 
