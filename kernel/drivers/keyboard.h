@@ -3,6 +3,10 @@
 
 #include "../core/util.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // TODO: some of these are 100% wrong, i let AI write them lol
 #define KEY_NULL 0
 #define KEY_ESC 27
@@ -85,4 +89,7 @@ extern struct Keyboard keyboard;
 void keyboard_init();
 char keyboard_get_last_char();
 
+#ifdef __cplusplus
+}
+#endif
 #endif
