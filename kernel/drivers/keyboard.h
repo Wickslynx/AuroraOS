@@ -83,5 +83,6 @@ extern struct Keyboard keyboard;
 #define keyboard_char(_c) (keyboard.chars[(u8) (_c)])
 
 void keyboard_init();
+char keyboard_get_last_char();
 
 #endif
