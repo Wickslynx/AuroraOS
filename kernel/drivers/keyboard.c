@@ -27,8 +27,8 @@ u8 keyboard_layout_us[2][128] = {
 
 struct Keyboard keyboard;
 
-// bad hack! for a better RNG
-static bool seeded = false;
+static inline char last_char;
+bool seeded = false;
 
 static void keyboard_handler(struct Registers *regs) {
     u16 scancode = (u16) inportb(0x60);
@@ -59,6 +59,27 @@ static void keyboard_handler(struct Registers *regs) {
 
     keyboard.keys[(u8) (scancode & 0x7F)] = KEY_IS_PRESS(scancode);
     keyboard.chars[KEY_CHAR(scancode)] = KEY_IS_PRESS(scancode);
+
+    if (KEY_IS_PRESS(scancode)) {
+        u8 keyi = KEY_SCANCODE(scancode); 
+        if (key < 128) { // valid key?
+            bool shift = false;
+            if (keyboard.mods & KEY_MOD_SHIFT) { // shift.
+                shift = true;
+            }
+
+            char ch = keyboard_layout_us(shift ? 1 : 0)[keyi]
+
+            if (ch != 0 && ch != KEY_NULL) { // supported key?
+                last_char = ch;
+            }
+            
+        }
+    }
+}
+
+char keyboard_get_last_char() {
+    return last_char;
 }
 
 void keyboard_init() {
