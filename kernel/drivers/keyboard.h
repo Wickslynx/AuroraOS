@@ -1,7 +1,7 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 
-#include "util.h"
+#include "../core/util.h"
 
 // TODO: some of these are 100% wrong, i let AI write them lol
 #define KEY_NULL 0
