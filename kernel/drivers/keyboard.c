@@ -68,7 +68,7 @@ static void keyboard_handler(struct Registers *regs) {
                 shift = true;
             }
 
-            char ch = keyboard_layout_us[shift ? 1 : 0][keyi]
+            char ch = keyboard_layout_us[shift ? 1 : 0][keyi];
 
             if (ch != 0 && ch != KEY_NULL) { // supported key?
                 last_char = ch;
