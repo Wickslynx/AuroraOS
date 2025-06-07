@@ -16,12 +16,13 @@ int terminal() {
 
   Auro::Internal::drawRectangle(COLOR(5, 10, 5), 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
   Auro::Internal::drawText(" -$ ", 0, 0, COLOR(255, 255, 255), 15);
-  char key = stoc(keyboard_get_last_char());
+  char key = keyboard_get_last_char();
   
   
   if (key == 'KEY_ENTER') {
     runcmd(cmd); // placeholder
   } else {
+    
     if (len < 1024) {
       cmd[len] = key;
     }
@@ -29,7 +30,7 @@ int terminal() {
     if (!key == 0) {
     	char buffer[32]; // one char
     	itoa(key, buffer, sizeof(key));
-    	//Auro::Internal::drawText(buffer, twidth+2, 10, COLOR(7, 7, 3));
+    	Auro::Internal::drawText(buffer, twidth+2, 10, COLOR(7, 7, 3));
     	len++;
     }
   }
