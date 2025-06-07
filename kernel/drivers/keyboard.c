@@ -27,7 +27,7 @@ u8 keyboard_layout_us[2][128] = {
 
 struct Keyboard keyboard;
 
-static inline char last_char;
+static char last_char;
 bool seeded = false;
 
 static void keyboard_handler(struct Registers *regs) {
@@ -62,13 +62,13 @@ static void keyboard_handler(struct Registers *regs) {
 
     if (KEY_IS_PRESS(scancode)) {
         u8 keyi = KEY_SCANCODE(scancode); 
-        if (key < 128) { // valid key?
+        if (keyi < 128) { // valid key?
             bool shift = false;
             if (keyboard.mods & KEY_MOD_SHIFT) { // shift.
                 shift = true;
             }
 
-            char ch = keyboard_layout_us(shift ? 1 : 0)[keyi]
+            char ch = keyboard_layout_us[shift ? 1 : 0][keyi]
 
             if (ch != 0 && ch != KEY_NULL) { // supported key?
                 last_char = ch;
