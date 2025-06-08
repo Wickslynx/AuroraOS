@@ -12,6 +12,7 @@ void test() {
 }
     
 extern "C" void _main(u32 magic) {
+    log_init();
     idt_init();
     isr_init();
     fpu_init(); // floating point unit.
