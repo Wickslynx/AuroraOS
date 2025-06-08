@@ -89,7 +89,7 @@ iso: dirs bootsect kernel
 	mkisofs -o $(ISO) -b $(BOOTSECT) -c boot.catalog -no-emul-boot -boot-load-size 4 -boot-info-table bin/
 
 run: dirs bootsect kernel img
-  	qemu-system-i386 --drive format=raw,file=auroraos.img -serial stdio -no-reboot -d guest_errors,int,pcall,unimp,out_asm -D debug.log
+	qemu-system-i386 --drive format=raw,file=auroraos.img -serial stdio -no-reboot -d guest_errors,int,pcall,unimp,out_asm -D debug.log
 
 img: dirs bootsect kernel
 	dd if=/dev/zero of=auroraos.img bs=512 count=2880
