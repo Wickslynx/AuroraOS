@@ -7,7 +7,7 @@
 //=====================================================================
 
 void fpu_init() {
-    log_print("[INFO] core/interrupts.c: Setting up FPU.. \n");
+    LOG_INFO(" core/interrupts.c: Setting up FPU.. \n");
     size_t t;
     asm("clts");
     asm("mov %%cr0, %0" : "=r"(t));
@@ -53,7 +53,7 @@ void idt_set(u8 index, void (*base)(struct Registers*), u16 selector, u8 flags) 
 }
 
 void idt_init() {
-    log_print("[INFO] core/interrupts.c: Setting up IDT.. \n");
+    LOG_INFO(" core/interrupts.c: Setting up IDT.. \n");
     idt.pointer.limit = sizeof(idt.entries) - 1;
     idt.pointer.base = (uintptr_t) &idt.entries[0];
     memset(&idt.entries[0], 0, sizeof(idt.entries));
@@ -159,7 +159,7 @@ void isr_handler(struct Registers *regs) {
 }
 
 void isr_init() {
-    log_print("[INFO] core/interrupts.c: Setting up ISR.. \n");
+    LOG_INFO(" core/interrupts.c: Setting up ISR.. \n");
     for (size_t i = 0; i < NUM_ISRS; i++) {
         isrs[i].index = i;
         isrs[i].stub = stubs[i];
@@ -245,7 +245,7 @@ void irq_install(size_t i, void (*handler)(struct Registers *)) {
 }
 
 void irq_init() {
-    log_print("[INFO] core/interrupts.c: Setting up IRQ.. \n");
+    LOG_INFO(" core/interrupts.c: Setting up IRQ.. \n");
     irq_remap();
     for (size_t i = 0; i < 16; i++) {
         isr_install(32 + i, irq_stub);
