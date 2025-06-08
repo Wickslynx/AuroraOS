@@ -148,9 +148,6 @@ static void exception_handler(struct Registers *regs) {
 }
 
 void isr_install(size_t i, void (*handler)(struct Registers*)) {
-    log_print("[INFO] core/interrupts.c: Installing ISR");
-    log_print(i);
-    log_print("... \n");
     isr_handlers[i] = handler;
 }
 
