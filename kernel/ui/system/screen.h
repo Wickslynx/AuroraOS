@@ -5,9 +5,9 @@
 extern "C" {
 #endif
 
-#include "../../core/util.h"
-#include "../../core/error.h"
-#include "../../mem/mem.h"
+#include <util.h>
+#include <error.h>
+#include <mem.h>
 
 
 #define SCREEN_WIDTH 1024

@@ -1,6 +1,5 @@
 #include "font.h"
 #include "screen.h"
-#include "../../core/system.h"
 
 #ifdef __cplusplus
 extern "C" {

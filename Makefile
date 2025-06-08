@@ -3,12 +3,14 @@ CXX = g++
 NASM=nasm
 LD=ld
 
+INCLUDE= -Ikernel/include 
+
 GFLAGS=
-CCFLAGS=-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing
+CCFLAGS=-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing $(INCLUDE)
 CCFLAGS+=-Wno-pointer-arith -Wno-unused-parameter
 CCFLAGS+=-nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector
 CCFLAGS+=-fno-builtin-function -fno-builtin
-CXXFLAGS = -m32 -std=c++17 -fno-exceptions -fno-rtti -ffreestanding -nostdlib -Wall -Wextra -O2 -fno-pie
+CXXFLAGS = -m32 -std=c++17 -fno-exceptions -fno-rtti -ffreestanding -nostdlib -Wall -Wextra -O2 -fno-pie $(INCLUDE)
 NASMFLAGS=-f elf32
 LDFLAGS=-m elf_i386 -g
 

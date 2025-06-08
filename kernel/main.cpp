@@ -1,10 +1,10 @@
-#include "ui/auro.h"
-#include "core/interrupts.h"
+#include <auro.h>
+#include <interrupts.h>
 #include "ui/system/screen.h"
-#include "core/system.h"
-#include "core/util.h"
+#include <system.h>
+#include <util.h>
 #include "mem/vmm.h"
-#include "core/error.h"
+#include <error.h>
 #include "../user/apps/terminal/terminal.cpp"
 
 void test() {

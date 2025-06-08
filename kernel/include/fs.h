@@ -1,7 +1,7 @@
 #ifndef FILE_SYS_H
 #define FILE_SYS_H
 
-#include "../core/util.h"
+#include "util.h"
 
 
 #define BLOCK_SIZE 512

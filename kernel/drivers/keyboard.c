@@ -1,6 +1,6 @@
-#include "keyboard.h"
-#include "../core/interrupts.h"
-#include "../core/system.h"
+#include "../include/keyboard.h"
+#include <interrupts.h>
+#include <system.h>
 #include "../core/timer.h"
 
 u8 keyboard_layout_us[2][128] = {

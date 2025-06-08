@@ -1,7 +1,7 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 
-#include "../core/util.h"
+#include "util.h"
 
 #ifdef __cplusplus
 extern "C" {

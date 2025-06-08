@@ -5,8 +5,9 @@
 extern "C" {
 #endif
 
-#include "../../core/util.h"
-#include "../../core/error.h"
+#include <util.h>
+#include <mem.h>
+#include <system.h>
 #include "screen.h"
 
 #define font_width(_s) (strlen((_s)) * 8)

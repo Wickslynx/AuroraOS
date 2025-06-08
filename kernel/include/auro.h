@@ -2,12 +2,12 @@
 #define AURO_H
 
 extern "C" {
-#include "system/font.h"
-#include "system/screen.h"
+#include "../ui/system/font.h"
+#include "../ui/system/screen.h"
 }
 
-#include "../core/util.h"
-#include "../mem/mem.h"
+#include "util.h"
+#include "mem.h"
 
 /*
 Included files:
