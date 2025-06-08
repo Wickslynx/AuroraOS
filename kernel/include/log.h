@@ -1,7 +1,7 @@
 #ifndef LOG_H
 #define LOG_H
 
-#include "../core/system.h"
+#include "system.h"
 
 #define COM1_PORT 0x3F8
 
