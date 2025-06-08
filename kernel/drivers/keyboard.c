@@ -80,7 +80,7 @@ static void keyboard_handler(struct Registers *regs) {
 }
 
 char keyboard_get_last_char() {
-    LOG_INFO("key pressed: " last_char)
+    LOG_INFO("key pressed: " last_char);
     return last_char;
 }
 
