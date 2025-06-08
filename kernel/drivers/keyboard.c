@@ -80,11 +80,13 @@ static void keyboard_handler(struct Registers *regs) {
 }
 
 char keyboard_get_last_char() {
-    LOG_INFO("key pressed: " last_char);
+    LOG_INFO("drivers/keyboard.c: key pressed ");
+    log_print(last_char);
+    log_print("\n");
     return last_char;
 }
 
 void keyboard_init() {
-    LOG_INFO("Setting up keyboard handlers...");
+    LOG_INFO("drivers/keyboard.c: Setting up keyboard handlers... \n");
     irq_install(1, keyboard_handler);
 }
