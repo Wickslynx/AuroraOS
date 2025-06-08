@@ -1,10 +1,11 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
-#include "error.h"
-#include "util.h"
+#include <error.h>
+#include <util.h>
 #include "../mem/vmm.h"
 
+#include <log.h>
 #include "domain.h"
 #include "cpu.h"
 
@@ -19,6 +20,7 @@ typedef struct {
   int pid;
   int ppid;
   int cpid[100];
+  int nchild;
   int exitc;
   u32 usp; // user stack pointer
   u32 ksp; // kernel stack pointer.
