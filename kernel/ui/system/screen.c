@@ -51,7 +51,7 @@ void screen_init() {
     memset(sbuffers[0], 0, buffer_size);
     memset(sbuffers[1], 0, buffer_size);
 
-    log_print("[INFO] ui/system/screen.c: Setting up screen..")
+    LOG_INFO(" ui/system/screen.c: Setting up screen..");
 }
 
 
