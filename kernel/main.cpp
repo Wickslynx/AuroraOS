@@ -14,6 +14,7 @@ void test() {
 }
     
 extern "C" void _main(u32 magic) {
+    log_print("[AuroraOS - Starting kernel...]");
     log_init();
     idt_init();
     isr_init();
@@ -24,7 +25,7 @@ extern "C" void _main(u32 magic) {
     init_vmm();
     */
 	
-
+    
     screen_init();
     bool quit = false;
     
