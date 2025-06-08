@@ -11,7 +11,7 @@ static inline bool serial_ready(void) {
 
 static inline void serial_write(char c) {
 
-    while (!serial_is_transmit_ready());
+    while (!serial_ready());
     
     outportb(COM1_PORT, c);
 }
