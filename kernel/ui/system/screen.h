@@ -8,6 +8,7 @@ extern "C" {
 #include <util.h>
 #include <error.h>
 #include <mem.h>
+#include <log.h>
 
 
 #define SCREEN_WIDTH 1024
