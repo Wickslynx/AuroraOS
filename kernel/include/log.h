@@ -41,8 +41,9 @@ static inline void log_print(const char* str) {
     }
 }
 
-#define LOG_ERROR(message) log_print(" \033[31m [ERROR] \033[0m"  message)
-#define LOG_INFO(message) log_print(" \033[96m [INFO] \033[0m"  message)
-#define LOG_WARNING(message) log_print("\033[95m [WARNING]  \033[0m"  message )
+#define LOG_ERROR(message) log_print("\033[31m [ERROR] \033[0m " message)
+#define LOG_INFO(message) log_print("\033[96m [INFO] \033[0m " message)
+#define LOG_WARNING(message) log_print("\033[95m [WARNING] \033[0m " message)
+
 
 #endif
