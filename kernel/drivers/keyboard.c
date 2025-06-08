@@ -85,6 +85,6 @@ char keyboard_get_last_char() {
 }
 
 void keyboard_init() {
-    LOG_INFO("Setting up keyboard handlers...")
+    LOG_INFO("Setting up keyboard handlers...");
     irq_install(1, keyboard_handler);
 }
