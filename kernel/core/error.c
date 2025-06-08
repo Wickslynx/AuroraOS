@@ -1,4 +1,5 @@
 #include "../include/error.h"
+#include <log.h>
 
 void panic(const char *err) {
     screen_clear(COLOR(63, 0, 0));
