@@ -15,7 +15,7 @@ void test() {
     
 extern "C" void _main(u32 magic) {
     log_init();
-    log_print("\033[32m [AuroraOS]\033[32m - Starting initialization.. \n");
+    log_print("\033[32m [AuroraOS]\033[0m - Starting initialization.. \n");
     idt_init();
     isr_init();
     fpu_init(); // floating point unit.
@@ -27,7 +27,7 @@ extern "C" void _main(u32 magic) {
 	
     
     screen_init();
-    log_print("\033[32m [AuroraOS]\033[32m - Initialization [OK]... \n");
+    log_print("\033[32m [AuroraOS]\033[0m - Initialization [OK]... \n");
 
     bool quit = false;
     
@@ -37,7 +37,7 @@ extern "C" void _main(u32 magic) {
         screen_swap();
     }
 
-    log_print("\033[32m [AuroraOS]\033[32m - Shutting down... \n");
+    log_print("\033[32m [AuroraOS]\033[0m - Shutting down... \n");
 
     // if we ever end up here, loop infinitly...
     for (;;) {}
