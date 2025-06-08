@@ -6,6 +6,7 @@ page_table_t *kernel_tables[1024];
 
 
 void init_vmm() {
+   LOG_INFO(" mem/vmm.c: Setting up VMM...");
    kernel_dir = (page_dir_t*)vmalloc(sizeof(page_dir_t));
    memset(kernel_dir, 0, sizeof(page_dir_t));
    imap_kernel();
@@ -13,6 +14,7 @@ void init_vmm() {
    enable_paging((u32)kernel_dir);  // defined in ../boot/start.S
 }
 void imap_kernel() {
+    LOG_INFO(" mem/vmm.c: Mapping kernel...");
     kernel_tables[0] = (page_table_t*)vmalloc(sizeof(page_table_t));
     memset(kernel_tables[0], 0, sizeof(page_table_t));
     
