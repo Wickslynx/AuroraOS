@@ -80,9 +80,11 @@ static void keyboard_handler(struct Registers *regs) {
 }
 
 char keyboard_get_last_char() {
-    LOG_INFO("drivers/keyboard.c: key pressed ");
-    log_print(last_char);
-    log_print("\n");
+    if (last_char) {
+        LOG_INFO("drivers/keyboard.c: key pressed ");
+        log_print(last_char);
+        log_print("\n");
+    }
     return last_char;
 }
 
