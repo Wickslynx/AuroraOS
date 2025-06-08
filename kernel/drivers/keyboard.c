@@ -1,5 +1,6 @@
 #include "../include/keyboard.h"
 #include <interrupts.h>
+#include <log.h>
 #include <system.h>
 #include "../core/timer.h"
 
@@ -79,9 +80,11 @@ static void keyboard_handler(struct Registers *regs) {
 }
 
 char keyboard_get_last_char() {
+    LOG_INFO("key pressed: " last_char)
     return last_char;
 }
 
 void keyboard_init() {
+    LOG_INFO("Setting up keyboard handlers...")
     irq_install(1, keyboard_handler);
 }
