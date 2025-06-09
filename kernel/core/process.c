@@ -7,8 +7,8 @@ Process cpid = 0;
 
 
 int getpid() {
-  for (int i < 256; i < 256; i++) {
-    if (processes[i] = NULL) {
+  for (int i = 0; i < 256; i++) { // Fixed loop condition and syntax
+    if (processes[i] == NULL) {   // Fixed assignment to comparison
       return i;
     }
   }
@@ -16,7 +16,7 @@ int getpid() {
   return -1; // no free processes.
 }
 
-Process process_create(char* name, int ppid, Domain domain, u32 entry, u32 stack) {
+Process* process_create(char* name, int ppid, Domain domain, u32 entry, u32 stack) {
   int pid = getpid();
 
   if (pid == -1) {
@@ -40,31 +40,50 @@ Process process_create(char* name, int ppid, Domain domain, u32 entry, u32 stack
   // clear children array (100)
   memset(proc->cpid, 0, sizeof(proc->cpid));
 
-  proc->page_dir=create_page_dir(); // TODO: Make this.
+  proc->page_dir = create_page(); // TODO: Make this.
 
-  if (!page_dir) {
+  if (!proc->page_dir) { 
     LOG_ERROR(" core/process.c: Failed to create page dir for process.");
     free(proc);
     return NULL;
   }
 
-  u32 kstack = (u32)malloc(sizeof(KERNEL_STACK_SIZE));
+  u32 kstack = (u32)malloc(KERNEL_STACK_SIZE); /
   if (!kstack) {
     LOG_ERROR(" core/process.c: Failed to create kernel stack.");
     free(proc);
     return NULL;
   }
-  proc->ksp = kstack + KERNEL_STACK_SIZE - sizeof(cpu_state_t);
+  proc->ksp = kstack + KERNEL_STACK_SIZE - sizeof(cpu_state_t); // top of kernel stack
 
-  u32 kstack = (u32)malloc(sizeof(KERNEL_STACK_SIZE));
+  u32 ustack = (u32)malloc(KERNEL_STACK_SIZE);
   if (!ustack) {
-    LOG_ERROR(" core/process.c: Failed to create page dir for process.");
+    LOG_ERROR(" core/process.c: Failed to create user stack.");
+    free((void*)kstack);
     free(proc);
     return NULL;
   }
+  proc->usp = ustack + KERNEL_STACK_SIZE - sizeof(cpu_state_t); // top of user stack
 
- // Commented out for now.. 
-  
-*/ 
-  
 
+
+  proc->entry = entry; 
+  proc->stack = stack;
+
+
+  cpu_state_t* cpu = (cpu_state_t*)(proc->ksp);
+  memset(cpu, 0, sizeof(cpu_state_t)); // Clear CPU state
+
+  cpu->eip = entry;              
+  cpu->cs  = 0x1B;               
+  cpu->eflags = 0x202;           
+  cpu->esp = proc->usp;          
+  cpu->ss  = 0x23;               
+
+  set the table slot.
+  processes[pid] = proc;
+
+  LOG_INFO(" core/process.c: Created process!");
+  return proc;
+}
+*/
