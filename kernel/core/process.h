@@ -36,8 +36,7 @@ Process* process_create(char* name, int ppid, Domain domain, u32 entry, u32 stac
 void process_destroy(Process* proc);
 
 
-void process_switch();
-void scheduler();
+void scheduler(void);
 
 extern Process* cproc;
 extern Process* processes[256]; // TODO: Dynamic.. For now we shouldn't need more than this. (who tf has 256 proccesses open)
