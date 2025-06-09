@@ -1,5 +1,7 @@
 #include "process.h"
 
+#define KERNEL_STACK_SIZE 8192
+
 Process* cproc = NULL;
 Process* processes[256] = {0};
 int cpid = 0;
