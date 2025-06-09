@@ -39,14 +39,9 @@ Process* process_create(char* name, int ppid, Domain domain, u32 entry, u32 stac
   // clear children array (100)
   memset(proc->cpid, 0, sizeof(proc->cpid));
 
-  proc->page_dir = create_page(); // TODO: Make this.
-
-  if (!proc->page_dir) { 
-    LOG_ERROR(" core/process.c: Failed to create page dir for process.");
-    free(proc);
-    return NULL;
-  }
-
+  
+  create_page(&proc->page_dir);
+  
   u32 kstack = (u32)malloc(KERNEL_STACK_SIZE); // kernel stack
   if (!kstack) {
     LOG_ERROR(" core/process.c: Failed to create kernel stack.");
