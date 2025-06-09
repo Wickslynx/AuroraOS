@@ -39,7 +39,7 @@ void init_vmm();
 void vmap(u32 vaddr, u32 paddr, int present, int rw); 
 void imap_kernel();
 void* vmalloc(u32 size);
-void create_page(&proc->page_dir);
+void create_page(page_dir_t *dir;
 
 static inline void pfault(struct Registers* regs);
 
