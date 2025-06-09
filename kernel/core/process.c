@@ -2,7 +2,7 @@
 
 Process* cproc = NULL;
 Process* processes[256] = {0};
-Process cpid = 0;
+int cpid = 0;
 
 int getpid() {
   for (int i = 0; i < 256; i++) { 
