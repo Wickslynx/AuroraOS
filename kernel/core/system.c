@@ -29,6 +29,26 @@ char serial_read(void) {
     return inportb(COM1_PORT);
 }
 
+void serial_readline(char* buffer, size_t max) {
+    size_t i = 0;
+    while (i < max -1) {
+        char c = serial_read();
+        serial_write(c);
+
+        if (c == '\r' || c == '\n') { // enter
+            break;
+        } else if (c == '\b' && i > 0) { // backspace
+            i--;
+            continue;
+        }
+        
+        buffer[i++] = c;
+    }
+
+    buffer[i] = '\0'; // null term.
+
+}
+
 
 u32 rand() {
     static u32 x = 123456789;
