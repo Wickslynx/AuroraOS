@@ -24,6 +24,8 @@ typedef struct {
   int exitc;
   u32 usp; // user stack pointer
   u32 ksp; // kernel stack pointer.
+  u32 entry;
+  u32 stack;
   proc_state_t proc_state;
   Domain domain;
   page_dir_t page_dir;
