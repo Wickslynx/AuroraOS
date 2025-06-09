@@ -82,7 +82,8 @@ static void keyboard_handler(struct Registers *regs) {
 char keyboard_get_last_char() {
     if (last_char) {
         LOG_INFO("drivers/keyboard.c: key pressed ");
-        log_print(last_char);
+        char buffer[2] = {last_char, '\0'};
+        log_print(buffer);
         log_print("\n");
     }
     return last_char;
