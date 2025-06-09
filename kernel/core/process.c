@@ -1,5 +1,6 @@
 #include "process.h"
 
+/*
 Process* cproc = NULL;
 Process* processes[256] = {0};
 Process cpid = 0;
@@ -62,9 +63,9 @@ Process process_create(char* name, int ppid, Domain domain, u32 entry, u32 stack
     return NULL;
   }
 
+ // Commented out for now.. 
   
-  
-
+*/ 
   
   
 }
