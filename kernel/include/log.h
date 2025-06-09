@@ -5,16 +5,6 @@
 
 #define COM1_PORT 0x3F8
 
-static inline bool serial_ready(void) {
-    return inportb(COM1_PORT + 5) & 0x20;
-}
-
-static inline void serial_write(char c) {
-
-    while (!serial_ready());
-    
-    outportb(COM1_PORT, c);
-}
 
 static inline void log_init(void) {
     outportb(COM1_PORT + 1, 0x00); // disable interrupts
