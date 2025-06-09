@@ -7,6 +7,11 @@ extern "C" {
 
 #include "util.h"
 
+serial_ready(void);
+void serial_write(char c);
+bool serial_recv(void);
+char serial_read(void);
+
 typedef struct { // Not finished, this should hold all system level stuff.
         bool quit;
 } system;
