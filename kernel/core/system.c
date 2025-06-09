@@ -6,6 +6,28 @@ void seed(u32 s) {
     rseed = s;
 }
 
+bool serial_ready(void) {
+    return inportb(COM1_PORT + 5) & 0x20;
+}
+
+void serial_write(char c) {
+
+    while (!serial_ready());
+    
+    outportb(COM1_PORT, c);
+}
+
+bool serial_recv(void) {
+    return inportb(COM1_PORT + 5) & 1; 
+}
+
+char serial_read(void) {
+    while (!serial_recv());
+    
+    return inportb(COM1_PORT);
+}
+
+
 u32 rand() {
     static u32 x = 123456789;
     static u32 y = 362436069;
