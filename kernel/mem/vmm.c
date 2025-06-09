@@ -34,7 +34,7 @@ void imap_kernel() {
   
 }
 
-void create_page() {
+void create_page(&proc->page_dir) {
     page_dir_t* new_dir = (page_dir_t*)vmalloc(sizeof(page_dir_t));
     memset(new_dir, 0, sizeof(page_dir_t));
     (*new_dir)[0] = (*kernel_dir)[0]; // map kernel
