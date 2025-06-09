@@ -11,6 +11,7 @@ bool serial_ready(void);
 void serial_write(char c);
 bool serial_recv(void);
 char serial_read(void);
+void serial_readline(char* buffer, size_t max);
 
 typedef struct { // Not finished, this should hold all system level stuff.
         bool quit;
