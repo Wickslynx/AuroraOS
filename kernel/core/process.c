@@ -83,7 +83,7 @@ Process* process_create(char* name, int ppid, Domain domain, u32 entry, u32 stac
 
 
 void cswitch(cpu_state_t* new_state) {
-  asm volatile (
+  asm (
       "movl %0, %%esp \n"  
       "popa \n"            
       "add $8, %%esp \n"   
