@@ -2,6 +2,8 @@
 
 static u32 rseed = 1;
 
+#define COM1_PORT 0x3F8
+
 void seed(u32 s) {
     rseed = s;
 }
