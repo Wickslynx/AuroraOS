@@ -20,6 +20,7 @@ extern "C" void _main(u32 magic) {
     isr_init();
     fpu_init(); // floating point unit.
     irq_init();
+    keyboard_init();
     /*
     imap_kernel();
     init_vmm();
