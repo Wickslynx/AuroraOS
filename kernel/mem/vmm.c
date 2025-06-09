@@ -34,12 +34,33 @@ void imap_kernel() {
   
 }
 
-page_dir_t* create_page() {
-   page_dir_t* new_dir = (page_dir_t*)vmalloc(sizeof(page_dir_t));
-   memset(new_dir, 0, sizeof(page_dir_t));
-   (*new_dir)[0] = (*kernel_dir)[0];
-   return new_dir;
+void allocate_page(page_dir_t *dir, u32 vaddr) {
+    u32 dir_index = vaddr >> 22;
+    u32 table_index = (vaddr >> 12) & 0x3FF;
+
+   // if there are no page table.
+    if (!(*dir)[dir_index].present) {
+        page_table_t *new_table = (page_table_t*)vmalloc(sizeof(page_table_t));
+        memset(new_table, 0, sizeof(page_table_t));
+
+        (*dir)[dir_index].present = 1;
+        (*dir)[dir_index].rw = 1;
+        (*dir)[dir_index].user = 1; // user page.
+        (*dir)[dir_index].frame = ((u32)new_table) >> 12;
+    }
+
+
+    page_table_t *table = (page_table_t *)((*dir)[dir_index].frame << 12);
+
+  
+    u32 pframe = ((u32)vmalloc(4096)) >> 12;  // Allocate one page (4KB).
+
+    (*table)[table_index].present = 1;
+    (*table)[table_index].rw = 1;
+    (*table)[table_index].user = 1; //  user accesible.
+    (*table)[table_index].frame = pframe;
 }
+
 
 void imap_user(page_dir_t *dir, u32 vaddr, u32 pframe) {
     u32 dir_index = vaddr >> 22;
