@@ -100,3 +100,19 @@ void switch_proc(Process* next_proc) {
     cproc = next_proc; 
     cswitch((cpu_state_t*)(next_proc->ksp));
 }
+
+void schedule() {
+  int npid = (cproc->pid + 1) % 256;
+
+  for (int i = 0; i < 256; i++) { 
+    int pid = (npid + i) % 256;
+    if (processes[pid] && processes[pid]->proc_state == READY) {
+      if (processes[pid] != cproc) {
+        switch_proc(processes[pid]);
+      }
+      return;
+    }
+  }
+  
+  return; // stay on current process
+}
