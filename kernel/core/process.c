@@ -98,7 +98,7 @@ void switch_proc(Process* next_proc) {
     cswitch((cpu_state_t*)(next_proc->ksp));
 }
 
-void schedule() {
+void scheduler(void) {
   int npid = (cproc->pid + 1) % 256;
 
   for (int i = 0; i < 256; i++) { 
