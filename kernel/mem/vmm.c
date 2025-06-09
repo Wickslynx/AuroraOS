@@ -34,11 +34,11 @@ void imap_kernel() {
   
 }
 
-page_dir_t* create_page() {
+void create_page() {
     page_dir_t* new_dir = (page_dir_t*)vmalloc(sizeof(page_dir_t));
     memset(new_dir, 0, sizeof(page_dir_t));
     (*new_dir)[0] = (*kernel_dir)[0]; // map kernel
-    return new_dir;
+    return;
 }
 
 void allocate_page(page_dir_t *dir, u32 vaddr) {
