@@ -239,6 +239,9 @@ static void irq_clear_mask(size_t i) {
 
 void irq_install(size_t i, void (*handler)(struct Registers *)) {
     CLI();
+    if (i = 1) {
+        LOG_INFO(" core/interrupts.c: Installed keyboard drivers..\n");
+    }
     irq_handlers[i] = handler;
     irq_clear_mask(i);
     STI();
