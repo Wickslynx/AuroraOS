@@ -62,8 +62,8 @@ Process* process_create(char* name, int ppid, Domain domain, u32 entry, u32 stac
   }
   proc->usp = ustack + KERNEL_STACK_SIZE - sizeof(cpu_state_t); // top of user stack
 
-  proc->entry = entry; // program entry point
-  proc->stack = stack; // user stack pointer (if needed for userland code)
+  proc->entry = entry; // entry
+  proc->stack = stack; // user stack
 
   cpu_state_t* cpu = (cpu_state_t*)(proc->ksp);
   memset(cpu, 0, sizeof(cpu_state_t)); // Clear CPU state
