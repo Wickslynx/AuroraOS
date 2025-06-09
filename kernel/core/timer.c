@@ -1,5 +1,6 @@
 #include "timer.h"
 #include "interrupts.h"
+#include "process.h"
 
 #define PIT_A 0x40
 #define PIT_B 0x41
@@ -34,6 +35,7 @@ u64 timer_get() {
 
 static void timer_handler(struct Registers *regs) {
     state.ticks++;
+    scheduler();
 }
 
 void timer_init() {
