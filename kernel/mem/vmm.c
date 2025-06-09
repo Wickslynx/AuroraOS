@@ -87,6 +87,8 @@ static inline void pfault(struct Registers* regs) {
     int present = !(regs->err_code & 0x1);
     int rw = regs->err_code & 0x2;
     int us = regs->err_code & 0x4;
+
+    LOG_ERROR(" mem/vmm.c: Raised page fault " fadress);
     
     panic("Page fault...."); // There is no printf yet, so i can't print the error code.. TODO: Make this possible
     
