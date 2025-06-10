@@ -79,6 +79,16 @@ Process* process_create(char* name, int ppid, Domain domain, u32 entry, u32 stac
 }
 
 
+int load_program(Process* proc, void* code, size_t size) {
+    if (!proc || !code || size == 0) {
+        return -1;
+    }
+    
+    memcpy((void*)proc->entry, code, size);
+    return 0;
+}
+
+
 void cswitch(cpu_state_t* new_state) {
   asm (
       "movl %0, %%esp \n"  
