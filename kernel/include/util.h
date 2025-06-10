@@ -35,6 +35,18 @@ typedef u8 bool;
 
 #define CLI() asm ("cli")
 #define STI() asm ("sti")
+    
+#define PACKED __attribute__((packed))
+    
+#define HIBIT(_x) (31 - __builtin_clz((_x)))
+#define LOBIT(_x)\
+    __extension__({ __typeof__(_x) __x = (_x); HIBIT(__x & -__x); })
+
+#define BIT_SET(_v, _n, _x) __extension__({\
+        __typeof__(_v) __v = (_v);\
+        (__v ^ ((-(_x) ^ __v) & (1 << (_n))));\
+        })
+
 
 static inline u16 inports(u16 port) {
     u16 r;
