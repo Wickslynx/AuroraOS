@@ -1,5 +1,8 @@
 #ifndef TIMER_H
 #define TIMER_H
+#ifdef _cplusplus
+extern "C" {
+#endif
 
 #include "util.h"
 
@@ -9,4 +12,7 @@
 u64 timer_get();
 void timer_init();
 
+#ifdef __cplusplus
+}
+#endif
 #endif
