@@ -37,7 +37,7 @@ extern "C" void _main(u32 magic) {
         screen_clear(COLOR(0, 0, 7));
 	test();
         screen_swap();
-	tate.frames++;
+	state.frames++;
     }
 
     log_print("\033[32m [AuroraOS]\033[0m - Shutting down... \n");
