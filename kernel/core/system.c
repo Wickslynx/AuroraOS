@@ -29,6 +29,27 @@ char serial_read(void) {
     return inportb(COM1_PORT);
 }
 
+void serial_init(void) {
+    outportb(COM1_PORT + 1, 0x00);  
+    outportb(COM1_PORT + 3, 0x80);    
+    outportb(COM1_PORT + 0, 0x03);    
+    outportb(COM1_PORT + 1, 0x00);   
+    outportb(COM1_PORT + 3, 0x03);   
+    outportb(COM1_PORT + 2, 0xC7);    
+    outportb(COM1_PORT + 4, 0x0B);    
+    outportb(COM1_PORT + 4, 0x1E);   
+    outportb(COM1_PORT + 0, 0xAE);    // test
+    
+   
+    if (inportb(COM1_PORT + 0) != 0xAE) {
+        return;
+    }
+
+    
+    outportb(COM1_PORT + 4, 0x0F);
+}
+
+
 void serial_readline(char* buffer, size_t max) {
     size_t i = 0;
     while (i < max -1) {
