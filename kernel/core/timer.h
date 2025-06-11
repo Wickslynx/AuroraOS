@@ -1,6 +1,6 @@
 #ifndef TIMER_H
 #define TIMER_H
-#ifdef _cplusplus
+#ifdef __cplusplus
 extern "C" {
 #endif
 
