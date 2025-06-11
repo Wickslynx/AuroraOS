@@ -71,6 +71,7 @@ void serial_readline(char* buffer, size_t max) {
         } else if (c >= 32 && c <= 126) { // only printable characters, else they will be ignored.
             buffer[i++] = c;
             serial_write(c);  
+        }
     }
     buffer[i] = '\0'; // null terminate
 }
