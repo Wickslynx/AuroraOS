@@ -33,11 +33,20 @@ extern "C" void _main(u32 magic) {
 
     bool quit = false;
 
+    
+	
     while (quit != true) {
+	u64 now = timer_get();
+    	u32 last = 0;
+	    
+	if (now != last) {
+		last = now;
+	}
+	
+
         screen_clear(COLOR(0, 0, 7));
 	test();
         screen_swap();
-	state.frames++;
     }
 
     log_print("\033[32m [AuroraOS]\033[0m - Shutting down... \n");
