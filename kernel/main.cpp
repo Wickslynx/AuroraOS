@@ -5,6 +5,7 @@
 #include <error.h>
 #include <log.h>
 
+#include "core/timer.h"
 #include "mem/vmm.h"
 #include "ui/system/screen.h"
 #include "../user/apps/terminal/terminal.cpp"
@@ -26,16 +27,17 @@ extern "C" void _main(u32 magic) {
     init_vmm();
     */
 	
-    
+    timer_init();
     screen_init();
     log_print("\033[32m [AuroraOS]\033[0m - Initialization [OK]... \n");
 
     bool quit = false;
-    
+
     while (quit != true) {
         screen_clear(COLOR(0, 0, 7));
 	test();
         screen_swap();
+	tate.frames++;
     }
 
     log_print("\033[32m [AuroraOS]\033[0m - Shutting down... \n");
