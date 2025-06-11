@@ -51,23 +51,28 @@ void serial_init(void) {
 
 
 void serial_readline(char* buffer, size_t max) {
+    if (!buffer || max == 0) return;  
+    
     size_t i = 0;
-    while (i < max -1) {
+    while (i < max - 1) {
         char c = serial_read();
-        serial_write(c);
-
-        if (c == '\r' || c == '\n') { // enter
-            break;
-        } else if (c == '\b' && i > 0) { // backspace
-            i--;
-            continue;
-        }
         
-        buffer[i++] = c;
+        if (c == '\r' || c == '\n') { // newline
+            serial_write('\r'); 
+            serial_write('\n');  
+            break;
+        } else if (c == '\b' || c == 127) { // DEL
+            if (i > 0) {
+                i--;
+                serial_write('\b');  
+                serial_write(' ');  
+                serial_write('\b'); 
+            }
+        } else if (c >= 32 && c <= 126) { // only printable characters, else they will be ignored.
+            buffer[i++] = c;
+            serial_write(c);  
     }
-
-    buffer[i] = '\0'; // null term.
-
+    buffer[i] = '\0'; // null terminate
 }
 
 
