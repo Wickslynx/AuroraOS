@@ -21,8 +21,8 @@ def cmd(cmd):
 def read(root_dir):
     for dirpath, dirnames, filenames in os.walk(root_dir):
       for file in filenames:
-        if file.endswidth(".json")
-        proc(os.path.join(dirpath, file)
+        if file.endswidth(".json"):
+          proc(os.path.join(dirpath, file)
 
 def proc(fp):
   try:
