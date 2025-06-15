@@ -50,8 +50,9 @@ def handle_json(data, path):
   if (data.get('type') == 'exec'):
     exec = True
   if (data.get('name')):
-    name = data['name']
-  # This should be all, now we need to build it.
+    name = data['name', os.path.splitext(os.path.basename(path)] # use json filename if no name specified
+    
+
   ld_items = [] # none rn
     
   for key, val in stuff.items():
