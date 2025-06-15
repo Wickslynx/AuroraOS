@@ -8,8 +8,10 @@ stuff = {
 }
 i = 1
 CFLAGS = "-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing $(INCLUDE) -Wno-pointer-arith -Wno-unused-parameter -nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector -fno-builtin-function -fno-builtin"
-CPPFLAGS = "-m32 -std=c++17 -fno-exceptions -fno-rtti -ffreestanding -nostdlib -Wall -Wextra -O2 -fno-pie $(INCLUDE)"
+CPPFLAGS = "-m32 -std=c++17 -fno-exceptions -fno-rtti -ffreestanding -nostdlib -Wall -Wextra -O2 -fno-pie -Ikernel/include "
 ASMFLAGS = "-f elf32"
+LDFLAGS = "-m elf_i386 -g -Ikernel/include"
+
 def cmd(cmd):
   def run():
     result = sp.run(cmd, shell=True, capture_output=True, text=True)
@@ -27,7 +29,6 @@ def cmd(cmd):
 
 def read(root_dir):
     for dirpath, dirnames, filenames in os.walk(root_dir):
-      
       for file in filenames:
         if file.endswith(".json"):
           proc(os.path.join(dirpath, file))
@@ -96,8 +97,7 @@ def handle_json(data, path):
   
   # link if its supposed to exec and we have obj
   if exec and obj:
-    ld_cmd = f"ld -o {out} {' '.join(obj)} {' '.join(ld_items)}"
-    sp.run(ld_cmd, shell=True)
+    sp.run(f"ld -o {out} {' '.join(obj)} {' '.join(ld_items)} {LDFLAGS}", shell=True)
   
   stuff[i] = [name, out]
   
