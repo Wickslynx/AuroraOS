@@ -4,7 +4,7 @@ import time
 import json
 import os
 stuff = {
-  "BUILD" : "~AuroraOS/build.py" # If you ever would need the build.... Don't think so though.
+  "BUILD" : "./build.py" # If you ever would need the build.... Don't think so though.
 }
 i = 1
 CFLAGS = "-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing $(INCLUDE) -Wno-pointer-arith -Wno-unused-parameter -nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector -fno-builtin-function -fno-builtin"
