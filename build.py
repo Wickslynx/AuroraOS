@@ -11,13 +11,23 @@ CFLAGS = "-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing $(INCL
 CPPFLAGS = "-m32 -std=c++17 -fno-exceptions -fno-rtti -ffreestanding -nostdlib -Wall -Wextra -O2 -fno-pie $(INCLUDE)"
 ASMFLAGS = "-f elf32"
 def cmd(cmd):
-  t = threading.Thread(target=sp.run, args=(cmd,))
+  def run():
+    result = sp.run(cmd, shell=True, capture_output=True, text=True)
+    print(f"Running: {cmd}")
+    if result.stdout:
+      print(result.stdout)
+    if result.stderr:
+      print(result.stderr)
+    if result.returncode != 0:
+      print(f"Command failed with return code {result.returncode}")
+  t = threading.Thread(target=run)
   t.start()
   return t
 
 
 def read(root_dir):
     for dirpath, dirnames, filenames in os.walk(root_dir):
+      
       for file in filenames:
         if file.endswith(".json"):
           proc(os.path.join(dirpath, file))
@@ -93,11 +103,7 @@ def handle_json(data, path):
   
 def main():
     import sys
-    if len(sys.argv) > 1:
-        read(sys.argv[1])
-    else:
-        print("Usage: python build.py <directory>")
-        read(".")
+    read(".")
 
 if __name__ == "__main__":
   main()
