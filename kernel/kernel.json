@@ -1,4 +1,5 @@
 {
   "type": "exec",
-  "name": "kernel",
+  "name": "polaris",
+  "requires": ["polaris-core", "polaris-fs", "polaris-mem"]
 }
