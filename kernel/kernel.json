@@ -1,7 +1,4 @@
 {
-  "id": "kernel",
-  "type": "exe"
-
-  "files": ["boot/*", "include/*", "core/*", "drivers", "mem/*", "tools/*"]
-  
+  "type": "exec",
+  "name": "kernel",
 }
