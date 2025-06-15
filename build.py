@@ -7,7 +7,7 @@ stuff = {
   "BUILD" : "./build.py" # If you ever would need the build.... Don't think so though.
 }
 i = 1
-CFLAGS = "-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing $(INCLUDE) -Wno-pointer-arith -Wno-unused-parameter -nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector -fno-builtin-function -fno-builtin"
+CFLAGS = "-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing -Ikernel/include -Wno-pointer-arith -Wno-unused-parameter -nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector -fno-builtin-function -fno-builtin"
 CPPFLAGS = "-m32 -std=c++17 -fno-exceptions -fno-rtti -ffreestanding -nostdlib -Wall -Wextra -O2 -fno-pie -Ikernel/include "
 ASMFLAGS = "-f elf32"
 LDFLAGS = "-m elf_i386 -g -Ikernel/include"
