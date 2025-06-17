@@ -3,12 +3,12 @@
 
 // WARNING: This is AI generated.
 int image_bmp(const u8 *bmp_data, u32 bmp_size, int x, int y) {
-    if (bmp_size < sizeof(bmp_file_header_t) + sizeof(bmp_info_header_t)) {
+    if (bmp_size < sizeof(bmp_file_t) + sizeof(bmp_info_t)) {
         return -1;
     }
     
-    bmp_file_header_t *file_header = (bmp_file_header_t*)bmp_data;
-    bmp_info_header_t *info_header = (bmp_info_header_t*)(bmp_data + sizeof(bmp_file_header_t));
+    bmp_file_t *file_header = (bmp_file_t*)bmp_data;
+    bmp_info_t *info_header = (bmp_info_t*)(bmp_data + sizeof(bmp_file_t));
     
     // Check that it's an BMP
     if (file_header->signature != 0x4D42) { 
