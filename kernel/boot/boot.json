@@ -1,0 +1,5 @@
+{
+  "type": "exec",
+  "name": "boot",
+  "requires": "polaris"
+}
