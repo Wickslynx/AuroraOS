@@ -44,6 +44,7 @@ void screen_init() {
     sbuffers[1] = (u8 *)malloc(buffer_size);
     
     if (!sbuffers[0] || !sbuffers[1]) {
+        LOG_ERROR(" kernel/ui/system/screen.c: (screen_init:47) UNABLE TO ALLOCATE BUFFERS");
         panic("UNABLE TO ALLOCATE BUFFERS");
     }
     
