@@ -69,11 +69,15 @@ typedef struct {
     node_t node;
 } file_t
 
+
+// core 
+
 int fs_format(u32 dev, u32 tblocks);
 int fs_mount(u32 dev, fs *fs);
 int fs_umount(fs *fs);
 int fs_sync(fs *fs);
 
+// node stuff -> this should be moved to a seperate file..
 u32 block_alloc(fs *fs);
 int block_free(fs *fs);
 bool is_free(fs *fs, u32 block);
@@ -83,6 +87,7 @@ u32 node_free(fs *fs, num);
 node_t* node_get(fs *fs, num);
 int wnode(fs *fs, node_t *node);
 
+// fops
 int create(fs *fs, const char* path, u16 mode);
 int open(fs *fs, const char* path, u16 flags, file_t file);
 int close(fs *fs, file_t file);
