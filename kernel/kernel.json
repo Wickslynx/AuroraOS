@@ -1,5 +1,0 @@
-{
-  "type": "exec",
-  "name": "polaris",
-  "requires": ["polaris-core", "polaris-fs", "polaris-mem"]
-}
