@@ -1,203 +1,190 @@
-#include "../include/fs.h"
+#include "fs.h"
 
-//----------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------
-//Please see the contributer_introduction file for more info on how to commit!
+static fs fs_main;
 
-/*   --File system built for AuroraOS--
-
-
-Important stuff to know:
-
-Superblock structure:
-Total blocks: 1024
-Inode blocks: 16
-Data blocks: 1008
-
-
-Global variables:
-- fs_memory, Main array thats holding the whole filesystem.
-- sb, ptr to superblock.
-- inodes, ptr to the inode table.
-- data_blocks, ptr to the data storage.
-- free_inode_bitmap, Tracks inode allocation
-- free_data_bitmap, Tracks data allocation.
-
-Memory layout: 
-[Superblock][Inode Bitmap][Data Bitmap][Inode Table][Data Blocks]
-
-Additional declarations:
-memset: core/util.h
-
-
-*/ 
-
-//----------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------
-
-unsigned char fs_memory[BLOCK_SIZE * 1024]; // 512KB filesystem.
-
-// Pointers to the filesystem sections, see (Global variables).
-superblock_t *sb;
-inode_t *inodes;
-unsigned char *data_blocks;
-unsigned char *free_inode_bitmap;
-unsigned char *free_data_bitmap;
-
-
-void fs_init() {
-
-    //Init superblock at the start.
-    sb = (superblock_t *)fs_memory; 
-    sb->magic = FS_MAGIC;
-
-    //Assign the right values.
-    sb->total_blocks = 1024;
-    sb->inode_blocks = 16;
-    sb->data_blocks = 1008;
-    
-    //Calculate the bitmap pos.
-    sb->free_inode_bitmap = sizeof(superblock_t); //Calculate the pos for the inodes.
-    sb->free_data_bitmap = sb->free_inode_bitmap + sb->inode_blocks; // Calculate the pos for the data.
-    
-    //Set up the pointers to the diffrent parts.
-    inodes = (inode_t *)(fs_memory + sb->free_inode_bitmap + sb->inode_blocks); //Create inode_t struct with the memory + the offset of the free_inode_bitmap + the location of the blocks.
-    data_blocks = fs_memory + BLOCK_SIZE * (sb->free_data_bitmap + sb->data_blocks); //Create data blocks with the size of the mem with the block size and with the offset and the location.
-    free_inode_bitmap = fs_memory + sb->free_inode_bitmap; //Make a pointer to the already defined method.
-    free_data_bitmap = fs_memory + sb->free_data_bitmap; //Make a pointer to the already defined method.
-
-    //Make memsets to and set every block to 0 (free).
-    memset(free_inode_bitmap, 0, sb->inode_blocks);
-    memset(free_data_bitmap, 0, sb->data_blocks);
+// read a block 
+int rblock(u32 dev, u32 block, void *buffer) {
+    u32 sector = block * SPB;
+    for (int i = 0; i < SPB; i++) {
+        disk.read_sector(dev, sector + i, (u8*)buffer + (i * SECTOR_SIZE));
+    }
+    return 0;
 }
 
-int create(const char *filename) {        
-    for (unsigned int i = 0; i < MAX_FILES; i++) {
-        
-        if (!free_inode_bitmap[i]) {
-            free_inode_bitmap[i] = 1; //Set to used.
-            
-            inode_t *new_inode = &inodes[i]; //Make a new inode.
-            memset(new_inode, 0, sizeof(inode_t)); //Make available mem for it .
-            
-            dir_entry_t *new_entry = (dir_entry_t *)(data_blocks + i * BLOCK_SIZE); //Make a new directory entry.
-            
-            for (int j = 0; j < MAX_FILENAME_LENGTH; j++) { //For the length of the file.
-                new_entry->filename[j] = filename[j]; //Write the name of the file.
-                if (filename[j] == '\0') break; //If at the end, break.
-            }
-            
-            new_entry->inode_index = i; //Set the new filename to the inode index.
-            return 0;
-        }
+// write a block 
+int wblock(u32 dev, u32 block, const void* buffer) {
+    u32 sector = block * SPB;
+    for (int i = 0; i < SPB; i++) {
+        disk.write_sector(dev, sector + i, (const u8*)buffer + (i * SECTOR_SIZE));
     }
-    return -1; // If no free inode.
-}
-
-int write(const char *filename, const char *data, unsigned int length) {
-    // Validate input parameters
-    if (filename == NULL || data == NULL || length == 0) {
-        return -1; // Invalid input
-    }
-
-    for (unsigned int i = 0; i < MAX_FILES; i++) {
-        dir_entry_t *entry = (dir_entry_t *)(data_blocks + i * BLOCK_SIZE);
-        
-        int found = true; // true
-        
-        // Careful filename comparison
-        for (int j = 0; j < MAX_FILENAME_LENGTH; j++) {
-            if (entry->filename[j] != filename[j]) {
-                found = false; // false
-                break;
-            }
-            if (filename[j] == '\0') break;
-        }
-        
-        if (found) {
-            inode_t *file_inode = &inodes[entry->inode_index];
-            
-            // Check file size limit
-            if (length > BLOCK_SIZE * 12) {
-                return -1; // File too large
-            }
-            
-            // Calculate number of blocks needed
-            unsigned int blocks_needed = (length + BLOCK_SIZE - 1) / BLOCK_SIZE;
-            
-            // Check if enough free blocks are available
-            unsigned int free_blocks_count = 0;
-            for (unsigned int k = 0; k < MAX_DATA_BLOCKS; k++) {
-                if (!free_data_bitmap[k]) {
-                    free_blocks_count++;
-                }
-            }
-            
-            if (free_blocks_count < blocks_needed) {
-                return -1; // Not enough free blocks
-            }
-            
-            // Allocate and write
-            unsigned int blocks_written = 0;
-            for (unsigned int j = 0; j < MAX_DATA_BLOCKS && blocks_written < blocks_needed; j++) {
-                if (!free_data_bitmap[j]) {
-                    free_data_bitmap[j] = 1;
-                    
-                    file_inode->data_block_indices[blocks_written] = j;
-                    
-                    // Calculate bytes to copy (full block or remaining data)
-                    unsigned int bytes_to_copy = (blocks_written == blocks_needed - 1) 
-                        ? (length % BLOCK_SIZE ? length % BLOCK_SIZE : BLOCK_SIZE) 
-                        : BLOCK_SIZE;
-                    
-                    memcpy(
-                        (void*)(data_blocks + j * BLOCK_SIZE), 
-                        (const void*)(data + blocks_written * BLOCK_SIZE), 
-                        bytes_to_copy
-                    );
-                    
-                    blocks_written++;
-                }
-            }
-            
-            file_inode->size = length;
-            return 0; 
-        }
-    }
-    return -1; // File not found
+    return 0;
 }
 
 
-int read(const char *filename, char *buffer, unsigned int length) {
-    for (unsigned int i = 0; i < MAX_FILES; i++) { //For all files.
-        
-        dir_entry_t *entry = (dir_entry_t *)(data_blocks + i * BLOCK_SIZE); //Make a new directory entry as usual :)
-        
-        int found = true; //Declare found as default true,
-        
-        for (int j = 0; j < MAX_FILENAME_LENGTH; j++) { //For all files.
-            if (entry->filename[j] != filename[j]) { //If the filename and entry match.
-                found = false;
-                break;
-            }
-            
-            if (filename[j] == '\0') break; //If the length of the filename 0, break.
-        }
-        
-        if (found) { //If match.
-            
-            inode_t *file_inode = &inodes[entry->inode_index]; //Make a new inode.
-            
-            //Set the length to be the size of the file.
-            length = file_inode->size;
-            
-            //For all data blocks.
-            for (unsigned int j = 0; j < (length + BLOCK_SIZE - 1) / BLOCK_SIZE; j++) {
-                memcpy(buffer + j * BLOCK_SIZE, data_blocks + file_inode->data_block_indices[j] * BLOCK_SIZE, BLOCK_SIZE); // Memory copy them to a char array (buffer).
-            }
-            
-            return length; //Return the length of the file.
-        }
+int fs_format(u32 dev, u32 tblocks) {
+    block_t b = {0};
+    b.magic = FS_MAGIC;
+    b.version = 1;
+    b.size = BLOCK_SIZE;
+    b.tblocks = tblocks;
+    b.fblocks = tblocks - 1;
+    b.node_start = 1; // first free block
+
+    if (wblock(dev, 0, &b) != 0) return -1;
+
+    free_block_t fb = {0};
+    // just write over all blocks.
+    for (u32 i = 1; i < tblocks; i++) {
+        fb.num = i;
+        fb.next = (i + 1 < tblocks) ? i + 1 : 0;
+        wblock(dev, i, &fb);
     }
-    return -1; // File not found.
+
+    return 0;
+}
+
+// mount fs from dev.
+int fs_mount(u32 dev, fs *fs) {
+    if (rblock(dev, 0, &fs->block) != 0) return -1;
+    if (fs->block.magic != FS_MAGIC) return -1;
+    fs->devid = dev;
+    fs->ismounted = true;
+    return 0;
+}
+
+// unmount fs
+int fs_umount(fs *fs) {
+    if (!fs->ismounted) return -1;
+    fs->ismounted = false;
+    return 0;
+}
+
+// write it back to the disk NOTE: Don't do this every frame, it will just lag out everything.
+int fs_sync(fs *fs) {
+    return wblock(fs->devid, 0, &fs->block);
+}
+
+// alloc one free block, returns block num
+u32 block_alloc(fs *fs) {
+    if (fs->block.fblocks == 0) return 0;
+    free_block_t fb;
+    rblock(fs->devid, fs->block.node_start, &fb);
+    u32 block_num = fb.num;
+    fs->block.node_start = fb.next;
+    fs->block.fblocks--;
+    fs_sync(fs);
+    return block_num;
+}
+
+// just janks a block to the free list.
+int block_free(fs *fs, u32 block) {
+    free_block_t fb;
+    fb.num = block;
+    fb.next = fs->block.node_start;
+    wblock(fs->devid, block, &fb);
+    fs->block.node_start = block;
+    fs->block.fblocks++;
+    fs_sync(fs);
+    return 0;
+}
+
+// just check if the block is marked free
+bool is_free(fs *fs, u32 block) {
+    free_block_t fb;
+    rblock(fs->devid, block, &fb);
+    return fb.num == block;
+}
+
+// alloc a new node (data)
+u32 node_alloc(fs *fs) {
+    u32 block = block_alloc(fs);
+    if (!block) return 0;
+    node_t node = {0};
+    node.used = 1;
+    node.num = block;
+    wnode(fs, &node);
+    return block;
+}
+
+// free a node AND it's block
+int node_free(fs *fs, u32 num) {
+    node_t node = {0};
+    wnode(fs, &node);
+    return block_free(fs, num);
+}
+
+// get node from disk
+node_t* node_get(fs *fs, u32 num) {
+    static node_t node;
+    rblock(fs->devid, num, &node);
+    return &node;
+}
+
+// write node to disk
+int wnode(fs *fs, node_t *node) {
+    return wblock(fs->devid, node->num, node);
+}
+
+// create a new file node TODO: Paths.
+int create(fs *fs, const char* path, u16 mode) {
+    u32 node_num = node_alloc(fs);
+    if (!node_num) return -1;
+    node_t *node = node_get(fs, node_num);
+    node->type = NODE_FILE;
+    node->size = 0;
+    node->ctime = node->etime = 0;
+    wnode(fs, node);
+    return 0;
+}
+
+// open file TODO: Path handling
+int open(fs *fs, const char* path, u16 flags, file_t *file) {
+    u32 node_num = 1; /// rn this is kinda weird asf, theres no paths.
+    node_t *node = node_get(fs, node_num);
+    file->node_num = node_num;
+    file->pos = 0;
+    file->flags = flags;
+    file->node = *node;
+    return 0;
+}
+
+int close(fs *fs, file_t *file) {
+    return 0;
+}
+
+// read file content 
+int read(fs *fs, file_t *file, void *buffer, u64 size) {
+    node_t *node = &file->node;
+    if (file->pos + size > node->size) size = node->size - file->pos;
+    rblock(fs->devid, node->num, buffer);
+    file->pos += size;
+    return size;
+}
+
+// write file content 
+int write(fs *fs, file_t *file, const void *buffer, u64 size) {
+    node_t *node = &file->node;
+    wblock(fs->devid, node->num, buffer);
+    file->pos += size;
+    if (file->pos > node->size) node->size = file->pos;
+    node->etime = 0;
+    wnode(fs, node);
+    return size;
+}
+
+// delete file node 
+int fs_delete(fs *fs, const char* path) {
+    u32 node_num = 1; // TODO: Paths.
+    node_free(fs, node_num);
+    return 0;
+}
+
+// repos from fhandler
+int seek(fs *fs, file_t *file, u64 offset, int whence) {
+    switch (whence) {
+        case 0: file->pos = offset; break;               // SEEK_SET
+        case 1: file->pos += offset; break;              // SEEK_CUR
+        case 2: file->pos = file->node.size + offset; break; // SEEK_END
+    }
+    return 0;
 }
