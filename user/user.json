@@ -1,0 +1,7 @@
+{
+  "id": "user-space",
+  "type": "wrapper",
+
+  "childs": "apps/*"
+  
+}
