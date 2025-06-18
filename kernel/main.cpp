@@ -26,7 +26,7 @@ extern "C" void _main(u32 magic) {
 
     bool quit = false;
 
-    LOG_INFO("Reaching main loop..");
+    LOG_INFO(" kernel/main.cpp: Entering main loop!");
 	
     while (quit != true) {
         screen_clear(COLOR(0, 0, 7));
