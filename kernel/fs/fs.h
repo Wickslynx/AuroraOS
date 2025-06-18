@@ -6,6 +6,8 @@ extern "C" {
 #endif
 
 #include "disk.h"
+#include <util.h>
+#include <mem.h>
 
 #define SECTOR_SIZE 512
 #define SPB 1 // 1 sector per block.
