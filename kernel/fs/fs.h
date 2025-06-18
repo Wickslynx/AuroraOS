@@ -32,6 +32,7 @@ typedef struct {
     u32 size;
     u32 tblocks;
     u32 fblocks; // free
+    u32 node_start;
 } block_t;
 
 typedef struct {
