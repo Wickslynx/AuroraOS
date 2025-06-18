@@ -5,13 +5,12 @@
 #include <error.h>
 #include <log.h>
 
-#include "core/timer.h"
 #include "mem/vmm.h"
 #include "ui/system/screen.h"
-#include "../user/apps/terminal/terminal.cpp"
+#include "../user/home/home.cpp"
 
 void test() {
-	terminal();
+	__home();
 }
     
 extern "C" void _main(u32 magic) {
@@ -21,29 +20,15 @@ extern "C" void _main(u32 magic) {
     isr_init();
     fpu_init(); // floating point unit.
     irq_init();
-    keyboard_init();
-    /*
-    imap_kernel();
-    init_vmm();
-    */
-	
-    timer_init();
+    //keyboard_init();
     screen_init();
     log_print("\033[32m [AuroraOS]\033[0m - Initialization [OK]... \n");
 
     bool quit = false;
 
-    
+    LOG_INFO("Reaching main loop..");
 	
     while (quit != true) {
-	u64 now = timer_get();
-    	u32 last = 0;
-	    
-	if (now != last) {
-		last = now;
-	}
-	
-
         screen_clear(COLOR(0, 0, 7));
 	test();
         screen_swap();
