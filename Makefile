@@ -29,7 +29,7 @@ ASM_SRCS=\
 ASM_OBJS=$(ASM_SRCS:.S=.o)
 
 # find all C source files
-KERNEL_C_SRCS=$(wildcard kernel/*.c kernel/mem/*.c kernel/ui/system/*.c kernel/drivers/*.c kernel/ui/*.c kernel/home/*.c kernel/core/*.c)
+KERNEL_C_SRCS=$(wildcard kernel/*.c kernel/mem/*.c kernel/ui/system/*.c kernel/drivers/*.c kernel/ui/*.c user/home/*.c kernel/core/*.c)
 # find all C++ source files
 KERNEL_CPP_SRCS=$(wildcard kernel/*.cpp kernel/ui/system/*.cpp kernel/drivers/*.cpp kernel/ui/*.cpp kernel/mem/*.cpp kernel/core/*.cpp)
 # convert C source files to .o
@@ -88,7 +88,7 @@ kernel: $(KERNEL_OBJS)
 iso: dirs bootsect kernel
 	mkisofs -o $(ISO) -b $(BOOTSECT) -c boot.catalog -no-emul-boot -boot-load-size 4 -boot-info-table bin/
 
-run: dirs bootsect kernel img
+run: clean dirs bootsect kernel img 
 	qemu-system-i386 --drive format=raw,file=auroraos.img -serial stdio -no-reboot -d guest_errors,int,pcall,unimp,out_asm -D debug.log
 
 img: dirs bootsect kernel
