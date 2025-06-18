@@ -17,9 +17,7 @@ extern "C" {
 #define M_FILENAME 255 // should be enough who tf has a file that has more than 255 letters in the name
 
 #define M_PATH 255
-#define DBLOCKS 12 // direct
-#define IBLOCKS 1 // inderect
-#define DIBLOCKS 1  // double inderect
+
 
 
 typedef enum {
