@@ -4,19 +4,14 @@ import time
 import json
 import os
 import sys
-
 stuff = {
   "BUILD" : "./build.py" # If you ever would need the build.... Don't think so though.
 }
-
 i = 0
-
-
-
-CFLAGS = f"-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing  -Wno-pointer-arith -Wno-unused-parameter -nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector -fno-builtin-function -fno-builtin"
-CPPFLAGS = f"-m32 -std=c++17 -fno-exceptions -fno-rtti -ffreestanding -nostdlib -Wall -Wextra -O2 -fno-pie"
+CFLAGS = "-m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing -Wno-pointer-arith -Wno-unused-parameter -nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector -fno-builtin-function -fno-builtin"
+CPPFLAGS = "-m32 -std=c++17 -fno-exceptions -fno-rtti -ffreestanding -nostdlib -Wall -Wextra -O2 -fno-pie"
 ASMFLAGS = "-f elf32"
-LDFLAGS = "-m elf_i386 -g -Ikernel/include"
+LDFLAGS = "-m elf_i386 -g"
 
 def cmd(cmd):
   def run():
@@ -32,13 +27,11 @@ def cmd(cmd):
   t.start()
   return t
 
-
 def read(root_dir):
     for dirpath, dirnames, filenames in os.walk(root_dir):
       for file in filenames:
         if file.endswith(".json"):
           proc(os.path.join(dirpath, file))
-
 
 def proc(fp):
   try:
@@ -49,7 +42,6 @@ def proc(fp):
   except Exception as e:
     print(f"Error reading {fp}: {e}")
 
-
 def handle_json(data, path):
   global i 
   exec = False
@@ -57,28 +49,24 @@ def handle_json(data, path):
   if (data.get('type') == 'exec'):
     exec = True
   if (data.get('name')):
-    name = data.get('name') or os.path.splitext(os.path.basename(path))[0] # use json filename if no name specified
+    name = data.get('name')
+  else:
+    name = os.path.splitext(os.path.basename(path))[0] # use directory name if no name specified
     
-  INCLUDE = "-Ikernel/include"
-  
+
+  INCLUDE = ""
+  if data.get('include', True):  
+    INCLUDE = "-Ikernel/include"
+    # specify include dirs with include dirs, not needed.
+    for inc_dir in data.get('include_dirs', []):
+      INCLUDE += f" -I kernel/include {inc_dir}"
+    
   
   ld_items = [] # none rn
     
-  for key, val in stuff.items():
-    if (key in data.get('requires', [])):
-      ld_items.append(val) # add the files, i also need to add it to the compilation command.
-      INCLUDE += f" {val}"
-    else:
-      if not data.get('requires'):  # nothing specified
-        break
-
-      	
-      # the required package is not built yet.. THen we need to build it.
-      print(f"REQUIRED PACKAGE NOT FOUND: {name}") 
-      sys.exit(-1)   	
+key} required by {name}") 
+        sys.exit(-1)   	
       
-
-  
   threads = []
   obj = []
   for root, dirs, filenames in os.walk(path):
@@ -87,22 +75,34 @@ def handle_json(data, path):
       try: 
         if file.endswith(".c"):
           obj_path = filepath.replace('.c', '.o')
-          t = cmd(f"gcc -o {obj_path} {filepath} -c {INCLUDE} {CFLAGS}")
+          compile_cmd = f"gcc -o {obj_path} {filepath} -c {CFLAGS}"
+          if INCLUDE:
+            compile_cmd += f" {INCLUDE}"
+          t = cmd(compile_cmd)
           threads.append(t)
           obj.append(obj_path)
         elif file.endswith(".cpp"):
           obj_path = filepath.replace('.cpp', '.o')
-          t = cmd(f"g++ -o {obj_path} {filepath} -c {INCLUDE} {CPPFLAGS}")
+          compile_cmd = f"g++ -o {obj_path} {filepath} -c {CPPFLAGS}"
+          if INCLUDE:
+            compile_cmd += f" {INCLUDE}"
+          t = cmd(compile_cmd)
           threads.append(t)
           obj.append(obj_path)
         elif file.endswith(".S"): # GAS
           obj_path = filepath.replace('.S', '.o')
-          t = cmd(f"gcc -o {obj_path} {filepath} -c {INCLUDE} {CFLAGS}")
+          compile_cmd = f"gcc -o {obj_path} {filepath} -c {CFLAGS}"
+          if INCLUDE:
+            compile_cmd += f" {INCLUDE}"
+          t = cmd(compile_cmd)
           threads.append(t)
           obj.append(obj_path)
         elif file.endswith(".asm"): # NASM
           obj_path = filepath.replace('.asm', '.o')
-          t = cmd(f"nasm -o {obj_path} {filepath} {INCLUDE} {ASMFLAGS}")
+          compile_cmd = f"nasm -o {obj_path} {filepath} {ASMFLAGS}"
+          if INCLUDE:
+            compile_cmd += f" {INCLUDE}"
+          t = cmd(compile_cmd)
           threads.append(t)
           obj.append(obj_path)
       except Exception as e:
@@ -119,8 +119,12 @@ def handle_json(data, path):
   # link if its supposed to exec and we have obj
   if exec and obj:
     sp.run(f"ld -o {out} {' '.join(obj)} {' '.join(ld_items)} {LDFLAGS}", shell=True)
+  elif not exec and obj:
+    # for non exec, just make a archive - shouldn't need to use it now anyways.
+    sp.run(f"ar rcs {name}.a {' '.join(obj)}", shell=True)
+    out = name + ".a"
   
-  stuff[i] = [name, os.path.dirname(path)] # add the path to the directory.
+  stuff[name] = out  
   i += 1
   
 def main():
