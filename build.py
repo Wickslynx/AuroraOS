@@ -76,7 +76,7 @@ def handle_json(data, path):
       INCLUDE += f" -I{inc_dir}"
 
   ld_items = []
-
+  linker_script = ""
   if data.get("ld"):
     linker_script += "{data.get(\"ld\"}"
     islinker = True
