@@ -8,6 +8,11 @@ on:
      - "Makefile"
      - "linker.ld"
      - "user/**"
+    paths-ignore:
+     - "user/base-files/**"
+  
+
+    
     
     branches: [ "main" ]
   pull_request: #Always run on pull-requests.
