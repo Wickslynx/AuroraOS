@@ -38,6 +38,7 @@ Next, I played around with UI elements like windows and a terminal. Progress was
 ![Uhhh ooo, Error! Please contanct me.](assets/images/auroraos-example-terminal-1.0.png)
 
 <br>
+
 # Processes, Filesystem, and a New Build System...
 
 For the following month, I focused on the "behind-the-scenes" work: processes, file handling, and setting up a new build system. Not much visible progress, but important foundations were laid.
