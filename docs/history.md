@@ -24,6 +24,11 @@ After a few months I started working again, i had just seen a video about Tetris
 
 # **Basic GUI elements rendered..**
 
+
+![Uhhh ooo, Error! Please contanct me.](assets/images/auroraos-example-red-screen.png)
+
+<br>
+
 # **Better UI system..**
 
 # **Processes, filesystem, new build system..**
