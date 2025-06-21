@@ -39,6 +39,4 @@ else
   exit 1
 fi
 
-  fi
-
 python3 /meta/build.py
