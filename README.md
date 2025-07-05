@@ -31,7 +31,7 @@ $  qemu-system-i386 --drive format=raw,file=auroraos.img -serial stdio -no-reboo
 ```
 Remove the ``-monitor stdio`` and use ``-nographic`` to run it just in the terminal.
 
-> **Advice:** <br> Just run `make run` to build and run the OS.
+> **Advice:** <br> Use `make run` to build and run the OS.
 
 **Building on real hardware...**
 So you are building AuroraOS on real hardware, I wouldn't recommend it but here is how.
