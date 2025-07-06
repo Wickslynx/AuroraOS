@@ -8,8 +8,6 @@ on:
      - "Makefile"
      - "linker.ld"
      - "user/**"
-    paths-ignore:
-     - "user/base-files/**"
   
 
     
