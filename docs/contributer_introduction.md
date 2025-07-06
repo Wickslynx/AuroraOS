@@ -73,13 +73,13 @@ int divide(int num1, int num2) {
 
 ## File layout:
 
-# 1. `.github/`
+**1. `.github/`**
 Github related files!
 - `workflows/`: github actions.
 
 ---
 
-# 2. `docs/`
+**2. `docs/`**
 Documentation..
 - `assets/images/`: Images
 - `bugs/`: known issues, bugs...
@@ -91,7 +91,7 @@ Documentation..
 
 ---
 
-# 3. `kernel/`
+**3. `kernel/`**
 kernel source
 - `boot/`: Bootloader-related code.
 - `core/`: Kernel core logic initilazation, processes-
@@ -107,12 +107,12 @@ kernel source
 
 ---
 
-# 5. `meta/`
+**5. `meta/`**
 (empty) metadata, configs...
 
 ---
 
-# 6. `user/`
+**6. `user/`**
 user space programs.
 - `apps/`: Applications built for the OS.
   - `calculator/`: A calculator app.
