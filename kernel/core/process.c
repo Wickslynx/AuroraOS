@@ -83,6 +83,10 @@ Process* process_create(char* name, int ppid, Domain domain, u32 entry, u32 stac
   return proc;
 }
 
+void process_destroy(Process* proc) {
+    // TODO: Make this actually work
+      
+}
 
 int load_program(Process* proc, void* code, size_t size) {
     if (!proc || !code || size == 0) {
@@ -92,9 +96,6 @@ int load_program(Process* proc, void* code, size_t size) {
     memcpy((void*)proc->entry, code, size);
     return 0;
 }
-
-
-
 
 void cswitch(cpu_state_t* old_state, cpu_state_t* new_state) {
     asm   (
