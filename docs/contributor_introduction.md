@@ -4,7 +4,7 @@
 
 > **⚠ Warning**<br> This page is still under development!
 
-## **Skill dosen't matter, or does it?**
+## **Skill doesn't matter, or does it?**
 Do you really need to be a rocket scientist to contribute to AuroraOS? I don't belive so. 
 
 Here's some things you can do at any level:
