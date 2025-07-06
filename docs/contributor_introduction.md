@@ -43,7 +43,8 @@ Here's some things you can do if you know too much about code:
 Rules:
 - Always add documentation for every commit you make, if you do not document your pull-request will not be merged.
 
-Example of a proper file documentation:
+> And no... I'm to lazy to document all my files.
+Example of proper file documentation:
 
 
 ```c
