@@ -69,7 +69,7 @@ int divide(int num1, int num2) {
 }
 
 ```
-> **✉ Note** <br> Feel free to add documentation to functions which dosen't have it, even though they are not yours.
+> **✉ Note** <br> Feel free to add documentation to functions which doesn't have it, even though they are not yours.
 
 
 <br>
