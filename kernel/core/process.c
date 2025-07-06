@@ -97,7 +97,7 @@ int load_program(Process* proc, void* code, size_t size) {
 
 
 void cswitch(cpu_state_t* old_state, cpu_state_t* new_state) {
-    asm volatile (
+    asm   (
         // save
         "pushf \n"              // flags
         "pusha \n"              // regs
@@ -125,7 +125,7 @@ void switch_proc(Process* next_proc) {
         cswitch((cpu_state_t*)(old_proc->ksp), (cpu_state_t*)(next_proc->ksp));
     } else {
         // first proc ever.
-        asm volatile (
+        asm   (
             "movl %0, %%esp \n"  
             "popa \n"            
             "add $8, %%esp \n"   
