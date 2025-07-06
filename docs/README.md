@@ -1,3 +1,15 @@
-# AuroraOS's Documentation...
+<p align="center">
+<img src="assets/auroraos.png" width="250" />
+</p>
 
-All AuroraOS's general documentation can be found here. There will also be other stuff here, TODO-lists, All Assets, more...
+> **⚠ Warning**<br> This page is still under development!
+
+## The AuroraOS Project.
+
+What is the AuroraOS project? When did it start and by who?
+
+
+
+# History
+
+> To find more about the history of AuroraOS, please visit the [history page](https://github.com/Wickslynx/AuroraOS/tree/main/docs/history.md)
