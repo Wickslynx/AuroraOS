@@ -29,7 +29,7 @@ Here's some things you can do if you know too much about code:
 - Porting to different architectures.
 - Working in the kernel, implementing new features as you like.
 
-> **IMPORTANT!** <br> All contributions is apprechiated.
+> **IMPORTANT!** <br> All contributions is appreciated.
 
 <br>
 
