@@ -17,11 +17,11 @@ typedef enum {
 } proc_state_t;
 
 typedef struct {
-  int pid;
-  int ppid;
-  int cpid[100];
-  int nchild;
-  int exitc;
+  int pid; // process id
+  int ppid; // parent process id 
+  int cpid[100]; // child process id 
+  int nchild; // number of children processes
+  int exitc; // exit code
   u32 usp; // user stack pointer
   u32 ksp; // kernel stack pointer.
   u32 entry;
