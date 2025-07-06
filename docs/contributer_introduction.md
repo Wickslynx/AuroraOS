@@ -74,7 +74,7 @@ int divide(int num1, int num2) {
 ## File layout:
 
 ### 1. `.github/`
-github files.
+Github related files!
 - `workflows/`: github actions.
 
 ---
