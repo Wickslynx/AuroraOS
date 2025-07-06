@@ -158,7 +158,8 @@ void scheduler(void) {
             cproc->proc_state = RUNNING;
             return;
         } else {
-            // nothing to run TODO: The system should be idle.
+            // set c proc to idle 
+            cproc->proc_state = IDLE;
             return;
         }
     }
