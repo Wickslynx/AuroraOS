@@ -65,11 +65,16 @@ Process* process_create(char* name, int ppid, Domain domain, u32 entry, u32 stac
   cpu_state_t* cpu = (cpu_state_t*)(proc->ksp);
   memset(cpu, 0, sizeof(cpu_state_t)); // Clear CPU state
 
-  cpu->eip = entry;              
-  cpu->cs  = 0x1B;               // user mode (ring 3)
-  cpu->eflags = 0x202;          
-  cpu->esp = proc->usp;        
-  cpu->ss  = 0x23;               // user data (ring 3)
+  cpu->eip = entry;
+  cpu->cs = 0x1B;        // user code (ring 3)
+  cpu->eflags = 0x202;   // sti
+  cpu->esp = proc->usp;  
+  cpu->ss = 0x23;        // user data (ring 3)
+  cpu->ds = 0x23;        // data
+  cpu->es = 0x23;
+  cpu->fs = 0x23;
+  cpu->gs = 0x23;
+
 
   // set the table slot.
   processes[pid] = proc;
@@ -89,37 +94,81 @@ int load_program(Process* proc, void* code, size_t size) {
 }
 
 
-void cswitch(cpu_state_t* new_state) {
-  asm (
-      "movl %0, %%esp \n"  
-      "popa \n"            
-      "add $8, %%esp \n"   
-      "iret \n"            
-      :
-      : "r"(new_state)
-      : "memory"
-  );
+
+
+void cswitch(cpu_state_t* old_state, cpu_state_t* new_state) {
+    asm volatile (
+        // save
+        "pushf \n"              // flags
+        "pusha \n"              // regs
+        "movl %%esp, %0 \n"     // sp
+        
+        // switch
+        "movl %1, %%esp \n"     // new sp
+        "popa \n"               // regs
+        "popf \n"               // flags
+        "ret \n"                // return
+        
+        : "=m" (*old_state)     // out: old state
+        : "m" (*new_state)      // in: new state
+        : "memory"
+    );
 }
 
 void switch_proc(Process* next_proc) {
     if (!next_proc) return;
-
-    cproc = next_proc; 
-    cswitch((cpu_state_t*)(next_proc->ksp));
+    
+    Process* old_proc = cproc;
+    cproc = next_proc;
+    
+    if (old_proc) {
+        cswitch((cpu_state_t*)(old_proc->ksp), (cpu_state_t*)(next_proc->ksp));
+    } else {
+        // first proc ever.
+        asm volatile (
+            "movl %0, %%esp \n"  
+            "popa \n"            
+            "add $8, %%esp \n"   
+            "iret \n"            
+            :
+            : "r"((cpu_state_t*)(next_proc->ksp))
+            : "memory"
+        );
+    }
 }
 
 void scheduler(void) {
-  int npid = (cproc->pid + 1) % 256;
-
-  for (int i = 0; i < 256; i++) { 
-    int pid = (npid + i) % 256;
-    if (processes[pid] && processes[pid]->proc_state == READY) {
-      if (processes[pid] != cproc) {
-        switch_proc(processes[pid]);
-      }
-      return;
-    }
-  }
+    Process* next_proc = NULL;
   
-  return; // stay on current process
+    int start_pid = cproc ? (cproc->pid + 1) % 256 : 0; // no current process.
+    
+    // next proc
+    for (int i = 0; i < 256; i++) { 
+        int pid = (start_pid + i) % 256;
+        if (processes[pid] && processes[pid]->proc_state == READY) {
+            next_proc = processes[pid];
+            break;
+        }
+    }
+    
+    // if theres no ready proc.
+    if (!next_proc) {
+        if (cproc && (cproc->proc_state == RUNNING || cproc->proc_state == READY)) {
+            // c proc can just run untill we have another one.
+            cproc->proc_state = RUNNING;
+            return;
+        } else {
+            // nothing to run TODO: The system should be idle.
+            return;
+        }
+    }
+    
+    
+    if (cproc && cproc->proc_state == RUNNING) {
+        cproc->proc_state = READY;  
+    }
+    
+    // switch
+    next_proc->proc_state = RUNNING;
+    switch_proc(next_proc);
 }
