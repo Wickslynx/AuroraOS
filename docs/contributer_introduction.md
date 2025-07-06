@@ -36,6 +36,7 @@ Here's some things you can do if you know too much about code:
 
 ## **Reading my codebase?**
 
+<br>
 
 ## **How do I document?**
 
@@ -70,6 +71,8 @@ int divide(int num1, int num2) {
 ```
 > **✉ Note** <br> Feel free to add documentation to functions which dosen't have it, even though they are not yours.
 
+
+<br>
 
 ## File layout:
 
