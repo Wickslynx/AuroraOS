@@ -13,7 +13,8 @@ typedef enum {
   RUNNING,
   READY,
   TERMINATED,
-  BLOCKED
+  BLOCKED,
+  IDLE
 } proc_state_t;
 
 typedef struct {
