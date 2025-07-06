@@ -70,3 +70,60 @@ int divide(int num1, int num2) {
 ```
 > **✉ Note** <br> Feel free to add documentation to functions which dosen't have it, even though they are not yours.
 
+
+## File layout:
+
+### 1. `.github/`
+github files.
+- `workflows/`: github actions.
+
+---
+
+### 2. `docs/`
+Documentation..
+- `assets/images/`: Images
+- `bugs/`: known issues, bugs...
+- `kernel/`: kernel documentation.
+- `tests/`: unit tests.
+- `ui/`:
+  - `vbe/`: VBE docs.
+  - `vga/`: VGA docs.
+
+---
+
+### 3. `kernel/`
+kernel source
+- `boot/`: Bootloader-related code.
+- `core/`: Kernel core logic initilazation, processes-
+- `drivers/`: Hardware drivers 
+- `fs/`: File system 
+- `include/`: Header files f
+- `mem/`: Memory management (paging, heap) 
+- `tools/`: utilites (debug terminal..)
+- `ui/`: auro UI library.
+  - `system/`: system level ui.
+
+---
+
+---
+
+### 5. `meta/`
+(empty) metadata, configs...
+
+---
+
+### 6. `user/`
+user space programs.
+- `apps/`: Applications built for the OS.
+  - `calculator/`: A calculator app.
+  - `settings/`: A settings app.
+  - `terminal/`: cmd line shell.
+- `base-files/`: fs skeleton.
+  - `etc/`: config files.
+  - `tmp/`: Temporary directory.
+  - `usr/`: user binaries.
+  - `var/`:
+    - `log/`: logs.
+- `home/`: 
+
+---
