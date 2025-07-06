@@ -74,7 +74,10 @@ int divide(int num1, int num2) {
 
 <br>
 
-## File layout:
+## Techinal details
+
+
+**File layout:**
 
 **`.github/`**
 Github related files!
@@ -122,3 +125,16 @@ user space programs.
 - `home/`: 
 
 ---
+
+
+**Memory Layout** 
+| Section                | Address Range       | Description |
+|------------------------|--------------------|-------------|
+| Bootloader            | `0x0000 - 0x3000`   | Initializes segment registers and stack. |
+| Kernel Loading        | `0x1000+`           | Loads kernel into memory. |
+| Video Framebuffer     | `FB_ADDR (BIOS)`    | Stores pixel data for display. |
+| Heap Region           | `0x140000 - 0x540000` | Dynamic memory allocation. |
+| Kernel Execution      | `0x10000+`          | Protected mode kernel execution. |
+
+---
+
