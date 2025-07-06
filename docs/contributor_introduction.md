@@ -76,11 +76,11 @@ int divide(int num1, int num2) {
 
 ## File layout:
 
-**1. `.github/`**
+**`.github/`**
 Github related files!
 - `workflows/`: github actions.
 
-**2. `docs/`**
+**`docs/`**
 Documentation..
 - `assets/images/`: Images
 - `bugs/`: known issues, bugs...
@@ -90,7 +90,7 @@ Documentation..
   - `vbe/`: VBE docs.
   - `vga/`: VGA docs.
 
-**3. `kernel/`**
+**`kernel/`**
 kernel source
 - `boot/`: Bootloader-related code.
 - `core/`: Kernel core logic initilazation, processes-
@@ -103,11 +103,11 @@ kernel source
   - `system/`: system level ui.
 
 
-**5. `meta/`**
+**`meta/`**
 (empty) metadata, configs...
 
 
-**6. `user/`**
+**`user/`**
 user space programs.
 - `apps/`: Applications built for the OS.
   - `calculator/`: A calculator app.
