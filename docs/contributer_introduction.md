@@ -77,8 +77,6 @@ int divide(int num1, int num2) {
 Github related files!
 - `workflows/`: github actions.
 
----
-
 **2. `docs/`**
 Documentation..
 - `assets/images/`: Images
@@ -88,8 +86,6 @@ Documentation..
 - `ui/`:
   - `vbe/`: VBE docs.
   - `vga/`: VGA docs.
-
----
 
 **3. `kernel/`**
 kernel source
@@ -103,14 +99,10 @@ kernel source
 - `ui/`: auro UI library.
   - `system/`: system level ui.
 
----
-
----
 
 **5. `meta/`**
 (empty) metadata, configs...
 
----
 
 **6. `user/`**
 user space programs.
