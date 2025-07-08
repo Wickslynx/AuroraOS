@@ -17,6 +17,7 @@ typedef enum {
   IDLE
 } proc_state_t;
 
+// Process Control Block (PCB)
 typedef struct {
   int pid; // process id
   int ppid; // parent process id 
