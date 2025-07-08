@@ -8,7 +8,7 @@
 <a href="https://github.com/Wickslynx/AuroraOS/tree/main/docs">Documentation</a>
 </p>
   
-> **⚠ Warning**<br> AuroraOS is still in REALLY early development, sometimes it dosen't even boot. Don't let it come near any production enviroment. Stay safe!
+> **⚠ Warning**<br> AuroraOS is still in REALLY early development, sometimes it doesn't even boot. Don't let it come near any production enviroment. Stay safe!
 
 <br>
 
