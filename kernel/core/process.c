@@ -84,7 +84,22 @@ Process* process_create(char* name, int ppid, Domain domain, u32 entry, u32 stac
 }
 
 void process_destroy(Process* proc) {
-    // TODO: Make this actually work
+    // Remove from process table
+    processes[proc->pid] = NULL;
+
+    // Mark as terminated
+    proc->proc_state = TERMINATED;
+
+    // Free kernel stack
+    free((void*)(proc->ksp - (KERNEL_STACK_SIZE - sizeof(cpu_state_t))));
+
+    // Free user stack
+    free((void*)(proc->usp - (KERNEL_STACK_SIZE - sizeof(cpu_state_t))));
+
+    // Free the process struct itself
+    free(proc);
+
+    // NOTE: No file descriptor cleanup, and parent/child handling is manual
       
 }
 
