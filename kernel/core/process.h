@@ -44,10 +44,6 @@ int load_program(Process* proc, void* code, int size)
 
 void scheduler(void);
 
-extern Process* cproc;
-extern Process* processes[256]; // TODO: Dynamic.. For now we shouldn't need more than this. (who tf has 256 proccesses open)
-extern int cpid;
-
 #ifdef __cplusplus
 } 
 #endif 
