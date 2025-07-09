@@ -36,7 +36,7 @@ typedef struct {
 
 Process* process_create(char* name, int ppid, Domain domain, u32 entry, u32 stack);
 void process_destroy(Process* proc);
-
+int load_program(Process* proc, void* code, int size) 
 
 void scheduler(void);
 
