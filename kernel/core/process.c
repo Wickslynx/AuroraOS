@@ -103,7 +103,7 @@ void process_destroy(Process* proc) {
       
 }
 
-int load_program(Process* proc, void* code, size_t size) {
+int load_program(Process* proc, void* code, int size) {
     if (!proc || !code || size == 0) {
         return -1;
     }
