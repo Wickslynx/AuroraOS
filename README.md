@@ -2,7 +2,11 @@
 <img src="docs/assets/warning-triangle.png" width="250" />
 </p>
 
-> **⚠ New repository:** <br> https://github.com/auroraos-org/Aurora
+# AuroraOS has moved repositories! 
+
+# New repository: https://github.com/auroraos-org/Aurora
+
+> Scroll down for the legacy README.
 
 <br>
 <br>
