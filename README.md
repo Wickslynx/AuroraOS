@@ -2,7 +2,37 @@
 <img src="docs/assets/warning-triangle.png" width="250" />
 </p>
 
-> **New repository:** <br> https://github.com/auroraos-org/Aurora
+> **⚠ New repository:** <br> https://github.com/auroraos-org/Aurora
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<p align="center">
+<img src="docs/assets/auroraos.png" width="250" />
+</p>
+
+<p align="center">
+<a href="https://discord.com/invite/3X6WzRFUVP">Discord</a> -
+<a href="https://github.com/Wickslynx/AuroraOS/tree/main/docs">Documentation</a>
+</p>
+  
+> **⚠ Warning**<br> AuroraOS is still in REALLY early development, sometimes it doesn't even boot. Don't let it come near any production environment. Stay safe!
+
+<br>
 
 The Nordic Operating System...
 
@@ -48,3 +78,4 @@ Please email me on Wickslynx@yahoo.com
 I will respond as soon as possible, updates come regularly. 
 
 > **★ Also see** <br> Our [docs](https://github.com/Wickslynx/AuroraOS/tree/main/docs/auroraos.md) for more examples, images and information.
+
