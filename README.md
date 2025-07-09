@@ -4,11 +4,6 @@
 
 > **New repository:** <br> https://github.com/auroraos-org/Aurora
 
-<p align="center">
-<a href="https://discord.com/invite/3X6WzRFUVP">Discord</a> -
-<a href="https://github.com/Wickslynx/AuroraOS/tree/main/docs">Documentation</a>
-</p>
-
 The Nordic Operating System...
 
 
