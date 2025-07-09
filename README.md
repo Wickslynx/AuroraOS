@@ -1,5 +1,5 @@
 <p align="center">
-<img src="docs/assets/warning.png" width="250" />
+<img src="docs/assets/warning-triangle.png" width="250" />
 </p>
 
 > **New repository:** <br> https://github.com/auroraos-org/Aurora
