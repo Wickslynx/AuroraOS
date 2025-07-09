@@ -1,6 +1,10 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <error.h>
 #include <util.h>
 #include "../mem/vmm.h"
@@ -17,7 +21,7 @@ typedef enum {
   IDLE
 } proc_state_t;
 
-// Process Control Block (PCB)
+// pcb
 typedef struct {
   int pid; // process id
   int ppid; // parent process id 
@@ -43,5 +47,9 @@ void scheduler(void);
 extern Process* cproc;
 extern Process* processes[256]; // TODO: Dynamic.. For now we shouldn't need more than this. (who tf has 256 proccesses open)
 extern int cpid;
+
+#ifdef __cplusplus
+} 
+#endif 
 
 #endif
