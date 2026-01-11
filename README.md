@@ -4,7 +4,7 @@
 
 # AuroraOS has moved repositories! 
 
-# New repository: https://github.com/auroraos-org/Aurora
+# New repository: https://codeberg.org/aurora-org/AuroraOS
 
 > Scroll down for the legacy README.
 
